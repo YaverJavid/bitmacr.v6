@@ -1,0 +1,15 @@
+{
+    "short_name": "Pixmacr",
+    "name": "Pixmacr By Yaver With ❤️",
+    "start_url": ".",
+    "background_color": "#1a1b1d",
+    "theme_color": "#1a1b1d",
+    "display":"standalone",
+    "icons": [
+        {   "src":"favicon.png",
+            "sizes":"1080x1080",
+            "type":"image/png",
+            "purpose": "maskable"
+        }
+     ]
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1a1b1d">
+    <title>Pixmacr - A pixel art maker by Yaver</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+</head>
+
+<body>
+    <img srcset="" src="logo.png" alt="Logo" width="150">
+    <div class="controls" id="top-control-container">
+        <input type="button" id="undo" value="Undo">
+        <input type="button" id="export-button" value="Save (png)">
+        <input type="button" id="redo" value="Redo">
+    </div>
+    <div id="paint-zone"></div>
+    <div id="menu-nav">
+    </div>
+    <div id="controls-container">
+        <div class="controls" id="bottom-control-container">
+            <div>
+                <br>
+                <h3>General</h3>
+                <br>
+                <label for="color-selector">Select Color : </label>
+                <input value="#FF0000" type="color" name="color-selector" id="color-selector">
+                <br>
+                <label for="select-color">Select Color From Cell : </label>
+                <input type="checkbox" name="select-color" id="select-color">
+                <br>
+                <input type="button" id="clear-button" value="Clear All">
+                <input type="button" id="erase-selector-button" value="Select Eraser">
+                <input type="button" id="fill-all-button" value="Fill All"> <br>
+                <label for="cell-slider">Canvas Size : </label>
+                <input type="range" name="cell-slider" id="cells-slider" min='1' max='50' value='10'>
+                <span id="canvas-size-shower">(10)</span><br>
+                <input type="button" id="fliph-button" value="Flip Horizontally">
+                <input type="button" id="flipv-button" value="Flip Vertically">
+
+
+            </div>
+            <div>
+                <br>
+                <h3>Copy Options</h3><br>
+                <label for="multiply-q-selector">Multiply From : </label>
+                <select name="multiply-q-selector" id="multiply-q-selector">
+                    <option value="1">Quadrant I</option>
+                    <option value="2">Quadrant II</option>
+                    <option value="3">Quadrant III</option>
+                    <option value="4">Quadrant IV</option>
+                </select> <br>
+                <details>
+                    <summary>
+                        Copy To : <span id="copy-targets-shower"></span>
+                    </summary>
+                    <br>
+                    <input type="button" id="select-all-copy-targets" value="Select All">
+                    <br>
+                    <label for="q1-multiply-target-checkbox">Quadrant I</label>
+                    <input type="checkbox" id="q1-multiply-target-checkbox" checked>
+                    <br>
+                    <label for="q2-multiply-target-checkbox">Quadrant II</label>
+                    <input type="checkbox" id="q2-multiply-target-checkbox" checked>
+                    <br>
+                    <label for="q3-multiply-target-checkbox">Quadrant III</label>
+                    <input type="checkbox" id="q3-multiply-target-checkbox" checked>
+                    <br>
+                    <label for="q4-multiply-target-checkbox">Quadrant IV</label>
+                    <input type="checkbox" id="q4-multiply-target-checkbox" checked>
+                    <br>
+                </details>
+                <br> <input type="button" value="Multiply" id="multiply-q-button">
+            </div>
+            <div>
+                <br>
+                <h3>Random Tools</h3><br>
+                <input type="button" value="Select Random Color Mode" id="random-color-selector-button">
+                <br> <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
+            </div>
+            <div>
+                <br>
+                <h3>Raw Data</h3>
+                <input type="file" id="raw-data-fp" accept=".spad" value="F">
+                <br>
+                <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
+                <br>
+                <input type="button" value="Export Raw Data(spad)" id="export-raw-data">
+                <br>
+                <input type="button" value="Save To Local-storage(Browser)" id="save-to-ls">
+            </div>
+            <div id="drawings-section">
+                <br>
+                <h3>Saved Drawings</h3>
+            </div>
+            <div>
+                <br>
+                <h3>Filters</h3>
+                <br> <input type="button" value="Invert" id="filter-invert"> <br>
+                <input type="button" value="Sepia" id="filter-sepia"> 
+                <input type="button" value="Grayscale" id="filter-grayscale">
+                <input type="button" value="Solorize" id="filter-solorize"> <br>
+                <input type="button" value="filter-duotone" id="filter-duotone" style="opacity: 0.3" disabled>
+            </div>
+            <div>
+                <br>
+                <h3>Find & Replace Options</h3><br>
+                <label for="color-selector">Find : </label>
+                <input value="#FF0000" type="color" id="color-to-be-replaced-selector"> <br>
+                <label for="select-color-for-find">Select Color From Cell : </label>
+                <input type="checkbox" id="select-color-for-find"> <br>
+                <label for="color-selector">Replace With : </label>
+                <input value="#FF0000" type="color" id="color-to-replace-with-selector">
+                <br> <label for="select-color-for-replacer">Select Color From Cell : </label>
+                <input type="checkbox" id="select-color-for-replacer"> <br>
+                <label for="color-match-threshold-range">Threshold : </label>
+                <input type="range" min="0" max="225" value="0" id="color-match-threshold-range">
+                <span id="threshold-shower">(0)</span>
+                <br> <input type="button" value="Replace" id="replace-button"> <br>
+            </div>
+            <div>
+                <br>
+                <h3>Guide Options</h3> <br>
+                <label for="guide-checkbox">Quadrant Guides:</label>
+                <input type="checkbox" name="guide-checkbox" id="guide-checkbox">
+                <br>
+                <label for="border-checkbox">Guide Cell Border:</label>
+                <input type="checkbox" name="border-checkbox" id="border-checkbox" checked>
+                <br>
+                <label for="guide-cell-border-color">Guide Cell Border Color: </label>
+                <input type="color" id="guide-cell-border-color" value="#ffffff">
+            </div>
+            <div>
+                <br>
+                <h3>Export Options</h3><br>
+                <label for="cell-border-width-slider">Cell Border: </label>
+                <input type="range" name="cell-border-width-slider" id="cell-border-width-slider" min='0' max='15' value='0'>
+                <span id="cell-border-width-shower">(0)</span>
+                <br>
+                <label for="cell-border-color-selector">Cell Border Color: </label>
+                <input type="color" id="cell-border-color-selector">
+                <br>
+                <label for="watermark-checkbox">Watermark:</label>
+                <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
+                <input type="button" id="export-button2" value="Export">
+            </div>
+            <div>
+                <br>
+                <h3>Themes</h3><br>
+                <input type="button" value="Dark Theme" id="dark-theme"> <br>
+                <input type="button" value="Light Theme" id="light-theme"> <br>
+                <input type="button" value="Orlue Theme" id="orlue-theme"> <br>
+                <input type="button" value="Invert Theme" id="invert-theme">
+            </div>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <br>
+    <script src="js/utils.js"></script>
+    <script src="js/declarations.js"></script>
+    <script src="js/stack.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/raw-data-handler.js"></script>
+    <script src="js/browser-variation-support.js"></script>
+    <script src="js/themes.js"></script>
+</body>
+
+</html>
