@@ -221,7 +221,9 @@ h3 {
 }
 
 .menu-nav-items:hover{
-    filter: invert(1)
+    background: var(--secondary);
+    color: var(--accent);
+    border-color: var(--accent)
 }
 
 

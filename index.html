@@ -43,8 +43,17 @@
                 <span id="canvas-size-shower">(10)</span><br>
                 <input type="button" id="fliph-button" value="Flip Horizontally">
                 <input type="button" id="flipv-button" value="Flip Vertically">
+                <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
+                <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise">
 
-
+            </div>
+            <div>
+                <br>
+                <h3>Basic Tools</h3>
+                <label for="cols-painter">Paint Coloum</label>
+                <input type="checkbox" id="cols-painter"> <br>
+                <label for="rows-painter">Paint Rows</label>
+                <input type="checkbox" id="rows-painter"> <br>
             </div>
             <div>
                 <br>
@@ -83,7 +92,10 @@
                 <h3>Random Tools</h3><br>
                 <input type="button" value="Select Random Color Mode" id="random-color-selector-button">
                 <br> <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
+                <br> <input type="button" value="Randomise Color Shift" id="shift-colors-button">
+
             </div>
+
             <div>
                 <br>
                 <h3>Raw Data</h3>
@@ -103,10 +115,10 @@
                 <br>
                 <h3>Filters</h3>
                 <br> <input type="button" value="Invert" id="filter-invert"> <br>
-                <input type="button" value="Sepia" id="filter-sepia"> 
+                <input type="button" value="Sepia" id="filter-sepia">
                 <input type="button" value="Grayscale" id="filter-grayscale">
-                <input type="button" value="Solorize" id="filter-solorize"> <br>
-                <input type="button" value="filter-duotone" id="filter-duotone" style="opacity: 0.3" disabled>
+                <input type="button" value="Solorize" id="filter-solorize"> 
+                <input type="button" value="Duotone" id="filter-duotone">
             </div>
             <div>
                 <br>
@@ -153,10 +165,11 @@
             <div>
                 <br>
                 <h3>Themes</h3><br>
-                <input type="button" value="Dark Theme" id="dark-theme"> <br>
-                <input type="button" value="Light Theme" id="light-theme"> <br>
-                <input type="button" value="Orlue Theme" id="orlue-theme"> <br>
-                <input type="button" value="Invert Theme" id="invert-theme">
+                <input type="button" data-accent="#1a1b1d" data-secondary="white" value="Dark Theme" id="dark-theme" class="theme-selector">
+                <input type="button" data-secondary="#1a1b1d" data-accent="white" value="Light Theme" id="light-theme" class="theme-selector">
+                <input type="button" data-accent="#5858F9" data-secondary="white" value="Bluey" id="light-theme" class="theme-selector">
+                <br>
+                <input type="button" value="Invert Theme" id="invert-theme"> <br>
             </div>
         </div>
     </div>
