@@ -121,3 +121,18 @@ function convertRGBAStrToObj(rgbaStr) {
   const rgbaArr = rgbaStr.match(/\d+/g).map(Number);
   return {r: rgbaArr[0], g: rgbaArr[1], b: rgbaArr[2], a: rgbaArr[3]};
 }
+
+function rotateArray90Degrees(matrix, clockwise = true) {
+  const rows = matrix.length;
+  const columns = matrix[0].length;
+  const result = [];
+
+  for (let i = 0; i < columns; i++) {
+    result.push([]);
+    for (let j = clockwise ? 0 : rows - 1; j >= 0 && j < rows; j += clockwise ? 1 : -1) {
+      result[i].push(matrix[j][clockwise ? columns - i - 1 : i]);
+    }
+  }
+
+  return result;
+}

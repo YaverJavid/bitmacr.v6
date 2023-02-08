@@ -1,9 +1,9 @@
-function filterCanvas(filterFunction) {
+function filterCanvas(filterFunction, ...args) {
     let currentPaintData = buffer.getItem()
     for (let i = 0; i < currentPaintData.length; i++) {
         let colorObj = convertRGBAStrToObj(currentPaintData[i])
         if (colorObj.a === undefined) colorObj.a = 1
-        paintCells[i].style.background = colorObjectToRGBA(filterFunction(colorObj))
+        paintCells[i].style.background = colorObjectToRGBA(filterFunction(colorObj, ...args))
 
     }
     recordPaintData()
@@ -51,14 +51,27 @@ document.getElementById("filter-solorize").addEventListener("click", () => {
     })
 })
 
-// document.getElementById("filter-").addEventListener("click", () => {
-//     filterCanvas((pixel, color1 = "red", color2 = "blue")=>{
-//         let brightness = 0.34 * pixel.r + 0.5 * pixel.g + 0.16 * pixel.b
-//         let color = brightness > 255 / 2 ? color1 : color2;
-//         pixel.r = color[0];
-//         pixel.g = color[1];
-//         pixel.b = color[2];
-//         return pixel
-//     })
-// })
-// document.getElementById("filter-grayscale").addEventListener("click", () => {})
+document.getElementById("shift-colors-button").addEventListener("click", () => {
+    filterCanvas((pixel) => {
+        if (pixel.a == 0) return pixel
+        return {
+            r: Math.min(255, pixel.r + (Math.round(Math.random() * 50) - 25)),
+            g: Math.min(255, pixel.g + (Math.round(Math.random() * 50) - 25)),
+            b: Math.min(255, pixel.b + (Math.round(Math.random() * 50) - 25)),
+            a: pixel.a
+        };
+    })
+})
+
+document.getElementById("filter-duotone").addEventListener("click", () => {
+    filterCanvas((pixel) => {
+        let r = pixel.r
+        let g = pixel.g
+        let b = pixel.b
+        let a = pixel.a
+        let average = (r+g+b)/3
+        if(average > 127.5)
+          return {a, r: 255, g:255, b: 255}
+        return {a, r: 0, g:0, b: 0}
+    })
+})

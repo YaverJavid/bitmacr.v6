@@ -73,25 +73,43 @@ function addCanvas(argRows, argCols) {
     paintZone.innerHTML = HTML
     for (let i = 0; i < paintCells.length; i++) {
         paintCells[i].addEventListener("click", function() {
-            if ((!colorSelectCheckbox.checked) && (!selectColorForFind.checked) && (!selectColorForReplacer.checked)) {
-                this.style.background = getCurrentSelectedColor()
-                recordPaintData()
-            } else {
-                let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
-                changeCellBorderColor(borderColor)
+                
                 if (selectColorForFind.checked) {
+                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    changeCellBorderColor(borderColor)
                     colorToBeReplacedSelector.value = selectedColor
                     selectColorForFind.checked = false
                 } else if (colorSelectCheckbox.checked) {
+                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    changeCellBorderColor(borderColor)
                     colorSelector.value = selectedColor
                     currentSelectedColor = colorSelector.value
                     colorSelectCheckbox.checked = false
-                } else {
+                } else if(selectColorForReplacer.checked) {
+                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    changeCellBorderColor(borderColor)
                     colorToReplaceWithSelector.value = selectedColor
                     selectColorForReplacer.checked = false
+                } else if(rowsPainter.checked){
+                    let rowToPaint = Math.floor( i/rows);
+                    let newData = squareArray(buffer.getItem().slice())
+                    let rowArray = []
+                    for (let i = 0; i < rows; i++) rowArray.push(getCurrentSelectedColor())
+                    newData[rowToPaint] = rowArray
+                    applyPaintData(newData.flat())
+                    recordPaintData()
+                } else if(colsPainter.checked){
+                    let colToPaint  = i % cols
+                    let newData = squareArray(buffer.getItem().slice())
+                    for (let i = 0; i < newData.length; i++) newData[i][colToPaint] = getCurrentSelectedColor()
+                    applyPaintData(newData.flat())
+                    recordPaintData()
+                } else{
+                    this.style.background = getCurrentSelectedColor()
+                    recordPaintData()
                 }
-            }
-           
+            
+
         })
         paintCells[i].style.borderColor = guideCellBorderColor.value
     }
@@ -139,12 +157,12 @@ function drawRectangle(context, x, y, width, height, borderColor, fillColor, bor
     context.stroke();
 }
 
-function exportImage (){
+function exportImage() {
     paintDataOnCanvas(ctx, canvas, buffer.getItem(), cellBorderWidthSlider.value, cellBorderColorSelector.value, rows, cols)
     downloadCanvasAsImage(canvas, 'syn-pixmacr-yj.png')
 }
 
-function paintDataOnCanvas(ctx, canvas, colorData, borderWidth, borderColor, rows, cols){
+function paintDataOnCanvas(ctx, canvas, colorData, borderWidth, borderColor, rows, cols) {
     let currentY = 0
     let currentX = 0
     let cellWidth = canvas.height / cols
@@ -270,7 +288,7 @@ eraseButton.addEventListener("click", function() {
 
 
 
-guideCellBorderColor.addEventListener("input", function (){
+guideCellBorderColor.addEventListener("input", function() {
     borderColor = this.value
     for (var i = 0; i < paintCells.length; i++) {
         paintCells[i].style.borderColor = borderColor
@@ -463,7 +481,7 @@ colorMatchThresholdSlider.addEventListener("input", () => {
 })
 
 
-document.getElementById("flipv-button").addEventListener("click",()=>{
+document.getElementById("flipv-button").addEventListener("click", () => {
     applyPaintData(buffer.getItem().slice().reverse())
     recordPaintData()
 })
@@ -475,6 +493,22 @@ document.getElementById("fliph-button").addEventListener("click", () => {
 })
 
 
+document.getElementById("rotate-clockwise-button").addEventListener("click", () => {
+    applyPaintData(rotateArray90Degrees(squareArray(buffer.getItem().slice())).flat())
+    recordPaintData()
+})
+
+document.getElementById("rotate-anticlockwise-button").addEventListener("click", () => {
+    applyPaintData(rotateArray90Degrees(squareArray(buffer.getItem().slice()), false).flat())
+    recordPaintData()
+})
 
 
 
+colsPainter.addEventListener("input", () => {
+    rowsPainter.checked = false
+})
+
+rowsPainter.addEventListener("input", () => {
+    colsPainter.checked = false
+})
