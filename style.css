@@ -299,3 +299,16 @@ input[type=button]:hover{
     box-sizing: border-box;
     background: #00000000;
 }
+
+.cell:hover{
+    border-style: dashed
+    
+}
+
+kbd{
+    font-family: monospace!important;
+    background: var(--secondary);
+    color:var(--accent);
+    opacity: 0.3;
+    font-size: 0.8rem
+}
