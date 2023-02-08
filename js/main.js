@@ -19,16 +19,22 @@ let cellBorderWidth = 1
 let currentSelectedColor = colorSelector.value
 let chooseColorRandomly = false
 let rows, cols
+let menuSegmentLocations = []
 guideCellBorderColor.value = borderColor
 
 for (let i = 0; i < menus.length; i++) {
     let currentMenuName = menus[i].children[1].textContent
-    menuNav.innerHTML += `<div class="menu-nav-items">${currentMenuName.toUpperCase()}</div>`
+    menuSegmentLocations.push(i * controlWidth)
+    menuNav.innerHTML += `<div class="menu-nav-items" data-shortcutkey="${menus[i].children[1].dataset.shortcutkey}" >${currentMenuName.toUpperCase()} <kbd>ctrl+${menus[i].children[1].dataset.shortcutkey}</kbd> </div>`
+}
+
+function redirectMenuViewTo(location){
+    bottomControls.scrollLeft = location
 }
 
 for (let i = 0; i < menuNav.children.length; i++) {
     menuNav.children[i].addEventListener("click", () => {
-        bottomControls.scrollLeft = i * controlWidth
+        redirectMenuViewTo(i * controlWidth)
     })
 }
 
@@ -236,12 +242,12 @@ cellsSlider.addEventListener("change", function() {
 
 
 
-document.getElementById('undo').addEventListener("click", () => {
+undo.addEventListener("click", () => {
     if (buffer.setPointer(buffer.pointer - 1))
         applyPaintData(buffer.getItem())
 })
 
-document.getElementById('redo').addEventListener("click", () => {
+redo.addEventListener("click", () => {
     if (buffer.setPointer(buffer.pointer + 1))
         applyPaintData(buffer.getItem())
 })
@@ -511,4 +517,24 @@ colsPainter.addEventListener("input", () => {
 
 rowsPainter.addEventListener("input", () => {
     colsPainter.checked = false
+})
+
+
+let currentCell;
+
+paintZone.addEventListener('touchmove', (event) => {
+  if(!paintMode.checked) return
+  const { targetTouches } = event;
+  const touch = targetTouches[0];
+  const x = touch.clientX;
+  const y = touch.clientY;
+  currentCell = document.elementFromPoint(x, y);
+  if (currentCell.classList[0] != "cell") return
+  currentCell.style.background = getCurrentSelectedColor()
+  event.preventDefault()
+});
+
+paintZone.addEventListener('touchend', (event) => {
+    if(!paintMode.checked) return
+    recordPaintData()
 })

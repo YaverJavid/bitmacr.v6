@@ -75,3 +75,16 @@ document.getElementById("filter-duotone").addEventListener("click", () => {
         return {a, r: 0, g:0, b: 0}
     })
 })
+
+document.getElementById("shift-colors-button2").addEventListener("click", () => {
+    filterCanvas((pixel) => {
+        if (pixel.a == 0) return pixel
+        return {
+            r: Math.min(255, pixel.r + (Math.round(Math.random() * 50) - 25)),
+            g: Math.min(255, pixel.g + (Math.round(Math.random() * 50) - 25)),
+            b: Math.min(255, pixel.b + (Math.round(Math.random() * 50) - 25)),
+            a: pixel.a
+        };
+    })
+})
+
