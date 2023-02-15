@@ -2,6 +2,7 @@ document.addEventListener("keydown", function(event) {
     if (event.ctrlKey) {
         event.preventDefault()
         for (let i = 0; i < menuNav.children.length; i++) {
+            if(menuNav.children[i].dataset.shortcutkey == undefined) continue
             if (event.key == menuNav.children[i].dataset.shortcutkey) {
                 redirectMenuViewTo(menuSegmentLocations[i])
                 break

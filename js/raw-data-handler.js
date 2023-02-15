@@ -131,6 +131,8 @@ function addEventListenersToSavedDrawings() {
             if(!confirm("Do you really want to apply data, you will loose your current artwork on canvas?")) return
             let data = parseRawData(drawings[currentDrawingName])
             addCanvas(data.rows, data.cols)
+            canvasSizeShower.textContent = `(${data.cols})`
+            cellsSlider.value = data.cols
             applyPaintData(data.colorData)
             buffer.clearStack()
             if (!borderCheckbox.checked) {

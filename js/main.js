@@ -16,7 +16,14 @@ let prevSelectedColor
 let buffer = new Stack()
 let borderColor = getSecondaryColor().slice(1)
 let cellBorderWidth = 1
-let currentSelectedColor = colorSelector.value
+let usedColors = []
+let pallateColors = document.getElementsByClassName("pallate-color")
+for (var i = 0; i < pallateColors.length; i++) {
+    usedColors.push(rgbToHex(getComputedStyle(pallateColors[i]).getPropertyValue('background-color')).toUpperCase())
+}
+
+let currentSelectedColor = undefined
+setCurrentColor("#162829")
 let chooseColorRandomly = false
 let rows, cols
 let menuSegmentLocations = []
@@ -25,7 +32,9 @@ guideCellBorderColor.value = borderColor
 for (let i = 0; i < menus.length; i++) {
     let currentMenuName = menus[i].children[1].textContent
     menuSegmentLocations.push(i * controlWidth)
-    menuNav.innerHTML += `<div class="menu-nav-items" data-shortcutkey="${menus[i].children[1].dataset.shortcutkey}" >${currentMenuName.toUpperCase()} <kbd>ctrl+${menus[i].children[1].dataset.shortcutkey}</kbd> </div>`
+    menuNav.innerHTML += `<div class="menu-nav-items" data-shortcutkey="${menus[i].children[1].dataset.shortcutkey}" >${currentMenuName.toUpperCase()}
+      <kbd style="display: ${menus[i].children[1].dataset.shortcutkey == undefined ? "none" : "initial"}">ctrl+${menus[i].children[1].dataset.shortcutkey}</kbd>
+    </div>`
 }
 
 function redirectMenuViewTo(location){
@@ -81,18 +90,17 @@ function addCanvas(argRows, argCols) {
         paintCells[i].addEventListener("click", function() {
                 
                 if (selectColorForFind.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    let selectedColor = rgbToHex(buffer.getItem()[i])
                     changeCellBorderColor(borderColor)
                     colorToBeReplacedSelector.value = selectedColor
                     selectColorForFind.checked = false
                 } else if (colorSelectCheckbox.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    let selectedColor = rgbToHex(buffer.getItem()[i])
                     changeCellBorderColor(borderColor)
-                    colorSelector.value = selectedColor
-                    currentSelectedColor = colorSelector.value
+                    setCurrentColor(selectedColor)
                     colorSelectCheckbox.checked = false
                 } else if(selectColorForReplacer.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem(buffer.data.length - 1)[i])
+                    let selectedColor = rgbToHex(buffer.getItem()[i])
                     changeCellBorderColor(borderColor)
                     colorToReplaceWithSelector.value = selectedColor
                     selectColorForReplacer.checked = false
@@ -133,9 +141,18 @@ colorSelector.addEventListener("input", function() {
     if (currentSelectedColor == '#00000000') {
         eraseButton.value = 'Select Eraser'
     }
-    currentSelectedColor = this.value
+    setCurrentColor(this.value)
 })
 
+function setCurrentColor(color){
+    currentSelectedColor = color
+    colorSelector.value = color
+    if(!usedColors.includes(color)){
+        pallateContainer.innerHTML += `<div style="background:${color}" onclick="setCurrentColor('${color}')" class="pallate-color"></div>`
+        usedColors.push(color)
+    }
+    
+}
 
 
 document.getElementById('clear-button').addEventListener("click", () => {
@@ -285,9 +302,9 @@ eraseButton.addEventListener("click", function() {
     if (this.value == 'Select Eraser') {
         this.value = 'Unselect Eraser'
         prevSelectedColor = getCurrentSelectedColor()
-        currentSelectedColor = '#00000000'
+        setCurrentColor('#00000000')
     } else {
-        currentSelectedColor = prevSelectedColor
+        setCurrentColor(prevSelectedColor)
         this.value = 'Select Eraser'
     }
 })
@@ -538,3 +555,4 @@ paintZone.addEventListener('touchend', (event) => {
     if(!paintMode.checked) return
     recordPaintData()
 })
+
