@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1a1b1d">
-    <title>Pixmacr - A pixel art maker by Yaver</title>
+    <title>Pixmacr - A pixel art maker by Zanoor & Yaver</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <img srcset="" src="logo.png" alt="Logo" width="150">
+    <img srcset="" src="logo.png" alt="Logo" width="150" id="top-image">
     <div class="controls" id="top-control-container">
         <input type="button" id="undo" value="Undo">
         <input type="button" id="export-button" value="Save (png)">
@@ -59,6 +59,22 @@
             </div>
             <div>
                 <br>
+                <h3 data-shortcutkey="p">Color Pallate</h3> <br>
+                <div id="pallate-container">
+                    <div class="pallate-color default" onclick="setCurrentColor('#F44336')" style="background:#F44336"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#FFC107')" style="background:#FFC107"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#9C27B0')" style="background:#9C27B0"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#4CAF50')" style="background:#4CAF50"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#2196F3')" style="background:#2196F3"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#FF5722')" style="background:#FF5722"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#607D8B')" style="background:#607D8B"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#673AB7')" style="background:#673AB7"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#FFEB3B')" style="background:#FFEB3B"></div>
+                    <div class="pallate-color default" onclick="setCurrentColor('#03A9F4')" style="background:#03A9F4"></div>
+                </div>
+            </div>
+            <div>
+                <br>
                 <h3 data-shortcutkey="c">Copy Options</h3><br>
                 <label for="multiply-q-selector">Multiply From : </label>
                 <select name="multiply-q-selector" id="multiply-q-selector">
@@ -100,7 +116,7 @@
 
             <div>
                 <br>
-                <h3 data-shortcutkey="d">Raw Data</h3>
+                <h3>Raw Data</h3>
                 <input type="file" id="raw-data-fp" accept=".spad" value="F">
                 <br>
                 <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
@@ -119,7 +135,7 @@
                 <br> <input type="button" value="Invert" id="filter-invert"> <br>
                 <input type="button" value="Sepia" id="filter-sepia">
                 <input type="button" value="Grayscale" id="filter-grayscale">
-                <input type="button" value="Solorize" id="filter-solorize"> 
+                <input type="button" value="Solorize" id="filter-solorize">
                 <input type="button" value="Duotone" id="filter-duotone">
                 <input type="button" value="Randomise Color Shift" id="shift-colors-button2">
             </div>
@@ -171,9 +187,28 @@
                 <input type="button" data-accent="#1a1b1d" data-secondary="white" value="Dark Theme" class="theme-selector">
                 <input type="button" data-secondary="#1a1b1d" data-accent="white" value="Light Theme" class="theme-selector">
                 <input type="button" data-accent="#5858F9" data-secondary="white" value="Bluey" class="theme-selector">
-                <input type="button" data-accent="coral" data-secondary="white" value="Coral" class="theme-selector">
+                <input type="button" data-accent="#1a1b1d" data-secondary="lime" value="Dark Lime" class="theme-selector">
+                <input type="button" data-accent="#2E86C1" data-secondary="#F5B041" value="Blue Gold" class="theme-selector">
+                <input type="button" data-accent="#E74C3C" data-secondary="#F9E79F" value="Red Yellow" class="theme-selector">
+                <input type="button" data-accent="#8E44AD" data-secondary="#F1C40F" value="Purple Yellow" class="theme-selector">
+                <input type="button" data-accent="#1ABC9C" data-secondary="white" value="Turquoise Whité" class="theme-selector">
+                <input type="button" data-accent="#3498DB" data-secondary="#F5CBA7" value="Blue Peach" class="theme-selector">
+                <input type="button" data-accent="#27AE60" data-secondary="#FFC300" value="Green Yellow" class="theme-selector">
+                <input type="button" data-accent="#D35400" data-secondary="#F0E68C" value="Orange Khaki" class="theme-selector">
+                <input type="button" data-accent="#2C3E50" data-secondary="#FAD7A0" value="Navy Peach" class="theme-selector">
+                <input type="button" data-secondary="white" data-accent="#2C3E50" value="Navy White" class="theme-selector">
                 <br>
                 <input type="button" value="Invert Theme" id="invert-theme"> <br>
+            </div>
+            <div>
+                <br>
+                <h3 data-shortcutkey="7">Advanced</h3>
+                <hr>
+                <span>NOTE : ALL THESE SETTINGS WILL BE STORED IN BROWSER LOCAL STORAGE.</span>
+                <hr>
+                <label for="advanced-remove-top-image-checkbox">Remove top image</label>
+                <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
+                <span>Version6.3.0</span>
             </div>
         </div>
     </div>
@@ -181,6 +216,7 @@
     <br>
     <script src="js/utils.js"></script>
     <script src="js/declarations.js"></script>
+    <script src="js/advanced.js"></script>
     <script src="js/stack.js"></script>
     <script src="js/main.js"></script>
     <script src="js/filters.js"></script>
