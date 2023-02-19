@@ -313,6 +313,14 @@
      margin-bottom: 2px !important;
  }
  
- #pallate-container > .default{
+.default-pallette{
      border-style: dashed
+ }
+ 
+ .undev{
+     opacity: 0.3;
+ }
+ 
+ .hex-input{
+     width: 25%;
  }

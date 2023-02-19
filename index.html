@@ -31,6 +31,7 @@
                 <br>
                 <label for="color-selector">Select Color : </label>
                 <input value="#FF0000" type="color" name="color-selector" id="color-selector">
+                Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
                 <label for="select-color">Select Color From Cell : </label>
                 <input type="checkbox" name="select-color" id="select-color">
@@ -50,28 +51,32 @@
             <div>
                 <br>
                 <h3 data-shortcutkey="t">Basic Tools</h3>
-                <label for="cols-painter">Paint Coloum</label>
+                <label for="cols-painter">Paint Coloum : </label>
                 <input type="checkbox" id="cols-painter"> <br>
-                <label for="rows-painter">Paint Rows</label>
+                <label for="rows-painter">Paint Rows : </label>
                 <input type="checkbox" id="rows-painter"> <br>
                 <label for="paint-mode">Paint Mode : </label>
-                <input type="checkbox" id="paint-mode">
+                <input type="checkbox" id="paint-mode"> <br>
+                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
+                <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
+                <span id="copied-color-shower"></span>
             </div>
             <div>
                 <br>
-                <h3 data-shortcutkey="p">Color Pallate</h3> <br>
+                <h3 data-shortcutkey="p">Color Palette</h3> <br>
+                <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
                 <div id="pallate-container">
-                    <div class="pallate-color default" onclick="setCurrentColor('#F44336')" style="background:#F44336"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#FFC107')" style="background:#FFC107"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#9C27B0')" style="background:#9C27B0"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#4CAF50')" style="background:#4CAF50"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#2196F3')" style="background:#2196F3"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#FF5722')" style="background:#FF5722"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#607D8B')" style="background:#607D8B"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#673AB7')" style="background:#673AB7"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#FFEB3B')" style="background:#FFEB3B"></div>
-                    <div class="pallate-color default" onclick="setCurrentColor('#03A9F4')" style="background:#03A9F4"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#F44336')" style="background:#F44336"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FFC107')" style="background:#FFC107"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#9C27B0')" style="background:#9C27B0"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#4CAF50')" style="background:#4CAF50"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#2196F3')" style="background:#2196F3"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FF5722')" style="background:#FF5722"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#607D8B')" style="background:#607D8B"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#673AB7')" style="background:#673AB7"></div>
+                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FFEB3B')" style="background:#FFEB3B"></div>
                 </div>
+
             </div>
             <div>
                 <br>
@@ -143,11 +148,13 @@
                 <br>
                 <h3 data-shortcutkey="f">Find & Replace Options</h3><br>
                 <label for="color-selector">Find : </label>
-                <input value="#FF0000" type="color" id="color-to-be-replaced-selector"> <br>
+                <input value="#FF0000" type="color" id="color-to-be-replaced-selector"> 
+                Or <input class="hex-input" type="text" id="color-to-be-replaced-selector-hex" placeholder="Enter Hex..." maxlength="7"> <br> 
                 <label for="select-color-for-find">Select Color From Cell : </label>
                 <input type="checkbox" id="select-color-for-find"> <br>
                 <label for="color-selector">Replace With : </label>
                 <input value="#FF0000" type="color" id="color-to-replace-with-selector">
+                Or <input class="hex-input" type="text" id="color-to-replace-with-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br> <label for="select-color-for-replacer">Select Color From Cell : </label>
                 <input type="checkbox" id="select-color-for-replacer"> <br>
                 <label for="color-match-threshold-range">Threshold : </label>
@@ -164,8 +171,9 @@
                 <label for="border-checkbox">Guide Cell Border:</label>
                 <input type="checkbox" name="border-checkbox" id="border-checkbox" checked>
                 <br>
-                <label for="guide-cell-border-color">Guide Cell Border Color: </label>
+                <label for="guide-cell-border-color">Guide Cell Border Color: </label> <br>
                 <input type="color" id="guide-cell-border-color" value="#ffffff">
+                Or <input class="hex-input" type="text" id="guide-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
             </div>
             <div>
                 <br>
@@ -176,6 +184,7 @@
                 <br>
                 <label for="cell-border-color-selector">Cell Border Color: </label>
                 <input type="color" id="cell-border-color-selector">
+                Or <input class="hex-input" type="text" id="export-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
                 <label for="watermark-checkbox">Watermark:</label>
                 <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
@@ -183,7 +192,7 @@
             </div>
             <div>
                 <br>
-                <h3 data-shortcutkey="h">Themes</h3><br>
+                <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
                 <input type="button" data-accent="#1a1b1d" data-secondary="white" value="Dark Theme" class="theme-selector">
                 <input type="button" data-secondary="#1a1b1d" data-accent="white" value="Light Theme" class="theme-selector">
                 <input type="button" data-accent="#5858F9" data-secondary="white" value="Bluey" class="theme-selector">
@@ -202,23 +211,32 @@
             </div>
             <div>
                 <br>
-                <h3 data-shortcutkey="7">Advanced</h3>
-                <hr>
-                <span>NOTE : ALL THESE SETTINGS WILL BE STORED IN BROWSER LOCAL STORAGE.</span>
-                <hr>
-                <label for="advanced-remove-top-image-checkbox">Remove top image</label>
-                <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
-                <span>Version6.3.0</span>
+                <h3 data-shortcutkey="z">Settings</h3>
+                <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
+                <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input>
             </div>
+              <div>
+                  <br>
+                  <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3>
+                  <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
+                  <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
+                  <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
+                  <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
+                  <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
+                  <input type="checkbox" id="hide-default-pallette-checkbox">
+                  <br> 
+                  <span>Version : 6.3.0</span>
+              </div>
         </div>
     </div>
     <canvas id="canvas"></canvas>
     <br>
     <script src="js/utils.js"></script>
     <script src="js/declarations.js"></script>
-    <script src="js/advanced.js"></script>
+    <script src="js/settings-pre.js"></script>
     <script src="js/stack.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/settings.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/raw-data-handler.js"></script>
     <script src="js/browser-variation-support.js"></script>
