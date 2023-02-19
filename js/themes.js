@@ -21,3 +21,5 @@ for (let i = 0; i < themeSelectors.length; i++) {
        setTheme(themeSelectors[i].dataset.accent, themeSelectors[i].dataset.secondary);
     })
 }
+
+borderColor = '#'+getSecondaryColor().slice(1)
