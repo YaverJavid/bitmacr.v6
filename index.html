@@ -148,8 +148,8 @@
                 <br>
                 <h3 data-shortcutkey="f">Find & Replace Options</h3><br>
                 <label for="color-selector">Find : </label>
-                <input value="#FF0000" type="color" id="color-to-be-replaced-selector"> 
-                Or <input class="hex-input" type="text" id="color-to-be-replaced-selector-hex" placeholder="Enter Hex..." maxlength="7"> <br> 
+                <input value="#FF0000" type="color" id="color-to-be-replaced-selector">
+                Or <input class="hex-input" type="text" id="color-to-be-replaced-selector-hex" placeholder="Enter Hex..." maxlength="7"> <br>
                 <label for="select-color-for-find">Select Color From Cell : </label>
                 <input type="checkbox" id="select-color-for-find"> <br>
                 <label for="color-selector">Replace With : </label>
@@ -186,6 +186,8 @@
                 <input type="color" id="cell-border-color-selector">
                 Or <input class="hex-input" type="text" id="export-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
+                <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')">
+                <br>
                 <label for="watermark-checkbox">Watermark:</label>
                 <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
                 <input type="button" id="export-button2" value="Export">
@@ -215,18 +217,25 @@
                 <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
                 <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input>
             </div>
-              <div>
-                  <br>
-                  <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3>
-                  <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
-                  <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
-                  <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
-                  <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
-                  <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
-                  <input type="checkbox" id="hide-default-pallette-checkbox">
-                  <br> 
-                  <span>Version : 6.4.1</span>
-              </div>
+            <div>
+                <br>
+                <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3>
+                <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
+                <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
+                <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
+                <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
+                <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
+                <input type="checkbox" id="hide-default-pallette-checkbox">
+                <br>
+                <span>Version : 6.5.0</span>
+            </div>
+            <div id="drawing-checker-section">
+                <br>
+                <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
+                <br>
+                <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
+                <img src="" width="0" height="0">
+            </div>
         </div>
     </div>
     <canvas id="canvas"></canvas>
