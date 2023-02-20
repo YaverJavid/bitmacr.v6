@@ -646,3 +646,15 @@ document.getElementById("export-cell-border-selector-hex").addEventListener("inp
         cellBorderColorSelector.value = this.value
     }
 })
+
+
+// drawing result shower
+
+document.getElementById("refresh-drawing-checker").addEventListener("click", ()=>{
+    let img = new Image(200,200)
+    paintDataOnCanvas(ctx, canvas, buffer.getItem(), cellBorderWidthSlider.value, cellBorderColorSelector.value, rows, cols)
+    img.src = canvas.toDataURL()
+    img.style.border = "1px solid var(--secondary)"
+    drawingCheckerSection.removeChild(drawingCheckerSection.lastChild)
+    drawingCheckerSection.appendChild(img)
+})

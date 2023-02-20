@@ -174,3 +174,9 @@ function copyTextToClipboard(text) {
 }
 
 var validateHex = (str) => /^#[0-9A-F]{6}$/i.test(str)
+
+function canvasToImage(canvas) {
+  var img = new Image();
+  img.src = canvas.toDataURL("image/png");
+  return img;
+}
