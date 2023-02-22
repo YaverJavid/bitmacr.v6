@@ -2,6 +2,13 @@
 
 
 ## Version History
+### 6.6.n
+- + Added Support For Shapes
+- Fixed Bugs
+- Reorganised Some UI
+- Added Contact Information
+- Added APK
+
 
 ### 6.5.n
 - + Added A Way To See How Drawing Would Look Like If Exported & Find It In Export Tab. 
