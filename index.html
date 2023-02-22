@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <img srcset="" src="logo.png" alt="Logo" width="150" id="top-image">
+    <img  src="logo.png" alt="Logo" width="150" id="top-image">
     <div class="controls" id="top-control-container">
         <input type="button" id="undo" value="Undo">
         <input type="button" id="export-button" value="Save (png)">
@@ -34,7 +34,7 @@
                 Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
                 <label for="select-color">Select Color From Cell : </label>
-                <input type="checkbox" name="select-color" id="select-color">
+                <input type="checkbox"  name="select-color" id="select-color">
                 <br>
                 <input type="button" id="clear-button" value="Clear All">
                 <input type="button" id="erase-selector-button" value="Select Eraser">
@@ -55,9 +55,21 @@
                 <input type="checkbox" id="cols-painter"> <br>
                 <label for="rows-painter">Paint Rows : </label>
                 <input type="checkbox" id="rows-painter"> <br>
-                <label for="paint-mode">Paint Mode : </label>
-                <input type="checkbox" id="paint-mode"> <br>
-                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
+                <label for="paint-mode-selector">Select Paint Mode : </label>
+                <select id="paint-mode-selector">
+                    <option value="none">None</option>
+                    <option value="circle">Circle</option>
+                    <option value="filled-circle">Circle (Filled)</option>
+                    <option value="stroke">Stroke</option>
+                </select> <br>
+                <label for="paintModeSelector">Onclick Fill : </label>
+                <select id="click-mode-selector">
+                    <option value="default">Cell</option>
+                    <option value="row">Row</option>
+                    <option value="col">Coloumn</option>
+                </select>
+                <br>
+                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label> 
                 <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
                 <span id="copied-color-shower"></span>
             </div>
@@ -195,10 +207,10 @@
             <div>
                 <br>
                 <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
-                <input type="button" data-accent="#1a1b1d" data-secondary="white" value="Dark Theme" class="theme-selector">
-                <input type="button" data-secondary="#1a1b1d" data-accent="white" value="Light Theme" class="theme-selector">
-                <input type="button" data-accent="#5858F9" data-secondary="white" value="Bluey" class="theme-selector">
-                <input type="button" data-accent="#1a1b1d" data-secondary="lime" value="Dark Lime" class="theme-selector">
+                <input type="button" data-accent="#1a1b1d" data-secondary="#ffffff" value="Dark Theme" class="theme-selector">
+                <input type="button" data-secondary="#1a1b1d" data-accent="#ffffff" value="Light Theme" class="theme-selector">
+                <input type="button" data-accent="#5858F9" data-secondary="#ffffff" value="Bluey" class="theme-selector">
+                <input type="button" data-accent="#1a1b1d" data-secondary="#32CD32" value="Dark Lime" class="theme-selector">
                 <input type="button" data-accent="#2E86C1" data-secondary="#F5B041" value="Blue Gold" class="theme-selector">
                 <input type="button" data-accent="#E74C3C" data-secondary="#F9E79F" value="Red Yellow" class="theme-selector">
                 <input type="button" data-accent="#8E44AD" data-secondary="#F1C40F" value="Purple Yellow" class="theme-selector">
@@ -207,7 +219,7 @@
                 <input type="button" data-accent="#27AE60" data-secondary="#FFC300" value="Green Yellow" class="theme-selector">
                 <input type="button" data-accent="#D35400" data-secondary="#F0E68C" value="Orange Khaki" class="theme-selector">
                 <input type="button" data-accent="#2C3E50" data-secondary="#FAD7A0" value="Navy Peach" class="theme-selector">
-                <input type="button" data-secondary="white" data-accent="#2C3E50" value="Navy White" class="theme-selector">
+                <input type="button" data-secondary="#ffffff" data-accent="#2C3E50" value="Navy White" class="theme-selector">
                 <br>
                 <input type="button" value="Invert Theme" id="invert-theme"> <br>
             </div>
@@ -227,14 +239,15 @@
                 <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
                 <input type="checkbox" id="hide-default-pallette-checkbox">
                 <br>
-                <span>Version : 6.5.0</span>
+                <span>Version : 6.5.0@Beta</span> <br>
+                <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a>
             </div>
             <div id="drawing-checker-section">
                 <br>
                 <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
                 <br>
                 <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
-                <img src="" width="0" height="0">
+                <img  width="0" height="0">
             </div>
         </div>
     </div>
@@ -244,6 +257,7 @@
     <script src="js/declarations.js"></script>
     <script src="js/settings-pre.js"></script>
     <script src="js/stack.js"></script>
+    <script src="js/shapes.js"></script>
     <script src="js/main.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/filters.js"></script>
@@ -251,6 +265,6 @@
     <script src="js/browser-variation-support.js"></script>
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
-</body>
+</body> 
 
 </html>

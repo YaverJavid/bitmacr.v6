@@ -13,9 +13,9 @@
  }
 
  * {
-     scroll-behavior: smooth;
      outline-color: transparent;
      font-family: 'Noto Sans Symbols', sans-serif;
+     scroll-behavior: smooth;
  }
 
  :root {
@@ -23,6 +23,7 @@
      --secondary: #ffffff;
      --misc: black;
  }
+
 
 
  #paint-zone {
@@ -155,7 +156,7 @@
      margin: 0;
  }
 
- #multiply-q-selector {
+ select  {
      margin-bottom: 25px;
      background: transparent;
      border-width: 1px;
