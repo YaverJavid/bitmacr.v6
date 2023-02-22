@@ -4,7 +4,6 @@ const canvas = document.querySelector('canvas')
 const cellsSlider = document.getElementById('cells-slider')
 const paintZone = document.getElementById('paint-zone')
 const colorSelector = document.getElementById('color-selector')
-const colorSelectCheckbox = document.getElementById("select-color")
 const canvasSizeShower = document.getElementById("canvas-size-shower")
 const eraseButton = document.getElementById("erase-selector-button")
 const guideCheckbox = document.getElementById("guide-checkbox")
@@ -20,8 +19,6 @@ const randomColorSelectorButton = document.getElementById("random-color-selector
 const colorToBeReplacedSelector = document.getElementById("color-to-be-replaced-selector")
 const colorToReplaceWithSelector = document.getElementById("color-to-replace-with-selector")
 const replaceButton = document.getElementById("replace-button")
-const selectColorForReplacer = document.getElementById("select-color-for-replacer")
-const selectColorForFind = document.getElementById("select-color-for-find")
 const thresholdShower = document.getElementById("threshold-shower")
 const colorMatchThresholdSlider = document.getElementById("color-match-threshold-range")
 const root = document.querySelector(":root")
@@ -47,6 +44,15 @@ const themeSelectors = document.getElementsByClassName("theme-selector")
 const paintMode = document.getElementById("paint-mode")
 const topImage = document.getElementById("top-image")
 const pallateContainer = document.getElementById("pallate-container")
-const copyColorFromCellCheckbox = document.getElementById("copy-color-from-cell-checkbox")
 const copiedColorShower = document.getElementById("copied-color-shower")
 const drawingCheckerSection = document.getElementById("drawing-checker-section")
+const paintModeSelector = document.getElementById("paint-mode-selector")
+const clickModeSelector = document.getElementById("click-mode-selector")
+
+
+const colorCopierCheckboxes = {
+    colorSelectCheckbox: document.getElementById("select-color"),
+    selectColorForFind: document.getElementById("select-color-for-find"),
+    selectColorForReplacer: document.getElementById("select-color-for-replacer"),
+    copyColorFromCellCheckbox: document.getElementById("copy-color-from-cell-checkbox")
+}

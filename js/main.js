@@ -38,10 +38,11 @@ for (let i = 0; i < menus.length; i++) {
     </div>`
 }
 
-function redirectMenuViewTo(location){
+function redirectMenuViewTo(location) {
     bottomControls.scrollLeft = location
 }
-function redirectViewToSetting(settingName){
+
+function redirectViewToSetting(settingName) {
     return redirectMenuViewTo(settingsLocations[settingName] * controlWidth)
 }
 
@@ -49,9 +50,9 @@ for (let i = 0; i < menuNav.children.length; i++) {
     menuNav.children[i].addEventListener("click", () => {
         redirectMenuViewTo(i * controlWidth)
     })
-    if(bottomControls.children[i].children[1].dataset.type == "settings-menu"){
-      settingsLocations[bottomControls.children[i].children[1].dataset.settingsname] = i
-      menuNav.children[i].style.display = "none"
+    if (bottomControls.children[i].children[1].dataset.type == "settings-menu") {
+        settingsLocations[bottomControls.children[i].children[1].dataset.settingsname] = i
+        menuNav.children[i].style.display = "none"
     }
 }
 
@@ -96,56 +97,54 @@ function addCanvas(argRows, argCols) {
     paintZone.innerHTML = HTML
     for (let i = 0; i < paintCells.length; i++) {
         paintCells[i].addEventListener("click", function() {
-                
-                if (selectColorForFind.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem()[i])
-                    changeCellBorderColor(borderColor)
+            if (colorSelectionInProgress) {
+                let selectedColor = rgbToHex(buffer.getItem()[i])
+                changeCellBorderColor(borderColor)
+                if (colorCopierCheckboxes.selectColorForFind.checked) {
                     colorToBeReplacedSelector.value = selectedColor
-                    selectColorForFind.checked = false
-                } else if (colorSelectCheckbox.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem()[i])
-                    changeCellBorderColor(borderColor)
+                    colorCopierCheckboxes.selectColorForFind.checked = false
+                } else if (colorCopierCheckboxes.colorSelectCheckbox.checked) {
                     setCurrentColor(selectedColor)
-                    colorSelectCheckbox.checked = false
-                } else if(selectColorForReplacer.checked) {
-                    let selectedColor = rgbToHex(buffer.getItem()[i])
-                    changeCellBorderColor(borderColor)
+                    colorCopierCheckboxes.colorSelectCheckbox.checked = false
+                } else if (colorCopierCheckboxes.selectColorForReplacer.checked) {
                     colorToReplaceWithSelector.value = selectedColor
-                    selectColorForReplacer.checked = false
-                } else if(rowsPainter.checked){
-                    let rowToPaint = Math.floor( i/rows);
-                    let newData = squareArray(buffer.getItem().slice())
-                    let rowArray = []
-                    for (let i = 0; i < rows; i++) rowArray.push(getCurrentSelectedColor())
-                    newData[rowToPaint] = rowArray
-                    applyPaintData(newData.flat())
-                    recordPaintData()
-                } else if(colsPainter.checked){
-                    let colToPaint  = i % cols
-                    let newData = squareArray(buffer.getItem().slice())
-                    for (let i = 0; i < newData.length; i++) newData[i][colToPaint] = getCurrentSelectedColor()
-                    applyPaintData(newData.flat())
-                    recordPaintData()
-                } else if(copyColorFromCellCheckbox.checked){
-                     let selectedColor = rgbToHex(buffer.getItem()[i])
-                     copyTextToClipboard(selectedColor);
-                     copiedColorShower.textContent = `If Color Wasn't Copied, Copy Manually: ${selectedColor}`
-                     changeCellBorderColor(borderColor)
-                     copyColorFromCellCheckbox.checked = false
-                } else{
-                    this.style.background = getCurrentSelectedColor()
-                    recordPaintData()
+                    colorCopierCheckboxes.selectColorForReplacer.checked = false
+                } else if (colorCopierCheckboxes.copyColorFromCellCheckbox.checked) {
+                    copyTextToClipboard(selectedColor);
+                    copiedColorShower.textContent = `If Color Wasn't Copied, Copy Manually: ${selectedColor}`
+                    colorCopierCheckboxes.copyColorFromCellCheckbox.checked = false
                 }
-            
+                recordPaintData()
+                colorSelectionInProgress = false
+            } else if (clickModeSelector.value == "row") {
+                let rowToPaint = Math.floor(i / rows);
+                let newData = squareArray(buffer.getItem().slice())
+                let rowArray = []
+                for (let i = 0; i < rows; i++) rowArray.push(getCurrentSelectedColor())
+                newData[rowToPaint] = rowArray
+                applyPaintData(newData.flat())
+                recordPaintData()
+            } else if (clickModeSelector.value == "col") {
+                let colToPaint = i % cols
+                let newData = squareArray(buffer.getItem().slice())
+                for (let i = 0; i < newData.length; i++) newData[i][colToPaint] = getCurrentSelectedColor()
+                applyPaintData(newData.flat())
+                recordPaintData()
+            }
+            else {
+                this.style.background = getCurrentSelectedColor()
+                recordPaintData()
+            }
+
 
         })
         paintCells[i].style.borderColor = borderColor
     }
     recordPaintData()
-    
+
 }
 
-addCanvas(10,10)
+addCanvas(10, 10)
 
 
 
@@ -159,18 +158,18 @@ colorSelector.addEventListener("input", function() {
     setCurrentColor(this.value)
 })
 
-function getPaletteHTML(color){
+function getPaletteHTML(color) {
     return `<div style="background:${color}" onclick="setCurrentColor('${color}')" class="pallate-color"></div>`
 }
 
-function setCurrentColor(color){
+function setCurrentColor(color) {
     currentSelectedColor = color
     colorSelector.value = color
-    if(!usedColors.includes(color.toLowerCase())){
+    if (!usedColors.includes(color.toLowerCase())) {
         pallateContainer.innerHTML += getPaletteHTML(color)
         usedColors.push(color)
     }
-    
+
 }
 
 
@@ -289,44 +288,24 @@ redo.addEventListener("click", () => {
 })
 
 
+// Color Copier Manager
+let colorSelectionInProgress = false
+for (let colorCopierCheckbox in colorCopierCheckboxes) {
+    colorCopierCheckboxes[colorCopierCheckbox].addEventListener("input", function() {
+        if (!this.checked) {
+            changeCellBorderColor(borderColor)
+            colorSelectionInProgress = false
+            return
+        }
+        colorSelectionInProgress = true
+        for (let colorCopierCheckbox in colorCopierCheckboxes) colorCopierCheckboxes[colorCopierCheckbox].checked = false
+        this.checked = true
+        changeCellBorderColor("red")
+    })
+}
 
 
-
-
-colorSelectCheckbox.addEventListener("input", function() {
-    if (this.checked) changeCellBorderColor("red")
-    else changeCellBorderColor(borderColor)
-    selectColorForFind.checked = false
-    selectColorForReplacer.checked = false
-    copyColorFromCellCheckbox.checked = false
-})
-
-selectColorForReplacer.addEventListener("input", function() {
-    if (this.checked) changeCellBorderColor("red")
-    else changeCellBorderColor(borderColor)
-    selectColorForFind.checked = false
-    colorSelectCheckbox.checked = false
-    copyColorFromCellCheckbox.checked = false
-})
-
-selectColorForFind.addEventListener("input", function() {
-    if (this.checked) changeCellBorderColor("red")
-    else changeCellBorderColor(borderColor)
-    colorSelectCheckbox.checked = false
-    selectColorForReplacer.checked = false
-    copyColorFromCellCheckbox.checked = false
-})
-
-copyColorFromCellCheckbox.addEventListener("input", function() {
-    if (this.checked) changeCellBorderColor("red")
-    else changeCellBorderColor(borderColor)
-    selectColorForFind.checked = false
-    colorSelectCheckbox.checked = false
-    selectColorForReplacer.checked = false
-})
-
-
-
+// END
 eraseButton.addEventListener("click", function() {
     if (this.value == 'Select Eraser') {
         this.value = 'Unselect Eraser'
@@ -380,18 +359,18 @@ guideCheckbox.addEventListener("input", function() {
 
 function addGuides() {
     let cols = Math.round(canvas.width / cellWidth)
-    if (cols % 2 == 1){
+    if (cols % 2 == 1) {
         let paintCells2d = []
-        for(let i = 0; i < paintCells.length; i++)
+        for (let i = 0; i < paintCells.length; i++)
             paintCells2d.push(paintCells[i])
         paintCells2d = squareArray(paintCells2d)
-        for(let i = 0; i < paintCells2d.length; i++){
-            let middleElementIndex = (paintCells2d[i].length-1)/2
+        for (let i = 0; i < paintCells2d.length; i++) {
+            let middleElementIndex = (paintCells2d[i].length - 1) / 2
             paintCells2d[i][middleElementIndex].style.borderRight = `1px dashed ${borderColor}`
             paintCells2d[i][middleElementIndex].style.borderLeft = `1px dashed ${borderColor}`
         }
-        let middlePaintCellsArray = paintCells2d[(paintCells2d.length-1)/2]
-        for(let i = 0; i < middlePaintCellsArray.length; i++){
+        let middlePaintCellsArray = paintCells2d[(paintCells2d.length - 1) / 2]
+        for (let i = 0; i < middlePaintCellsArray.length; i++) {
             middlePaintCellsArray[i].style.borderTop = `1px dashed ${borderColor}`
             middlePaintCellsArray[i].style.borderBottom = `1px dashed ${borderColor}`
         }
@@ -571,41 +550,66 @@ document.getElementById("rotate-anticlockwise-button").addEventListener("click",
 })
 
 
-
-colsPainter.addEventListener("input", () => {
-    rowsPainter.checked = false
-})
-
-rowsPainter.addEventListener("input", () => {
-    colsPainter.checked = false
-})
-
-
 let currentCell;
 
+let startingCoords = {}
+paintZone.addEventListener('touchstart', (event) => {
+    if (["none", "stroke"].includes(paintModeSelector.value) ) return
+    const { targetTouches } = event;
+    const touch = targetTouches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+    const currentCellIndex = Array.from(paintCells).indexOf(document.elementFromPoint(x, y))
+    startingCoords.gridX = Math.floor(currentCellIndex / cols);
+    startingCoords.gridY = currentCellIndex % cols
+    startingCoords.x = x
+    startingCoords.y = y
+})
+
+
 paintZone.addEventListener('touchmove', (event) => {
-  if(!paintMode.checked) return
-  const { targetTouches } = event;
-  const touch = targetTouches[0];
-  const x = touch.clientX;
-  const y = touch.clientY;
-  currentCell = document.elementFromPoint(x, y);
-  if (currentCell.classList[0] != "cell") return
-  currentCell.style.background = getCurrentSelectedColor()
-  event.preventDefault()
+    if (paintModeSelector.value == "none") return
+    const { targetTouches } = event;
+    const touch = targetTouches[0];
+    const x = touch.clientX
+    const y = touch.clientY
+    if (["circle", "filled-circle"].includes(paintModeSelector.value)) {
+        let paintCells2d = []
+        for (let i = 0; i < paintCells.length; i++) {
+            paintCells[i].style.background = buffer.getItem()[i]
+            paintCells2d.push(paintCells[i])
+        }
+        paintCells2d = squareArray(paintCells2d)
+        event.preventDefault()
+        const cw = 350 / cols
+        const radius = Math.ceil(Math.abs(startingCoords.x - x) / cw)
+        if (paintModeSelector.value == "circle")
+            drawCircle(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d, false)
+        else{
+            drawCircle(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d, true)
+        }
+        return
+    } 
+    
+    // Stroke 
+    event.preventDefault()
+    currentCell = document.elementFromPoint(x, y);
+    if (currentCell.classList[0] != "cell") return
+    currentCell.style.background = getCurrentSelectedColor()
 });
 
 paintZone.addEventListener('touchend', (event) => {
-    if(!paintMode.checked) return
-    recordPaintData()
+    if (paintModeSelector.value != "none") recordPaintData()
 })
 
+
+
 // Pallette 
-document.getElementById("extract-pallette").addEventListener("click", ()=>{
+document.getElementById("extract-pallette").addEventListener("click", () => {
     let currentUniquePaintData = [...new Set(buffer.getItem())]
     for (let i = 0; i < currentUniquePaintData.length; i++) {
         let currentColor = rgbToHex(currentUniquePaintData[i].toLowerCase())
-        if(!usedColors.includes(currentColor)){
+        if (!usedColors.includes(currentColor)) {
             pallateContainer.innerHTML += getPaletteHTML(currentColor)
             usedColors.push(currentColor)
         }
@@ -650,11 +654,14 @@ document.getElementById("export-cell-border-selector-hex").addEventListener("inp
 
 // drawing result shower
 
-document.getElementById("refresh-drawing-checker").addEventListener("click", ()=>{
-    let img = new Image(200,200)
+document.getElementById("refresh-drawing-checker").addEventListener("click", () => {
+    let img = new Image(200, 200)
     paintDataOnCanvas(ctx, canvas, buffer.getItem(), cellBorderWidthSlider.value, cellBorderColorSelector.value, rows, cols)
     img.src = canvas.toDataURL()
     img.style.border = "1px solid var(--secondary)"
     drawingCheckerSection.removeChild(drawingCheckerSection.lastChild)
     drawingCheckerSection.appendChild(img)
 })
+
+
+// paint modes
