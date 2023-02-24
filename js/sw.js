@@ -2,15 +2,34 @@ self.addEventListener('install', e => {
     e.waitUntil(
         caches.open('static').then(cache => {
             return cache.addAll([
-                "./",
-                "images/favicon.png",
+                "../",
+                "../favicon.png",
+                "../logo.png",
+                "../mascot.png",
+                "../favicon.ico",
                 "main.js",
-                "style.css",
-                "manifest.json",
-                "index.html",
+                "../style.css",
+                "../manifest.json",
+                "../index.html",
                 "sw.js",
                 "stack.js",
+                "utils.js",
+                "declarations.js",
+                "settings-pre.js",
+                "stack.js",
+                "shapes.js",
+                "main.js",
+                "settings.js",
+                "filters.js",
+                "raw-data-handler.js",
+                "browser-variation-support.js",
+                "themes.js",
+                "shortcuts.js",
+                "../icons/delete.svg",
+                "../icons/download.svg",
+                "../icons/play.svg",
                 ""
+
                 ])
         })
     )
