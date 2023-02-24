@@ -8,6 +8,7 @@
 - Reorganised Some UI
 - Added Contact Information
 - Added APK
+- later +++ updated service worker
 
 
 ### 6.5.n
