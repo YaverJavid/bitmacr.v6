@@ -56,3 +56,5 @@ const colorCopierCheckboxes = {
     selectColorForReplacer: document.getElementById("select-color-for-replacer"),
     copyColorFromCellCheckbox: document.getElementById("copy-color-from-cell-checkbox")
 }
+
+const bottomControlsContainer = document.getElementById("bottom-control-container")

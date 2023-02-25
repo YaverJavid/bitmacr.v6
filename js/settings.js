@@ -47,3 +47,23 @@ document.getElementById("hide-default-pallette-checkbox").addEventListener("inpu
     changeDefaultPalletteVisibility("initial")
     localStorage.setItem("pixmacr_hide_default_pallette", "0")
 })
+
+
+if(!localStorage.getItem("pixmacr_animate_menu")){
+   localStorage.setItem("pixmacr_animate_menu", "1")
+}
+
+if(localStorage.getItem("pixmacr_animate_menu") == "0"){
+    bottomControlsContainer.style.scrollBehavior = "auto"
+    document.getElementById("animate-menu-checkbox").checked = false
+}
+
+document.getElementById("animate-menu-checkbox").addEventListener("input",function(){
+    if(!this.checked){
+        localStorage.setItem("pixmacr_animate_menu", "0")
+        bottomControlsContainer.style.scrollBehavior = "auto"
+    }else{
+        localStorage.setItem("pixmacr_animate_menu", "1")
+        bottomControlsContainer.style.scrollBehavior = "smooth"
+    }
+})
