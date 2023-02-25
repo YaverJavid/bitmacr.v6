@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -13,7 +14,7 @@
 </head>
 
 <body>
-    <img  src="logo.png" alt="Logo" width="150" id="top-image">
+    <img src="logo.png" alt="Logo" width="150" id="top-image">
     <div class="controls" id="top-control-container">
         <input type="button" id="undo" value="Undo">
         <input type="button" id="export-button" value="Save (png)">
@@ -33,7 +34,7 @@
                 Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
                 <label for="select-color">Select Color From Cell : </label>
-                <input type="checkbox"  name="select-color" id="select-color">
+                <input type="checkbox" name="select-color" id="select-color">
                 <br>
                 <input type="button" id="clear-button" value="Clear All">
                 <input type="button" id="erase-selector-button" value="Select Eraser">
@@ -64,7 +65,7 @@
                     <option value="col">Coloumn</option>
                 </select>
                 <br>
-                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label> 
+                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
                 <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
                 <span id="copied-color-shower"></span>
             </div>
@@ -231,17 +232,18 @@
                 <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
                 <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
                 <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
-                <input type="checkbox" id="hide-default-pallette-checkbox">
-                <br>
-                <span>Version : 6.6.0</span> <br>
-                <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a>
+                <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
+                <label for="animate-menu-checkbox">Animate Menu: </label>
+                <input type="checkbox" id="animate-menu-checkbox"> <br>
+                <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
+                <span>Version : 6.6.0</span>
             </div>
             <div id="drawing-checker-section">
                 <br>
                 <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
                 <br>
                 <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
-                <img  width="0" height="0">
+                <img width="0" height="0">
             </div>
         </div>
     </div>
@@ -259,5 +261,6 @@
     <script src="js/browser-variation-support.js"></script>
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
-</body> 
+</body>
+
 </html>
