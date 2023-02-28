@@ -76,7 +76,7 @@ paintZone.addEventListener('touchmove', (event) => {
     const touch = targetTouches[0];
     const x = touch.clientX
     const y = touch.clientY
-    if (["circle", "filled-circle", "sphere", "rect", "rect-filled"].includes(paintModeSelector.value)) {
+    if (["circle", "circle-filled", "sphere", "rect", "rect-filled"].includes(paintModeSelector.value)) {
         let paintCells2d = []
         for (let i = 0; i < paintCells.length; i++) {
             paintCells[i].style.background = buffer.getItem()[i]
