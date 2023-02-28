@@ -1,7 +1,14 @@
-> THIS IS VERSION : ```6.6```
+> THIS IS VERSION : ```7.0```
 
 
 ## Version History
+### 7.0.n
+- Added rectangle, filled rectangle, sphere shape support.
+- Added setting for changing background with a random image & also a button to change it in ```settings/general```
+- Few more changes
+- Updated some structure 
+- Fixed bugs about paint mode shortcut.
+
 ### 6.6.n
 - Added Support For Shapes
 - Fixed Bugs
@@ -9,7 +16,7 @@
 - Added Contact Information
 - Added APK
 - 6.6.6 updated service worker
-- 6.6.7 added a way to toggle menu animation in settings/General 
+- 6.6.7 added a way to toggle menu animation in ```settings/General```
 
 
 ### 6.5.n
