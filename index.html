@@ -46,7 +46,7 @@
                 <input type="button" id="flipv-button" value="Flip Vertically">
                 <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
                 <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise">
-
+                
             </div>
             <div>
                 <br>
@@ -57,6 +57,9 @@
                     <option value="circle">Circle</option>
                     <option value="filled-circle">Circle (Filled)</option>
                     <option value="stroke">Stroke</option>
+                    <option value="sphere">Sphere</option>
+                    <option value="rect">Rectangle</option>
+                    <option value="rect-filled">Rectangle (Filled)</option>
                 </select> <br>
                 <label for="paintModeSelector">Onclick Fill : </label>
                 <select id="click-mode-selector">
@@ -74,15 +77,6 @@
                 <h3 data-shortcutkey="p">Color Palette</h3> <br>
                 <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
                 <div id="pallate-container">
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#F44336')" style="background:#F44336"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FFC107')" style="background:#FFC107"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#9C27B0')" style="background:#9C27B0"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#4CAF50')" style="background:#4CAF50"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#2196F3')" style="background:#2196F3"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FF5722')" style="background:#FF5722"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#607D8B')" style="background:#607D8B"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#673AB7')" style="background:#673AB7"></div>
-                    <div class="pallate-color default-pallette" onclick="setCurrentColor('#FFEB3B')" style="background:#FFEB3B"></div>
                 </div>
 
             </div>
@@ -144,7 +138,7 @@
             </div>
             <div>
                 <br>
-                <h3 data-shortcutkey="o">Filters</h3>
+                <h3 data-shortcutkey="o">Filters</h3> <br>
                 <br> <input type="button" value="Invert" id="filter-invert"> <br>
                 <input type="button" value="Sepia" id="filter-sepia">
                 <input type="button" value="Grayscale" id="filter-grayscale">
@@ -173,10 +167,10 @@
             <div>
                 <br>
                 <h3 data-shortcutkey="g">Guide Options</h3> <br>
-                <label for="guide-checkbox">Quadrant Guides:</label>
+                <label for="guide-checkbox">Quadrant Guides: </label>
                 <input type="checkbox" name="guide-checkbox" id="guide-checkbox">
                 <br>
-                <label for="border-checkbox">Guide Cell Border:</label>
+                <label for="border-checkbox">Guide Cell Border: </label>
                 <input type="checkbox" name="border-checkbox" id="border-checkbox" checked>
                 <br>
                 <label for="guide-cell-border-color">Guide Cell Border Color: </label> <br>
@@ -194,39 +188,31 @@
                 <input type="color" id="cell-border-color-selector">
                 Or <input class="hex-input" type="text" id="export-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
                 <br>
+                <label for="cell-border-on-transparent-cells-checkbox">Cell Border Also On Transparent Cells: </label>
+                <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
+                <br>
                 <label for="watermark-checkbox">Watermark:</label>
                 <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
                 <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
                 <input type="button" id="export-button2" value="Export">
             </div>
-            <div>
+            <div id="themes-section">
                 <br>
                 <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
-                <input type="button" data-accent="#1a1b1d" data-secondary="#ffffff" value="Dark Theme" class="theme-selector">
-                <input type="button" data-secondary="#1a1b1d" data-accent="#ffffff" value="Light Theme" class="theme-selector">
-                <input type="button" data-accent="#5858F9" data-secondary="#ffffff" value="Bluey" class="theme-selector">
-                <input type="button" data-accent="#1a1b1d" data-secondary="#32CD32" value="Dark Lime" class="theme-selector">
-                <input type="button" data-accent="#2E86C1" data-secondary="#F5B041" value="Blue Gold" class="theme-selector">
-                <input type="button" data-accent="#E74C3C" data-secondary="#F9E79F" value="Red Yellow" class="theme-selector">
-                <input type="button" data-accent="#8E44AD" data-secondary="#F1C40F" value="Purple Yellow" class="theme-selector">
-                <input type="button" data-accent="#1ABC9C" data-secondary="white" value="Turquoise Whité" class="theme-selector">
-                <input type="button" data-accent="#3498DB" data-secondary="#F5CBA7" value="Blue Peach" class="theme-selector">
-                <input type="button" data-accent="#27AE60" data-secondary="#FFC300" value="Green Yellow" class="theme-selector">
-                <input type="button" data-accent="#D35400" data-secondary="#F0E68C" value="Orange Khaki" class="theme-selector">
-                <input type="button" data-accent="#2C3E50" data-secondary="#FAD7A0" value="Navy Peach" class="theme-selector">
-                <input type="button" data-secondary="#ffffff" data-accent="#2C3E50" value="Navy White" class="theme-selector">
                 <br>
                 <input type="button" value="Invert Theme" id="invert-theme"> <br>
             </div>
             <div>
                 <br>
-                <h3 data-shortcutkey="z">Settings</h3>
+                <h3 data-shortcutkey="z">Settings</h3> <br>
                 <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
                 <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input>
+                <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
+                <span>Version : 7.0</span>
             </div>
             <div>
                 <br>
-                <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3>
+                <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3> <br>
                 <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
                 <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
                 <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
@@ -234,9 +220,10 @@
                 <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
                 <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
                 <label for="animate-menu-checkbox">Animate Menu: </label>
-                <input type="checkbox" id="animate-menu-checkbox" checked> <br>
-                <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
-                <span>Version : 6.6</span>
+                <input type="checkbox" id="animate-menu-checkbox"> <br>
+                <label for="add-image-background-checkbox">Use Image Background: </label>
+                <input type="checkbox" id="add-image-background-checkbox"> <br>
+                <input type="button" value="Change Background Image" id="change-background-image">
             </div>
             <div id="drawing-checker-section">
                 <br>
@@ -249,7 +236,9 @@
     </div>
     <canvas id="canvas"></canvas>
     <br>
+
     <script src="js/utils.js"></script>
+    <script src="js/lib.local-storage-tools.js"></script>
     <script src="js/declarations.js"></script>
     <script src="js/settings-pre.js"></script>
     <script src="js/stack.js"></script>
