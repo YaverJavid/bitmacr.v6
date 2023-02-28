@@ -28,7 +28,8 @@ self.addEventListener('install', e => {
                 "../icons/delete.svg",
                 "../icons/download.svg",
                 "../icons/play.svg",
-                ""
+                "",
+                "lib.local-storage-tools.js"
 
                 ])
         })

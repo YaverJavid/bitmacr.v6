@@ -15,8 +15,9 @@ if (ios) {
         for (var i = 0; i < topControlContainerChildren.length; i++) {
             topControlContainerChildren[i].style.fontSize = "1.3rem"
         }
-        
+
     } else {
         // Chrome
     }
 };
+

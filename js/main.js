@@ -16,13 +16,11 @@ let prevSelectedColor
 let buffer = new Stack()
 let borderColor = getSecondaryColor().slice(1)
 let cellBorderWidth = 1
-let usedColors = []
+// hex should be lowercase
+var defaultPalletteColors = ["#f44336", "#ffc107", "#9c27b0", "#4caf50", "#2196f3", "#ff5722", "#607d8b", "#673ab7", "#ffeb3b"]
+let usedColors = defaultPalletteColors
 let settingsLocations = []
 let pallateColors = document.getElementsByClassName("pallate-color")
-for (var i = 0; i < pallateColors.length; i++) {
-    usedColors.push(rgbToHex(getComputedStyle(pallateColors[i]).getPropertyValue('background-color')).toLowerCase())
-}
-
 let currentSelectedColor = undefined
 setCurrentColor("#162829")
 let chooseColorRandomly = false
@@ -156,11 +154,10 @@ colorSelector.addEventListener("input", function() {
         eraseButton.value = 'Select Eraser'
     }
     setCurrentColor(this.value)
+
 })
 
-function getPaletteHTML(color) {
-    return `<div style="background:${color}" onclick="setCurrentColor('${color}')" class="pallate-color"></div>`
-}
+
 
 function setCurrentColor(color) {
     currentSelectedColor = color
@@ -169,7 +166,7 @@ function setCurrentColor(color) {
         pallateContainer.innerHTML += getPaletteHTML(color)
         usedColors.push(color)
     }
-
+    removePalletteSelectionHint()
 }
 
 
@@ -207,7 +204,6 @@ function paintDataOnCanvas(ctx, canvas, colorData, borderWidth, borderColor, row
     let currentY = 0
     let currentX = 0
     let cellWidth = canvas.height / cols
-    // let cellHeight
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.lineWidth = cellBorderWidthSlider.value
     if (cellBorderWidthSlider.value == 0) {
@@ -226,7 +222,7 @@ function paintDataOnCanvas(ctx, canvas, colorData, borderWidth, borderColor, row
     } else {
         for (let i = 0; i < colorData.length; i++) {
             let currentCellColor = colorData[i]
-            if (currentCellColor != "rgba(0, 0, 0, 0)")
+            if (currentCellColor != "rgba(0, 0, 0, 0)" || cellBorderOnTransparentCellsCheckbox.checked)
                 drawRectangle(ctx, currentX, currentY, cellWidth, cellWidth, borderColor, currentCellColor, borderWidth)
             currentX += cellWidth
             if (Math.round(currentX) == Math.round(canvas.width)) {
@@ -549,62 +545,13 @@ document.getElementById("rotate-anticlockwise-button").addEventListener("click",
     recordPaintData()
 })
 
-
-let currentCell;
-
-let startingCoords = {}
-paintZone.addEventListener('touchstart', (event) => {
-    if (["none", "stroke"].includes(paintModeSelector.value) ) return
-    const { targetTouches } = event;
-    const touch = targetTouches[0];
-    const x = touch.clientX;
-    const y = touch.clientY;
-    const currentCellIndex = Array.from(paintCells).indexOf(document.elementFromPoint(x, y))
-    startingCoords.gridX = Math.floor(currentCellIndex / cols);
-    startingCoords.gridY = currentCellIndex % cols
-    startingCoords.x = x
-    startingCoords.y = y
-})
-
-
-paintZone.addEventListener('touchmove', (event) => {
-    if (paintModeSelector.value == "none") return
-    const { targetTouches } = event;
-    const touch = targetTouches[0];
-    const x = touch.clientX
-    const y = touch.clientY
-    if (["circle", "filled-circle"].includes(paintModeSelector.value)) {
-        let paintCells2d = []
-        for (let i = 0; i < paintCells.length; i++) {
-            paintCells[i].style.background = buffer.getItem()[i]
-            paintCells2d.push(paintCells[i])
-        }
-        paintCells2d = squareArray(paintCells2d)
-        event.preventDefault()
-        const cw = 350 / cols
-        const radius = Math.ceil(Math.abs(startingCoords.x - x) / cw)
-        if (paintModeSelector.value == "circle")
-            drawCircle(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d, false)
-        else{
-            drawCircle(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d, true)
-        }
-        return
-    } 
-    
-    // Stroke 
-    event.preventDefault()
-    currentCell = document.elementFromPoint(x, y);
-    if (currentCell.classList[0] != "cell") return
-    currentCell.style.background = getCurrentSelectedColor()
-});
-
-paintZone.addEventListener('touchend', (event) => {
-    if (paintModeSelector.value != "none") recordPaintData()
-})
-
-
-
 // Pallette 
+
+function getPaletteHTML(color, defaultPallette = false) {
+    let classString = defaultPallette ? "default-pallette" : ""
+    return `<div style="background:${color}" onclick="selectPalletteColor(this, '${color}')" class="${classString} pallate-color"></div>`
+}
+
 document.getElementById("extract-pallette").addEventListener("click", () => {
     let currentUniquePaintData = [...new Set(buffer.getItem())]
     for (let i = 0; i < currentUniquePaintData.length; i++) {
@@ -616,6 +563,21 @@ document.getElementById("extract-pallette").addEventListener("click", () => {
     }
 })
 
+function selectPalletteColor(palletteElem, color) {
+    setCurrentColor(color)
+    palletteElem.style.borderTopWidth = "5px"
+}
+
+function removePalletteSelectionHint() {
+    for (let i = 0; i < pallateColors.length; i++) {
+        pallateColors[i].style.borderTopWidth = "1px"
+    }
+}
+
+
+for (let i = 0; i < defaultPalletteColors.length; i++) {
+    pallateContainer.innerHTML += getPaletteHTML(defaultPalletteColors[i], true)
+}
 
 // input text color hex ...
 document.getElementById("color-selector-hex").addEventListener("input", function() {

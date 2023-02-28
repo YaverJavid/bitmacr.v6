@@ -58,3 +58,6 @@ const colorCopierCheckboxes = {
 }
 
 const bottomControlsContainer = document.getElementById("bottom-control-container")
+
+const cellBorderOnTransparentCellsCheckbox = document.getElementById("cell-border-on-transparent-cells-checkbox")
+const themesSection = document.getElementById("themes-section")

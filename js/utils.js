@@ -187,3 +187,20 @@ function distance2d(x1, y1, x2, y2) {
   const dy = y2 - y1;
   return Math.sqrt(dx*dx + dy*dy);
 }
+
+
+
+function brightenHexColor(hexColor, threshold) {
+  let red = parseInt(hexColor.slice(1,3), 16);
+  let green = parseInt(hexColor.slice(3,5), 16);
+  let blue = parseInt(hexColor.slice(5,7), 16);
+  let brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+  let newRed = Math.round((red + (255 - red) * threshold));
+  let newGreen = Math.round((green + (255 - green) * threshold));
+  let newBlue = Math.round((blue + (255 - blue) * threshold));
+  newRed = Math.min(newRed, 255);
+  newGreen = Math.min(newGreen, 255);
+  newBlue = Math.min(newBlue, 255);
+  let newHexColor = "#" + ((newRed << 16) | (newGreen << 8) | newBlue).toString(16).padStart(6, '0');
+  return newHexColor;
+}
