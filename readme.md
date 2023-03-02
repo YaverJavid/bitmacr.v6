@@ -14,6 +14,8 @@
 - * Fixed Bugs
 - * Updated Icon
 - * Updated Apk
+- * Added link to download app
+- * updated service worker
 
 
 ### 6.6.n
