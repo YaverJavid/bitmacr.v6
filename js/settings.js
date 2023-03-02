@@ -63,8 +63,9 @@ let imageTracker = 0
 
 function getImageURL(increment=true) {
     if(increment) imageTracker++
-    return `url("https://source.unsplash.com/random/200x200?sig=${imageTracker}")`
+    return `url("https://source.unsplash.com/random/?Wallpaper&${imageTracker}")`
 }
+
 
 setUpLocalStorageBucket("pixmacr_background_image", "0")
 
