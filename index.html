@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#1a1b1d">
     <title>Pixmacr - A pixel art maker by Zanoor & Yaver</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
 </head>
 
 <body>
@@ -21,216 +21,223 @@
         <input type="button" id="redo" value="Redo">
     </div>
     <div id="paint-zone"></div>
-    <div id="menu-nav">
+    <div id="info">
+        <span id="line-info-shower">row:0,col:0</span>
+        <span id="paint-mode-info-shower">,paint-mode:none,</span>
+        <nobr>color-mode:</nobr><span id="color-mode-shower">none</span>
     </div>
-    <div id="controls-container">
-        <div class="controls" id="bottom-control-container">
-            <div>
-                <br>
-                <h3 data-shortcutkey="s">General</h3>
-                <br>
-                <label for="color-selector">Select Color : </label>
-                <input value="#FF0000" type="color" name="color-selector" id="color-selector">
-                Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
-                <br>
-                <label for="select-color">Select Color From Cell : </label>
-                <input type="checkbox" name="select-color" id="select-color">
-                <br>
-                <input type="button" id="clear-button" value="Clear All">
-                <input type="button" id="erase-selector-button" value="Select Eraser">
-                <input type="button" id="fill-all-button" value="Fill All"> <br>
-                <label for="cell-slider">Canvas Size : </label>
-                <input type="range" name="cell-slider" id="cells-slider" min='1' max='75' value='10'>
-                <span id="canvas-size-shower">(10)</span><br>
-                <input type="button" id="fliph-button" value="Flip Horizontally">
-                <input type="button" id="flipv-button" value="Flip Vertically">
-                <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
-                <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise">
-                
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="t">Basic Tools</h3> <br>
-                <label for="paint-mode-selector">Select Paint Mode : </label>
-                <select id="paint-mode-selector">
-                    <option value="none">None</option>
-                    <option value="circle">Circle</option>
-                    <option value="circle-filled">Circle (Filled)</option>
-                    <option value="stroke">Stroke</option>
-                    <option value="sphere">Sphere</option>
-                    <option value="rect">Rectangle</option>
-                    <option value="rect-filled">Rectangle (Filled)</option>
-                </select> <br>
-                <label for="paintModeSelector">Onclick Fill : </label>
-                <select id="click-mode-selector">
-                    <option value="default">Cell</option>
-                    <option value="row">Row</option>
-                    <option value="col">Coloumn</option>
-                </select>
-                <br>
-                <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
-                <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
-                <span id="copied-color-shower"></span>
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="p">Color Palette</h3> <br>
-                <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
-                <div id="pallate-container">
+    <div>
+        <div id="menu-nav">
+        </div>
+        <div id="controls-container">
+            <div class="controls" id="bottom-control-container">
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="s">General</h3>
+                    <br>
+                    <label for="color-selector">Select Color : </label>
+                    <input value="#FF0000" type="color" name="color-selector" id="color-selector">
+                    Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
+                    <br>
+                    <label for="select-color">Select Color From Cell : </label>
+                    <input type="checkbox" name="select-color" id="select-color">
+                    <br>
+                    <input type="button" id="clear-button" value="Clear All">
+                    <input type="button" id="erase-selector-button" value="Select Eraser">
+                    <input type="button" id="fill-all-button" value="Fill All">
+                    <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
+                    <br>
+                    <label for="cell-slider">Canvas Size : </label>
+                    <input type="range" name="cell-slider" id="cells-slider" min='1' max='75' value='10'>
+                    <span id="canvas-size-shower">(10)</span><br>
+                    <input type="button" id="fliph-button" value="Flip Horizontally">
+                    <input type="button" id="flipv-button" value="Flip Vertically">
+                    <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
+                    <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise">
                 </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="t">Basic Tools</h3> <br>
+                    <label for="paint-mode-selector">Select Paint Mode : </label>
+                    <select id="paint-mode-selector">
+                        <option value="none">None</option>
+                        <option value="circle">Circle</option>
+                        <option value="circle-filled">Circle (Filled)</option>
+                        <option value="stroke">Stroke</option>
+                        <option value="sphere">Sphere</option>
+                        <option value="rect">Rectangle</option>
+                        <option value="rect-filled">Rectangle (Filled)</option>
+                    </select> <br>
+                    <label for="color-mode-selector">Color Mode : </label>
+                    <select id="color-mode-selector">
+                        <option value="normal">Normal</option>
+                        <option value="random">Random</option>
+                        <option value="hue">Hue</option>
+                        <option value="eraser">Eraser</option>
+                    </select> <br>
+                    <label for="paintModeSelector">Onclick Fill : </label>
+                    <select id="click-mode-selector">
+                        <option value="default">Cell</option>
+                        <option value="row">Row</option>
+                        <option value="col">Coloumn</option>
+                    </select>
+                    <br>
+                    <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
+                    <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
+                    <span id="copied-color-shower"></span>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="p">Color Palette</h3> <br>
+                    <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
+                    <div id="pallate-container">
+                    </div>
 
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="c">Copy Options</h3><br>
-                <label for="multiply-q-selector">Multiply From : </label>
-                <select name="multiply-q-selector" id="multiply-q-selector">
-                    <option value="1">Quadrant I</option>
-                    <option value="2">Quadrant II</option>
-                    <option value="3">Quadrant III</option>
-                    <option value="4">Quadrant IV</option>
-                </select> <br>
-                <details>
-                    <summary>
-                        Copy To : <span id="copy-targets-shower"></span>
-                    </summary>
+                </div>
+                <div>
                     <br>
-                    <input type="button" id="select-all-copy-targets" value="Select All">
+                    <h3 data-shortcutkey="c">Copy Options</h3><br>
+                    <label for="multiply-q-selector">Multiply From : </label>
+                    <select name="multiply-q-selector" id="multiply-q-selector">
+                        <option value="1">Quadrant I</option>
+                        <option value="2">Quadrant II</option>
+                        <option value="3">Quadrant III</option>
+                        <option value="4">Quadrant IV</option>
+                    </select> <br>
+                    <details>
+                        <summary>
+                            Copy To : <span id="copy-targets-shower"></span>
+                        </summary>
+                        <br>
+                        <input type="button" id="select-all-copy-targets" value="Select All">
+                        <br>
+                        <label for="q1-multiply-target-checkbox">Quadrant I</label>
+                        <input type="checkbox" id="q1-multiply-target-checkbox" checked>
+                        <br>
+                        <label for="q2-multiply-target-checkbox">Quadrant II</label>
+                        <input type="checkbox" id="q2-multiply-target-checkbox" checked>
+                        <br>
+                        <label for="q3-multiply-target-checkbox">Quadrant III</label>
+                        <input type="checkbox" id="q3-multiply-target-checkbox" checked>
+                        <br>
+                        <label for="q4-multiply-target-checkbox">Quadrant IV</label>
+                        <input type="checkbox" id="q4-multiply-target-checkbox" checked>
+                        <br>
+                    </details>
+                    <br> <input type="button" value="Multiply" id="multiply-q-button">
+                </div>
+                <div>
                     <br>
-                    <label for="q1-multiply-target-checkbox">Quadrant I</label>
-                    <input type="checkbox" id="q1-multiply-target-checkbox" checked>
+                    <h3>Raw Data</h3> <br>
+                    <input type="file" id="raw-data-fp" accept=".spad" value="F">
                     <br>
-                    <label for="q2-multiply-target-checkbox">Quadrant II</label>
-                    <input type="checkbox" id="q2-multiply-target-checkbox" checked>
+                    <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
                     <br>
-                    <label for="q3-multiply-target-checkbox">Quadrant III</label>
-                    <input type="checkbox" id="q3-multiply-target-checkbox" checked>
+                    <input type="button" value="Export Raw Data(spad)" id="export-raw-data">
                     <br>
-                    <label for="q4-multiply-target-checkbox">Quadrant IV</label>
-                    <input type="checkbox" id="q4-multiply-target-checkbox" checked>
+                    <input type="button" value="Save To Local-storage(Browser)" id="save-to-ls">
+                </div>
+                <div id="drawings-section">
                     <br>
-                </details>
-                <br> <input type="button" value="Multiply" id="multiply-q-button">
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="r">Random Tools</h3><br>
-                <input type="button" value="Select Random Color Mode" id="random-color-selector-button">
-                <br> <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
-                <br> <input type="button" value="Randomise Color Shift" id="shift-colors-button">
-
-            </div>
-
-            <div>
-                <br>
-                <h3>Raw Data</h3> <br>
-                <input type="file" id="raw-data-fp" accept=".spad" value="F">
-                <br>
-                <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
-                <br>
-                <input type="button" value="Export Raw Data(spad)" id="export-raw-data">
-                <br>
-                <input type="button" value="Save To Local-storage(Browser)" id="save-to-ls">
-            </div>
-            <div id="drawings-section">
-                <br>
-                <h3 data-shortcutkey="q">Saved Drawings</h3>
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="o">Filters</h3> <br>
-                <br> <input type="button" value="Invert" id="filter-invert"> <br>
-                <input type="button" value="Sepia" id="filter-sepia">
-                <input type="button" value="Grayscale" id="filter-grayscale">
-                <input type="button" value="Solorize" id="filter-solorize">
-                <input type="button" value="Duotone" id="filter-duotone">
-                <input type="button" value="Randomise Color Shift" id="shift-colors-button2">
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="f">Find & Replace Options</h3><br>
-                <label for="color-selector">Find : </label>
-                <input value="#FF0000" type="color" id="color-to-be-replaced-selector">
-                Or <input class="hex-input" type="text" id="color-to-be-replaced-selector-hex" placeholder="Enter Hex..." maxlength="7"> <br>
-                <label for="select-color-for-find">Select Color From Cell : </label>
-                <input type="checkbox" id="select-color-for-find"> <br>
-                <label for="color-selector">Replace With : </label>
-                <input value="#FF0000" type="color" id="color-to-replace-with-selector">
-                Or <input class="hex-input" type="text" id="color-to-replace-with-selector-hex" placeholder="Enter Hex..." maxlength="7">
-                <br> <label for="select-color-for-replacer">Select Color From Cell : </label>
-                <input type="checkbox" id="select-color-for-replacer"> <br>
-                <label for="color-match-threshold-range">Threshold : </label>
-                <input type="range" min="0" max="225" value="0" id="color-match-threshold-range">
-                <span id="threshold-shower">(0)</span>
-                <br> <input type="button" value="Replace" id="replace-button"> <br>
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="g">Guide Options</h3> <br>
-                <label for="guide-checkbox">Quadrant Guides: </label>
-                <input type="checkbox" name="guide-checkbox" id="guide-checkbox">
-                <br>
-                <label for="border-checkbox">Guide Cell Border: </label>
-                <input type="checkbox" name="border-checkbox" id="border-checkbox" checked>
-                <br>
-                <label for="guide-cell-border-color">Guide Cell Border Color: </label> <br>
-                <input type="color" id="guide-cell-border-color" value="#ffffff">
-                Or <input class="hex-input" type="text" id="guide-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="e">Export Options</h3><br>
-                <label for="cell-border-width-slider">Cell Border: </label>
-                <input type="range" name="cell-border-width-slider" id="cell-border-width-slider" min='0' max='15' value='0'>
-                <span id="cell-border-width-shower">(0)</span>
-                <br>
-                <label for="cell-border-color-selector">Cell Border Color: </label>
-                <input type="color" id="cell-border-color-selector">
-                Or <input class="hex-input" type="text" id="export-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
-                <br>
-                <label for="cell-border-on-transparent-cells-checkbox">Cell Border Also On Transparent Cells: </label>
-                <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
-                <br>
-                <label for="watermark-checkbox">Watermark:</label>
-                <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
-                <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
-                <input type="button" id="export-button2" value="Export">
-            </div>
-            <div id="themes-section">
-                <br>
-                <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
-                <br>
-                <input type="button" value="Invert Theme" id="invert-theme"> <br>
-            </div>
-            <div>
-                <br>
-                <h3 data-shortcutkey="z">Settings</h3> <br>
-                <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
-                <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input>
-                <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
-                <span>Version : 7.0</span>
-            </div>
-            <div>
-                <br>
-                <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3> <br>
-                <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
-                <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
-                <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
-                <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
-                <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
-                <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
-                <label for="animate-menu-checkbox">Animate Menu: </label>
-                <input type="checkbox" id="animate-menu-checkbox"> <br>
-                <label for="add-image-background-checkbox">Use Image Background: </label>
-                <input type="checkbox" id="add-image-background-checkbox"> <br>
-                <input type="button" value="Change Background Image" id="change-background-image">
-            </div>
-            <div id="drawing-checker-section">
-                <br>
-                <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
-                <br>
-                <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
-                <img width="0" height="0">
+                    <h3 data-shortcutkey="q">Saved Drawings</h3>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="o">Filters</h3> <br>
+                    <br> <input type="button" value="Invert" id="filter-invert"> <br>
+                    <input type="button" value="Sepia" id="filter-sepia">
+                    <input type="button" value="Grayscale" id="filter-grayscale">
+                    <input type="button" value="Solorize" id="filter-solorize">
+                    <input type="button" value="Duotone" id="filter-duotone">
+                    <input type="button" value="Randomise Color Shift" id="shift-colors-button2">
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="f">Find & Replace Options</h3><br>
+                    <label for="color-selector">Find : </label>
+                    <input value="#FF0000" type="color" id="color-to-be-replaced-selector">
+                    Or <input class="hex-input" type="text" id="color-to-be-replaced-selector-hex" placeholder="Enter Hex..." maxlength="7"> <br>
+                    <label for="select-color-for-find">Select Color From Cell : </label>
+                    <input type="checkbox" id="select-color-for-find"> <br>
+                    <label for="color-selector">Replace With : </label>
+                    <input value="#FF0000" type="color" id="color-to-replace-with-selector">
+                    Or <input class="hex-input" type="text" id="color-to-replace-with-selector-hex" placeholder="Enter Hex..." maxlength="7">
+                    <br> <label for="select-color-for-replacer">Select Color From Cell : </label>
+                    <input type="checkbox" id="select-color-for-replacer"> <br>
+                    <label for="color-match-threshold-range">Threshold : </label>
+                    <input type="range" min="0" max="225" value="0" id="color-match-threshold-range">
+                    <span id="threshold-shower">(0)</span>
+                    <br> <input type="button" value="Replace" id="replace-button"> <br>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="g">Guide Options</h3> <br>
+                    <label for="guide-checkbox">Quadrant Guides: </label>
+                    <input type="checkbox" name="guide-checkbox" id="guide-checkbox">
+                    <br>
+                    <label for="border-checkbox">Show Cell Border: </label>
+                    <input type="checkbox" name="border-checkbox" id="border-checkbox" checked>
+                    <br>
+                    <label for="guide-cell-border-color">Cell Border Color: </label>
+                    <input type="color" id="guide-cell-border-color" value="#ffffff">
+                    Or <input class="hex-input" type="text" id="guide-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="e">Export Options</h3><br>
+                    <label for="cell-border-width-slider">Cell Border: </label>
+                    <input type="range" name="cell-border-width-slider" id="cell-border-width-slider" min='0' max='15' value='0'>
+                    <span id="cell-border-width-shower">(0)</span>
+                    <br>
+                    <label for="cell-border-color-selector">Cell Border Color: </label>
+                    <input type="color" id="cell-border-color-selector">
+                    Or <input class="hex-input" type="text" id="export-cell-border-selector-hex" placeholder="Enter Hex..." maxlength="7">
+                    <br>
+                    <label for="cell-border-on-transparent-cells-checkbox">Cell Border Also On Transparent Cells: </label>
+                    <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
+                    <br>
+                    <label for="watermark-checkbox">Watermark:</label>
+                    <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
+                    <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
+                    <input type="button" id="export-button2" value="Export">
+                </div>
+                <div id="themes-section">
+                    <br>
+                    <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
+                    <br>
+                    <input type="button" value="Invert Theme" id="invert-theme"> <br>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-shortcutkey="z">Settings</h3> <br>
+                    <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
+                    <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input> <br>
+                    <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App</a> <br>
+                    <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
+                    <span>Version : 7.0</span>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3> <br>
+                    <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
+                    <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
+                    <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
+                    <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
+                    <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
+                    <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
+                    <label for="animate-menu-checkbox">Animate Menu: </label>
+                    <input type="checkbox" id="animate-menu-checkbox"> <br>
+                    <label for="add-image-background-checkbox">Use Image Background: </label>
+                    <input type="checkbox" id="add-image-background-checkbox"> <br>
+                    <input type="button" value="Change Background Image" id="change-background-image">
+                </div>
+                <div id="drawing-checker-section">
+                    <br>
+                    <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
+                    <br>
+                    <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
+                    <img width="0" height="0">
+                </div>
             </div>
         </div>
     </div>

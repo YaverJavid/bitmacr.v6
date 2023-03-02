@@ -1,4 +1,5 @@
  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&display=swap');
+
  input {
      margin-bottom: 25px;
  }
@@ -16,7 +17,7 @@
  * {
      font-family: 'Noto Sans Symbols', sans-serif;
      user-select: none
-  }
+ }
 
  :root {
      --accent: #1a1b1d;
@@ -29,24 +30,19 @@
  #paint-zone {
      display: flex;
      flex-wrap: wrap;
-     background-size: 100% 80%;
-     background-size: 100% 100%;
-     border: 1px solid var(--secondary);
-     border-width: 0.5px 0;
+     width: 95vw;
+     height: 95vw;
+     margin-left: 2.5vw;
+     border:1px solid var(--secondary);
  }
 
 
 
  input[type=color] {
-     border: none;
-     background: none;
-     outline-color: #00000000;
-     padding: 0;
+     width: 8vw;
  }
 
- input[type=color]::-webkit-color-swatch {
-     border-color: var(--secondary);
- }
+
 
  input[type=button] {
      border: 1px solid var(--secondary);
@@ -96,14 +92,21 @@
  }
 
 
-
-
-
- .controls {
-     margin: 25px 15px;
-     color: var(--secondary) !important;
-     padding: 0 10px;
+ #top-control-container {
+     display: flex;
+     width: 95vw;
+     padding: 5vw 3vw;
+     margin-left: 2.5%;
      border: 1px solid var(--secondary);
+     box-sizing: border-box;
+     justify-content: space-around;
+     align-items: center;
+     margin: 5vw 2.5vw
+ }
+
+ #top-control-container>* {
+     margin-bottom: 0;
+     padding: 0 5vw;
  }
 
  .controls>div>*,
@@ -127,25 +130,17 @@
      padding: 0
  }
 
- #top-control-container>* {
-     font-size: 1rem;
-     padding: 0 10px;
- }
+
 
  #bottom-control-container {
-     padding: 0;
+     width: 95vw;
      display: flex;
      overflow: hidden;
-     margin: 0;
-     scroll-behavior: smooth
-
+     scroll-behavior: smooth;
+     color: var(--secondary) !important;
+     border: 1px solid var(--secondary);
+     margin-left: 2.5vw!important;
  }
-
- #undo,
- #redo {
-     margin: 20px 10px;
- }
-
 
 
  h1 {
@@ -157,7 +152,7 @@
      margin: 0;
  }
 
- select  {
+ select {
      margin-bottom: 25px;
      background: transparent;
      border-width: 1px;
@@ -171,19 +166,15 @@
  }
 
 
- #controls-container {
-     margin: 0 25px;
-
- }
 
 
  #menu-nav {
      display: flex;
      width: 100%;
      margin: 5vh 0;
+     margin-top: 0vh;
      overflow-x: scroll;
      scrollbar-color: transparent;
-
  }
 
  .menu-nav-items {
@@ -191,14 +182,14 @@
      font-weight: bold;
      border: 1px solid var(--secondary);
      color: var(--secondary);
-     margin: 0 13px;
+     margin: 0 2.5vw;
      white-space: nowrap;
      cursor: pointer;
      transition: 500ms
  }
 
  .menu-nav-items:nth-child(1) {
-     margin-left: 7%;
+     margin-left: 5vw;
  }
 
  .menu-nav-items:hover {
@@ -315,23 +306,35 @@
  .theme-selector {
      margin-bottom: 2px !important;
  }
- 
-.default-pallette{
+
+ .default-pallette {
      border-style: dashed
  }
- 
- .undev{
+
+ .undev {
      opacity: 0.3;
  }
- 
- .hex-input{
+
+ .hex-input {
      width: 25%;
  }
- 
- .hidden{
+
+ .hidden {
      display: none
  }
- 
- #copied-color-shower{
+
+ #copied-color-shower {
      user-select: initial
+ }
+
+
+
+ #info {
+     margin: 2vh 0;
+     width:100%;
+ }
+
+ #info>* {
+     font-family: monospace;
+     color: var(--secondary);
  }
