@@ -106,12 +106,6 @@ function getDrawingHTML(drawingName) {
 
 
 for (let drawingName in drawings) {
-    // let currentParsedData = parseRawData(drawings[drawingName])
-    // paintDataOnCanvas(ctx, canvas, currentParsedData.colorData, cellBorderWidthSlider.value, cellBorderColorSelector.value, currentParsedData.rows, currentParsedData.cols)
-    // let img = canvasToImage(canvas)
-    // img.width = 100
-    // img.height = 100
-    // document.querySelector("body").appendChild(img)
     drawingsSection.innerHTML += getDrawingHTML(drawingName)
 }
 addEventListenersToSavedDrawings()

@@ -61,3 +61,7 @@ const bottomControlsContainer = document.getElementById("bottom-control-containe
 
 const cellBorderOnTransparentCellsCheckbox = document.getElementById("cell-border-on-transparent-cells-checkbox")
 const themesSection = document.getElementById("themes-section")
+const lineInfoShower = document.getElementById('line-info-shower')
+const paintModeInfoShower = document.getElementById("paint-mode-info-shower")
+const colorModeSelector = document.getElementById("color-mode-selector")
+const colorModeShower = document.getElementById("color-mode-shower")

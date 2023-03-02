@@ -76,7 +76,7 @@ execBucket("pixmacr_background_image","1", ()=>{
 
 document.getElementById("add-image-background-checkbox").addEventListener("input", function(){
     setBucketOnCondition("pixmacr_background_image", this.checked, "1", "0")
-    document.body.style.backgroundImage = this.checked ? getImageURL() : "none"
+    document.body.style.backgroundImage = this.checked ? getImageURL(false) : "none"
 })
 
 document.getElementById("change-background-image").addEventListener("click", ()=>{

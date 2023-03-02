@@ -26,6 +26,8 @@ setCurrentColor("#162829")
 let chooseColorRandomly = false
 let rows, cols
 let menuSegmentLocations = []
+let hue = 0
+
 guideCellBorderColor.value = borderColor
 
 for (let i = 0; i < menus.length; i++) {
@@ -55,7 +57,9 @@ for (let i = 0; i < menuNav.children.length; i++) {
 }
 
 function getCurrentSelectedColor() {
-    if (chooseColorRandomly) return getRandColor()
+    if (colorModeSelector.value == "random") return getRandColor()
+    if (colorModeSelector.value == "hue") return `hsl(${++hue},50%,60%)`
+    if(colorModeSelector.value == "eraser") return '#00000000'
     return currentSelectedColor
 }
 
@@ -85,16 +89,19 @@ function addCanvas(argRows, argCols) {
     paintZone.innerHTML = ""
     let HTML = ''
     let i = 0
-    let elemWidth = 100 / cols
+    let elemWidth =  parseFloat(getComputedStyle(paintZone).getPropertyValue("width"))/window.innerWidth * 100 / cols
     cellWidth = canvas.width / cols
     cellHeight = cellWidth
     while (i < rows * cols) {
-        HTML += `<div class="cell" style="width:${elemWidth}%;height:${elemWidth}vw"></div>`
+        HTML += `<div class="cell" style="width:${elemWidth}vw;height:${elemWidth}vw"></div>`
         i++
     }
     paintZone.innerHTML = HTML
     for (let i = 0; i < paintCells.length; i++) {
         paintCells[i].addEventListener("click", function() {
+            let currentCol = i % cols
+            let currentRow = Math.floor(i / rows);
+            lineInfoShower.textContent = `row:${currentRow},col:${currentCol}`
             if (colorSelectionInProgress) {
                 let selectedColor = rgbToHex(buffer.getItem()[i])
                 changeCellBorderColor(borderColor)
@@ -148,13 +155,8 @@ addCanvas(10, 10)
 
 
 
-
 colorSelector.addEventListener("input", function() {
-    if (currentSelectedColor == '#00000000') {
-        eraseButton.value = 'Select Eraser'
-    }
-    setCurrentColor(this.value)
-
+  setCurrentColor(this.value)
 })
 
 
@@ -303,14 +305,9 @@ for (let colorCopierCheckbox in colorCopierCheckboxes) {
 
 // END
 eraseButton.addEventListener("click", function() {
-    if (this.value == 'Select Eraser') {
-        this.value = 'Unselect Eraser'
-        prevSelectedColor = getCurrentSelectedColor()
-        setCurrentColor('#00000000')
-    } else {
-        setCurrentColor(prevSelectedColor)
-        this.value = 'Select Eraser'
-    }
+    colorModeSelector.value = "eraser"
+    this.value = "Selected Eraser"
+    setTimeout(()=>{this.value = "Select Eraser"}, 500)
 })
 
 
@@ -490,16 +487,6 @@ randomiseCellsButton.addEventListener("click", () => {
 })
 
 
-randomColorSelectorButton.addEventListener("click", () => {
-    if (chooseColorRandomly) {
-        chooseColorRandomly = false
-        randomColorSelectorButton.value = "Select Random Color Mode"
-    } else {
-        chooseColorRandomly = true
-        randomColorSelectorButton.value = "Select Normal Color Mode"
-    }
-})
-
 replaceButton.addEventListener("click", () => {
     let colorToBeReplaced = colorToBeReplacedSelector.value
     let colorToReplaceWith = colorToReplaceWithSelector.value
@@ -626,4 +613,11 @@ document.getElementById("refresh-drawing-checker").addEventListener("click", () 
 })
 
 
-// paint modes
+// paint mode
+paintModeSelector.addEventListener("input",()=>{
+    paintModeInfoShower.textContent = `,paint-mode:${paintModeSelector.value},`
+})
+
+colorModeSelector.addEventListener("input",()=>{
+    colorModeShower.textContent = colorModeSelector.value
+})
