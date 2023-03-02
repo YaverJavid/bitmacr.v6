@@ -8,6 +8,13 @@
 - Few more changes
 - Updated some structure 
 - Fixed bugs about paint mode shortcut.
+- 7.0.1 : Updated UI
+- * Added Color Mode Selector 
+- * Removed ```random-tools``` tab, added all its features to other tabs
+- * Fixed Bugs
+- * Updated Icon
+- * Updated Apk
+
 
 ### 6.6.n
 - Added Support For Shapes
