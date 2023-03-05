@@ -21,7 +21,7 @@
 - * Added a preview option on saved drawings (preview uses export settings for borders)
 - * Added line support in paint mode.
 - * Changed the algorithm for export, now images will have no fine unexpected black lines(BUG17), if allah wills!
-- * Added a way to access previous major versions of the same app.
+- * Added a way to access previous major versions of the same app, it has its own tab.
 - * Soloved some bugs.
 
 
