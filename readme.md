@@ -16,6 +16,13 @@
 - * Updated Apk
 - * Added link to download app
 - * updated service worker
+- 7.0.2 : Added support for drawing line.
+- * Removed watermark option from 'export-settings'
+- * Added a preview option on saved drawings (preview uses export settings for borders)
+- * Added line support in paint mode.
+- * Changed the algorithm for export, now images will have no fine unexpected black lines(BUG17), if allah wills!
+- * Added a way to access previous major versions of the same app.
+- * Soloved some bugs.
 
 
 ### 6.6.n
