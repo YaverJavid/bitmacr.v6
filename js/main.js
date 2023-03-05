@@ -267,7 +267,7 @@ cellsSlider.addEventListener("input", function() {
     canvasSizeShower.innerHTML = `(${this.value})`
 })
 cellsSlider.addEventListener("change", function() {
-    if (confirm(`You will loose your artwork if you resize. Do you really want to resize to ${Math.round(canvas.width / cellWidth)} cell(s) to ${this.value}cell(s)?`)) {
+    if (confirm(`You will loose your artwork if you resize. Do you really want to resize to ${cols} cell(s) to ${this.value}cell(s)?`)) {
         addCanvas(this.value, this.value)
         if (guideCheckbox.checked) {
             addGuides()
