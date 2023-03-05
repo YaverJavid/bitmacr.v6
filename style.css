@@ -22,7 +22,6 @@
  :root {
      --accent: #1a1b1d;
      --secondary: #ffffff;
-     --misc: black;
  }
 
 
@@ -81,9 +80,7 @@
      border-radius: 8px;
  }
 
- canvas {
-     display: none
- }
+ 
 
  hr {
      width: 80%;
@@ -160,10 +157,6 @@
      padding: 0;
  }
 
- #select-all-copy-targets {
-     color: var(--misc);
-     border-color: var(--misc);
- }
 
 
 
@@ -236,7 +229,8 @@
      border: 1px solid var(--secondary);
      max-width: 90%;
      overflow-x: scroll;
-     flex-shrink: 0
+     flex-shrink: 0;
+     transition: 500ms
  }
 
  .drawing:last-child {
@@ -338,3 +332,5 @@
      font-family: monospace;
      color: var(--secondary);
  }
+ 
+ 
