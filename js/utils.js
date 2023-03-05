@@ -1,10 +1,10 @@
 function hexToRgbObject(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+    } : null;
 }
 
 
@@ -60,8 +60,7 @@ function rgbToHex(str) {
 }
 
 
-function downloadCanvasAsImage(canvas, fileName = 'yj') {
-    const dataUrl = canvas.toDataURL();
+function downloadImage(dataUrl, fileName = 'pixmacr-yj-') {
     const anchor = document.createElement('a');
     anchor.href = dataUrl;
     anchor.download = fileName;
@@ -80,20 +79,20 @@ function downloadText(filename, text) {
     document.body.removeChild(element);
 }
 
-function matchNumbers(n1, n2, th){
-    if(n1 == n2) return true
+function matchNumbers(n1, n2, th) {
+    if (n1 == n2) return true
     let dn = Math.abs(n1 - n2)
     return dn < th
 }
 
-function matchHexColors(c1, c2, th){
+function matchHexColors(c1, c2, th) {
     c1 = hexToRgbObject(c1)
     c2 = hexToRgbObject(c2)
     return (
         matchNumbers(c1.r, c2.r, th) &&
-        matchNumbers(c1.g, c2.g ,th) &&
+        matchNumbers(c1.g, c2.g, th) &&
         matchNumbers(c1.b, c2.b, th)
-        )
+    )
 }
 
 
@@ -101,106 +100,123 @@ trimString = str => str.replace(/^\s+|\s+$/g, "");
 verifyName = str => trimString(str).length > 0;
 
 function hexToRgbaObject(hex) {
-  let opacity = 1;
-  if (hex.length === 9) {
-    opacity = parseInt(hex.substring(7, 9), 16) / 255;
-    hex = hex.substring(0, 7);
-  }
-  let r = parseInt(hex.substring(1, 3), 16);
-  let g = parseInt(hex.substring(3, 5), 16);
-  let b = parseInt(hex.substring(5, 7), 16);
+    let opacity = 1;
+    if (hex.length === 9) {
+        opacity = parseInt(hex.substring(7, 9), 16) / 255;
+        hex = hex.substring(0, 7);
+    }
+    let r = parseInt(hex.substring(1, 3), 16);
+    let g = parseInt(hex.substring(3, 5), 16);
+    let b = parseInt(hex.substring(5, 7), 16);
 
-  return { r, g, b, a: opacity };
+    return { r, g, b, a: opacity };
 }
 
-function colorObjectToRGBA(obj){
+function colorObjectToRGBA(obj) {
     return `rgb(${obj.r},${obj.g},${obj.b},${obj.a})`
 }
 
 function convertRGBAStrToObj(rgbaStr) {
-  const rgbaArr = rgbaStr.match(/\d+/g).map(Number);
-  return {r: rgbaArr[0], g: rgbaArr[1], b: rgbaArr[2], a: rgbaArr[3]};
+    const rgbaArr = rgbaStr.match(/\d+/g).map(Number);
+    return { r: rgbaArr[0], g: rgbaArr[1], b: rgbaArr[2], a: rgbaArr[3] };
 }
 
 function rotateArray90Degrees(matrix, clockwise = true) {
-  const rows = matrix.length;
-  const columns = matrix[0].length;
-  const result = [];
+    const rows = matrix.length;
+    const columns = matrix[0].length;
+    const result = [];
 
-  for (let i = 0; i < columns; i++) {
-    result.push([]);
-    for (let j = clockwise ? 0 : rows - 1; j >= 0 && j < rows; j += clockwise ? 1 : -1) {
-      result[i].push(matrix[j][clockwise ? columns - i - 1 : i]);
+    for (let i = 0; i < columns; i++) {
+        result.push([]);
+        for (let j = clockwise ? 0 : rows - 1; j >= 0 && j < rows; j += clockwise ? 1 : -1) {
+            result[i].push(matrix[j][clockwise ? columns - i - 1 : i]);
+        }
     }
-  }
 
-  return result;
+    return result;
 }
 
 
 function fallbackCopyTextToClipboard(text) {
-  var textArea = document.createElement("textarea");
-  textArea.value = text;
-  textArea.style.top = "0";
-  textArea.style.left = "0";
-  textArea.style.position = "fixed";
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
 
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
 
-  try {
-    var successful = document.execCommand('copy');
-    var msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Fallback: Copying text command was ' + msg);
-  } catch (err) {
-    console.error('Fallback: Oops, unable to copy', err);
-  }
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
 
-  document.body.removeChild(textArea);
+    document.body.removeChild(textArea);
 }
 
 
 function copyTextToClipboard(text) {
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(text).then(function() {
-    console.log('Async: Copying to clipboard was successful!');
-  }, function(err) {
-    console.error('Async: Could not copy text: ', err);
-  });
+    if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
 }
 
 var validateHex = (str) => /^#[0-9A-F]{6}$/i.test(str)
 
 function canvasToImage(canvas) {
-  var img = new Image();
-  img.src = canvas.toDataURL("image/png");
-  return img;
+    var img = new Image();
+    img.src = canvas.toDataURL("image/png");
+    return img;
 }
 
 
 function distance2d(x1, y1, x2, y2) {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  return Math.sqrt(dx*dx + dy*dy);
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
 
 
 function brightenHexColor(hexColor, threshold) {
-  let red = parseInt(hexColor.slice(1,3), 16);
-  let green = parseInt(hexColor.slice(3,5), 16);
-  let blue = parseInt(hexColor.slice(5,7), 16);
-  let brightness = (red * 299 + green * 587 + blue * 114) / 1000;
-  let newRed = Math.round((red + (255 - red) * threshold));
-  let newGreen = Math.round((green + (255 - green) * threshold));
-  let newBlue = Math.round((blue + (255 - blue) * threshold));
-  newRed = Math.min(newRed, 255);
-  newGreen = Math.min(newGreen, 255);
-  newBlue = Math.min(newBlue, 255);
-  let newHexColor = "#" + ((newRed << 16) | (newGreen << 8) | newBlue).toString(16).padStart(6, '0');
-  return newHexColor;
+    let red = parseInt(hexColor.slice(1, 3), 16);
+    let green = parseInt(hexColor.slice(3, 5), 16);
+    let blue = parseInt(hexColor.slice(5, 7), 16);
+    let brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+    let newRed = Math.round((red + (255 - red) * threshold));
+    let newGreen = Math.round((green + (255 - green) * threshold));
+    let newBlue = Math.round((blue + (255 - blue) * threshold));
+    newRed = Math.min(newRed, 255);
+    newGreen = Math.min(newGreen, 255);
+    newBlue = Math.min(newBlue, 255);
+    let newHexColor = "#" + ((newRed << 16) | (newGreen << 8) | newBlue).toString(16).padStart(6, '0');
+    return newHexColor;
+}
+
+function rgbaToHex(rgbaColor) {
+  let rgbaValues = rgbaColor.substring(rgbaColor.indexOf('(') + 1, rgbaColor.lastIndexOf(')')).split(',');
+  let r = parseInt(rgbaValues[0]);
+  let g = parseInt(rgbaValues[1]);
+  let b = parseInt(rgbaValues[2]);
+  let a = parseFloat(rgbaValues[3]);
+
+  let hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  
+  if (!isNaN(a)) {
+    let alpha = Math.round(a * 255).toString(16);
+    hex += alpha.length === 1 ? '0' + alpha : alpha;
+  }
+
+  return hex;
 }

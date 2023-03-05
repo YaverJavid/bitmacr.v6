@@ -95,11 +95,13 @@ function saveDrawings() {
 
 function getDrawingHTML(drawingName) {
     return `<div class="drawing">
+                <img class="drawing-preview" ></img>
                 <p class="drawing-name">${drawingName}</p>
                 <div class="drawing-icons-container">
                 <img class="drawing-delete-icon" src="icons/delete.svg">
                 <img class="drawing-apply-icon" src="icons/play.svg">
                 <img class="drawing-download-icon" src="icons/download.svg">
+                <img class="drawing-preview-icon" src="icons/see.svg"></icon>
                 </div>
             </div>`
 }
@@ -117,6 +119,8 @@ function addEventListenersToSavedDrawings() {
     const drawingNames = document.getElementsByClassName("drawing-name")
     const drawingElements = document.getElementsByClassName("drawing")
     const drawingDownloadIcons = document.getElementsByClassName("drawing-download-icon")
+    const drawingPreviewIcons = document.getElementsByClassName("drawing-preview-icon")
+    const drawingPreviews = document.getElementsByClassName("drawing-preview")
 
     for (let i = 0; i < drawingElements.length; i++) {
         let currentDrawingName = drawingNames[i].innerHTML
@@ -128,7 +132,7 @@ function addEventListenersToSavedDrawings() {
             saveDrawings()
         })
         drawingApplyIcons[i].addEventListener("click", () => {
-            if(!confirm("Do you really want to apply data, you will loose your current artwork on canvas?")) return
+            if (!confirm("Do you really want to apply data, you will loose your current artwork on canvas?")) return
             let data = parseRawData(drawings[currentDrawingName])
             addCanvas(data.rows, data.cols)
             canvasSizeShower.textContent = `(${data.cols})`
@@ -146,18 +150,27 @@ function addEventListenersToSavedDrawings() {
         drawingDownloadIcons[i].addEventListener("click", () => {
             if (confirm("Do You Want To Download In Png Format? (Cancel To Download In Raw Data Format(spad))")) {
                 let data = parseRawData(drawings[currentDrawingName])
-                paintDataOnCanvas(ctx,
-                    canvas,
-                    data.colorData,
+                let dataUrl = colorDataToImage(
+                    squareArray(data.colorData),
                     cellBorderWidthSlider.value,
-                    cellBorderColorSelector.value,
-                    data.rows,
-                    data.cols
+                    cellBorderColorSelector.value
                 )
-                downloadCanvasAsImage(canvas, `${currentDrawingName}(pixmacr-saved).png`)
+                downloadImage(dataUrl, "yjpm-saved-.png")
             } else {
                 downloadText(currentDrawingName + "(saved-pixmacr).spad", drawings[currentDrawingName])
             }
+        })
+        drawingPreviewIcons[i].addEventListener("click", () => {
+            drawingPreviewIcons[i].style.display = "none"
+            let data = parseRawData(drawings[currentDrawingName])
+            let dataUrl = colorDataToImage(
+                squareArray(data.colorData),
+                cellBorderWidthSlider.value,
+                cellBorderColorSelector.value
+            )
+            drawingPreviews[i].width = "200"
+            drawingPreviews[i].height = "200"
+            drawingPreviews[i].src = dataUrl
         })
     }
 }
