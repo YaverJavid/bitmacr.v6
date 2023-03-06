@@ -22,6 +22,7 @@
  :root {
      --accent: #1a1b1d;
      --secondary: #ffffff;
+     --misc: black;
  }
 
 
@@ -32,7 +33,8 @@
      width: 95vw;
      height: 95vw;
      margin-left: 2.5vw;
-     border:1px solid var(--secondary);
+     border: 0.5px solid var(--secondary);
+     
  }
 
 
@@ -46,20 +48,24 @@
  input[type=button] {
      border: 1px solid var(--secondary);
      background: none;
-     color: var(--secondary);
+     color: var(--secondary)!important;
      outline-color: #00000000;
      margin-bottom: 20px;
      cursor: pointer;
      font-weight: thin !important;
-     transition: 300ms
+     transition: 300ms;
+     background: var(--accent);
+     border-radius: 5vw
  }
 
 
  input[type=range] {
-     background: var(--secondary) !important;
+     background: var(--accent) !important;
      -webkit-appearance: none;
      appearance: none;
      height: 8px;
+          border-radius: 8vw
+
  }
 
  input[type=range]::-webkit-slider-thumb {
@@ -67,9 +73,10 @@
      appearance: none;
      width: 16px;
      height: 16px;
-     background: var(--secondary);
+     background: var(--accent);
      cursor: pointer;
-     filter: brightness(0.8);
+     filter: brightness(1.3);
+     border-radius: 8vw
  }
 
 
@@ -80,7 +87,9 @@
      border-radius: 8px;
  }
 
- 
+ canvas {
+     display: none
+ }
 
  hr {
      width: 80%;
@@ -94,11 +103,13 @@
      width: 95vw;
      padding: 5vw 3vw;
      margin-left: 2.5%;
-     border: 1px solid var(--secondary);
      box-sizing: border-box;
      justify-content: space-around;
      align-items: center;
-     margin: 5vw 2.5vw
+     margin: 5vw 2.5vw;
+     background: var(--secondary);
+          border-radius: 10vw
+
  }
 
  #top-control-container>* {
@@ -106,9 +117,9 @@
      padding: 0 5vw;
  }
 
- .controls>div>*,
+ .controls>div>label,
  details>* {
-     color: var(--secondary) !important;
+     color: var(--accent) !important;
      border-color: var(--secondary) !important
  }
 
@@ -126,6 +137,8 @@
      flex: 0 0 calc(100%);
      padding: 0
  }
+ 
+ 
 
 
 
@@ -136,7 +149,9 @@
      scroll-behavior: smooth;
      color: var(--secondary) !important;
      border: 1px solid var(--secondary);
-     margin-left: 2.5vw!important;
+     margin-left: 2.5vw !important;
+     background: var(--secondary);
+     border-radius: 10vw
  }
 
 
@@ -151,12 +166,22 @@
 
  select {
      margin-bottom: 25px;
-     background: transparent;
-     border-width: 1px;
+     background: var(--accent);
      cursor: pointer;
      padding: 0;
+     border-radius: 3vw;
+     border: none;
+     color: var(--secondary);
+ }
+ 
+ a{
+     color: var(--accent);
  }
 
+ #select-all-copy-targets {
+     color: var(--misc);
+     border-color: var(--misc);
+ }
 
 
 
@@ -174,11 +199,13 @@
      padding: 15px 30px;
      font-weight: bold;
      border: 1px solid var(--secondary);
-     color: var(--secondary);
+     color: var(--accent);
      margin: 0 2.5vw;
      white-space: nowrap;
      cursor: pointer;
-     transition: 500ms
+     transition: 500ms;
+     background: var(--secondary);
+     border-radius: 10vw
  }
 
  .menu-nav-items:nth-child(1) {
@@ -199,9 +226,9 @@
 
  input[type=text] {
      border: 1px solid var(--secondary);
-     background: transparent;
+     background: var(--accent);
      padding: 0 5px;
-
+     border-radius: 3vw
  }
 
  input[type=text]::placeholder {
@@ -209,7 +236,6 @@
  }
 
  input[type=button]:hover {
-     border-style: dotted
  }
 
  #drawings-section {
@@ -229,8 +255,7 @@
      border: 1px solid var(--secondary);
      max-width: 90%;
      overflow-x: scroll;
-     flex-shrink: 0;
-     transition: 500ms
+     flex-shrink: 0
  }
 
  .drawing:last-child {
@@ -293,7 +318,7 @@
      width: 10vw;
      height: 10vw;
      flex-shrink: 0;
-     border: 1px solid var(--secondary);
+     border: 1px solid var(--accent);
 
  }
 
@@ -325,12 +350,10 @@
 
  #info {
      margin: 2vh 0;
-     width:100%;
+     width: 100%;
  }
 
  #info>* {
      font-family: monospace;
      color: var(--secondary);
  }
- 
- 

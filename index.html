@@ -98,9 +98,6 @@
                 <div>
                     <br>
                     <h3 data-shortcutkey="c">Copy Options</h3><br>
-                    <label for="guide-checkbox2">Quadrant Guides: </label>
-                    <input type="checkbox" name="guide-checkbox2" id="guide-checkbox2">
-                    <br>
                     <label for="multiply-q-selector">Multiply From : </label>
                     <select name="multiply-q-selector" id="multiply-q-selector">
                         <option value="1">Quadrant I</option>
@@ -190,7 +187,7 @@
                     <br>
                     <h3 data-shortcutkey="e">Export Options</h3><br>
                     <label for="cell-border-width-slider">Cell Border: </label>
-                    <input type="range" name="cell-border-width-slider" id="cell-border-width-slider" min='0' max='5' value='0' step="0.1">
+                    <input type="range" name="cell-border-width-slider" id="cell-border-width-slider" min='0' max='15' value='0'>
                     <span id="cell-border-width-shower">(0)</span>
                     <br>
                     <label for="cell-border-color-selector">Cell Border Color: </label>
@@ -200,6 +197,8 @@
                     <label for="cell-border-on-transparent-cells-checkbox">Cell Border Also On Transparent Cells: </label>
                     <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
                     <br>
+                    <label for="watermark-checkbox">Watermark:</label>
+                    <input type="checkbox" name="watermark-checkbox" id="watermark-checkbox"> <br>
                     <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
                     <input type="button" id="export-button2" value="Export">
                 </div>
@@ -240,18 +239,10 @@
                     <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
                     <img width="0" height="0">
                 </div>
-                <div>
-                    <br>
-                    <h3>Previous Versions</h3>
-                    <a href="https://yaverjavid.github.io/bitmacr.v1">Version 1</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v2">Version 2</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v3">Version 3</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v4">Version 4</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v5">Version 5</a>
-                </div>
             </div>
         </div>
     </div>
+    <canvas id="canvas"></canvas>
     <br>
 
     <script src="js/utils.js"></script>
