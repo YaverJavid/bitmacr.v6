@@ -12,6 +12,4 @@ function execBucket(bucketName, expectedValue, action, ...actionArgs){
 function setBucketOnCondition(bucketName, condition, valueIfTrue, valueIfFalse){
     let bucketValue = condition ? valueIfTrue : valueIfFalse
     localStorage.setItem(bucketName ,bucketValue)
-    return bucketValue
 }
-

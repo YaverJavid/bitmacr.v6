@@ -37,7 +37,7 @@ function drawSphere(centerX, centerY, radius, grid) {
 }
 
 
-function drawRectange(x, y, w, h, plane, filled) {
+function drawRectangeOnPlane(x, y, w, h, plane, filled) {
     // filled = !0
     y += 1
     for (var i = (y - h); i < y; i++) {
@@ -53,25 +53,25 @@ function drawRectange(x, y, w, h, plane, filled) {
 }
 
 function drawLine(array, x1, y1, x2, y2) {
-    const dx = Math.abs(x2 - x1);
-    const dy = Math.abs(y2 - y1);
-    const sx = x1 < x2 ? 1 : -1;
-    const sy = y1 < y2 ? 1 : -1;
-    let err = dx - dy;
+  const dx = Math.abs(x2 - x1);
+  const dy = Math.abs(y2 - y1);
+  const sx = x1 < x2 ? 1 : -1;
+  const sy = y1 < y2 ? 1 : -1;
+  let err = dx - dy;
 
-    while (x1 !== x2 || y1 !== y2) {
-        array[y1][x1].style.background = getCurrentSelectedColor();
-        const e2 = 2 * err;
-        if (e2 > -dy) {
-            err -= dy;
-            x1 += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            y1 += sy;
-        }
+  while (x1 !== x2 || y1 !== y2) {
+    array[y1][x1].style.background = getCurrentSelectedColor();
+    const e2 = 2 * err;
+    if (e2 > -dy) {
+      err -= dy;
+      x1 += sx;
     }
-    array[y1][x1].style.background = getCurrentSelectedColor(); // draw the last pixel
+    if (e2 < dx) {
+      err += dx;
+      y1 += sy;
+    }
+  }
+  array[y1][x1].style.background = getCurrentSelectedColor(); // draw the last pixel
 }
 
 
@@ -100,8 +100,8 @@ paintZone.addEventListener('touchmove', (event) => {
     const x = touch.clientX
     const y = touch.clientY
     currentCell = document.elementFromPoint(x, y);
-
-    if (["circle", "circle-filled", "sphere", "rect", "rect-filled", "line", "triangle"].includes(paintModeSelector.value)) {
+    
+    if (["circle", "circle-filled", "sphere", "rect", "rect-filled", "line"].includes(paintModeSelector.value)) {
         let paintCells2d = []
         for (let i = 0; i < paintCells.length; i++) {
             paintCells[i].style.background = buffer.getItem()[i]
@@ -114,7 +114,7 @@ paintZone.addEventListener('touchmove', (event) => {
         let dy = Math.ceil(Math.abs(startingCoords.y - y) / cw)
         const radius = dx
         // gridX is gridY and vice versa in reality
-
+        
         switch (paintModeSelector.value) {
             case 'circle':
                 drawCircle(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d, false)
@@ -126,17 +126,17 @@ paintZone.addEventListener('touchmove', (event) => {
                 drawSphere(startingCoords.gridX - radius, startingCoords.gridY + radius, radius, paintCells2d)
                 break
             case 'rect':
-                drawRectange(startingCoords.gridY, startingCoords.gridX, dx, dy, paintCells2d, false)
+                drawRectangeOnPlane(startingCoords.gridY, startingCoords.gridX, dx, dy, paintCells2d, false)
                 break
             case 'rect-filled':
-                drawRectange(startingCoords.gridY, startingCoords.gridX, dx, dy, paintCells2d, true)
+                drawRectangeOnPlane(startingCoords.gridY, startingCoords.gridX, dx, dy, paintCells2d, true)
                 break
             case 'line':
                 if (currentCell.classList[0] != "cell") return
                 const currentCellIndex = Array.from(paintCells).indexOf(document.elementFromPoint(x, y))
                 let gridX = Math.floor(currentCellIndex / cols);
                 let gridY = currentCellIndex % cols
-                drawLine(paintCells2d, startingCoords.gridY, startingCoords.gridX, gridY, gridX)
+                drawLine(paintCells2d, startingCoords.gridY, startingCoords.gridX, gridY, gridX )
                 break
         }
         return
