@@ -4,12 +4,6 @@ let setAccentColor = color => root.style.setProperty("--accent", color)
 let setSecondaryColor = color => root.style.setProperty("--secondary", color)
 
 
-canvas.height = 1840
-canvas.width = 1840
-canvas.style.border = '1px solid white'
-canvas.style.width = '100%'
-canvas.style.boxSizing = 'border-box'
-let ctx = canvas.getContext('2d')
 let cellWidth
 let cellHeight
 let prevSelectedColor
@@ -59,7 +53,7 @@ for (let i = 0; i < menuNav.children.length; i++) {
 function getCurrentSelectedColor() {
     if (colorModeSelector.value == "random") return getRandColor()
     if (colorModeSelector.value == "hue") return `hsl(${++hue},50%,60%)`
-    if(colorModeSelector.value == "eraser") return '#00000000'
+    if (colorModeSelector.value == "eraser") return '#00000000'
     return currentSelectedColor
 }
 
@@ -89,9 +83,7 @@ function addCanvas(argRows, argCols) {
     paintZone.innerHTML = ""
     let HTML = ''
     let i = 0
-    let elemWidth =  parseFloat(getComputedStyle(paintZone).getPropertyValue("width"))/window.innerWidth * 100 / cols
-    cellWidth = canvas.width / cols
-    cellHeight = cellWidth
+    let elemWidth = parseFloat(getComputedStyle(paintZone).getPropertyValue("width")) / window.innerWidth * 100 / cols
     while (i < rows * cols) {
         HTML += `<div class="cell" style="width:${elemWidth}vw;height:${elemWidth}vw"></div>`
         i++
@@ -156,7 +148,7 @@ addCanvas(10, 10)
 
 
 colorSelector.addEventListener("input", function() {
-  setCurrentColor(this.value)
+    setCurrentColor(this.value)
 })
 
 
@@ -186,65 +178,85 @@ document.getElementById('fill-all-button').addEventListener("click", () => {
     recordPaintData()
 })
 
-function drawRectangle(context, x, y, width, height, borderColor, fillColor, borderWidth) {
-    context.beginPath();
-    context.rect(x, y, width, height);
-    context.fillStyle = fillColor;
-    context.fill();
-    context.lineWidth = borderWidth;
-    context.strokeStyle = borderColor;
-    context.stroke();
-}
 
 function exportImage() {
-    paintDataOnCanvas(ctx, canvas, buffer.getItem(), cellBorderWidthSlider.value, cellBorderColorSelector.value, rows, cols)
-    downloadCanvasAsImage(canvas, 'syn-pixmacr-yj.png')
+    let currentBuffer = buffer.getItem()
+    let paintData = []
+    for (let i = 0; i < currentBuffer.length; i++) {
+        paintData.push(rgbaToHex(currentBuffer[i]))
+    }
+    let dataUrl = colorDataToImage(squareArray(paintData), cellBorderWidthSlider.value, cellBorderColorSelector.value)
+    downloadImage(dataUrl, 'syn-pixmacr-yj.png')
 }
 
-function paintDataOnCanvas(ctx, canvas, colorData, borderWidth, borderColor, rows, cols) {
-    let currentY = 0
-    let currentX = 0
-    let cellWidth = canvas.height / cols
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.lineWidth = cellBorderWidthSlider.value
-    if (cellBorderWidthSlider.value == 0) {
-        for (let i = 0; i < colorData.length; i++) {
-            let currentCellColor = colorData[i]
-            ctx.fillStyle = currentCellColor
-            ctx.strokeStyle = 'black'
-            ctx.fillRect(currentX, currentY, cellWidth, cellWidth)
-            currentX += cellWidth
-            if (Math.round(currentX) == Math.round(canvas.width)) {
-                currentX = 0
-                currentY += cellWidth
-            }
+function colorDataToImage(colors, borderWidth, borderColor) {
+    // Calculate the dimensions of the canvas
+    const canvasWidth = colors[0].length;
+    const canvasHeight = colors.length;
 
-        }
-    } else {
-        for (let i = 0; i < colorData.length; i++) {
-            let currentCellColor = colorData[i]
-            if (currentCellColor != "rgba(0, 0, 0, 0)" || cellBorderOnTransparentCellsCheckbox.checked)
-                drawRectangle(ctx, currentX, currentY, cellWidth, cellWidth, borderColor, currentCellColor, borderWidth)
-            currentX += cellWidth
-            if (Math.round(currentX) == Math.round(canvas.width)) {
-                currentX = 0
-                currentY += cellWidth
+    // Create a new canvas element
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Get the canvas context and create an ImageData object
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.createImageData(canvasWidth, canvasHeight);
+
+    // Loop through each pixel in the ImageData object and set its color from the 2D array
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        // Calculate the x and y position of the pixel
+        const x = (i / 4) % canvasWidth;
+        const y = Math.floor(i / (4 * canvasWidth));
+
+        // Get the color of the corresponding cell in the 2D array
+        const color = colors[y][x];
+
+        // Convert the color from hex to RGB
+        const r = parseInt(color.substring(1, 3), 16);
+        const g = parseInt(color.substring(3, 5), 16);
+        const b = parseInt(color.substring(5, 7), 16);
+        let a = parseInt(color.substring(7, 9), 16);
+        if (isNaN(a)) a = 255
+        // Set the pixel color in the ImageData object
+        imageData.data[i] = r;
+        imageData.data[i + 1] = g;
+        imageData.data[i + 2] = b;
+        imageData.data[i + 3] = a;
+    }
+
+    // Put the ImageData onto the canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    // Scale the canvas up to 1024x1024
+    const scaledCanvas = document.createElement('canvas');
+    scaledCanvas.width = 1024;
+    scaledCanvas.height = 1024;
+
+    const scaledCtx = scaledCanvas.getContext('2d');
+    scaledCtx.imageSmoothingEnabled = false;
+    scaledCtx.drawImage(canvas, 0, 0, 1024, 1024);
+    let cellSize = 1024 / colors.length
+    // If there is a border, draw it onto the final canva
+    scaledCtx.lineWidth = borderWidth;
+    scaledCtx.strokeStyle = borderColor;
+    if (borderWidth > 0) {
+        for (let y = 0; y < colors.length; y++) {
+            for (let x = 0; x < colors[y].length; x++) {
+                if (colors[y][x] != "#00000000" || cellBorderOnTransparentCellsCheckbox.checked)
+                    scaledCtx.strokeRect(x * cellSize + borderWidth / 2, y * cellSize + borderWidth / 2, cellSize - borderWidth, cellSize - borderWidth);
             }
         }
     }
-    if (watermarkChekbox.checked) {
-        ctx.fillStyle = 'white'
-        ctx.font = '50px Arial'
-        ctx.fillText('Pix-Macr',
-            canvas.width - (canvas.width / 5),
-            canvas.height - (canvas.height / 10),
-            canvas.width - (canvas.width / 5)
-        )
-
-    }
-
+    return scaledCanvas.toDataURL();
 
 }
+
+
+
+
+
+
 
 
 document.getElementById('export-button').addEventListener("click", exportImage)
@@ -255,7 +267,7 @@ cellsSlider.addEventListener("input", function() {
     canvasSizeShower.innerHTML = `(${this.value})`
 })
 cellsSlider.addEventListener("change", function() {
-    if (confirm(`You will loose your artwork if you resize. Do you really want to resize to ${Math.round(canvas.width / cellWidth)} cell(s) to ${this.value}cell(s)?`)) {
+    if (confirm(`You will loose your artwork if you resize. Do you really want to resize to ${cols} cell(s) to ${this.value}cell(s)?`)) {
         addCanvas(this.value, this.value)
         if (guideCheckbox.checked) {
             addGuides()
@@ -264,8 +276,8 @@ cellsSlider.addEventListener("change", function() {
             removeBorder()
         }
     } else {
-        cellsSlider.value = Math.round(canvas.width / cellWidth)
-        canvasSizeShower.innerHTML = `(${Math.round(canvas.width / cellWidth)})`
+        cellsSlider.value = cols
+        canvasSizeShower.innerHTML = `(${cols})`
     }
 })
 
@@ -306,7 +318,7 @@ for (let colorCopierCheckbox in colorCopierCheckboxes) {
 eraseButton.addEventListener("click", function() {
     colorModeSelector.value = "eraser"
     this.value = "Selected Eraser"
-    setTimeout(()=>{this.value = "Select Eraser"}, 500)
+    setTimeout(() => { this.value = "Select Eraser" }, 500)
 })
 
 
@@ -332,7 +344,12 @@ borderCheckbox.addEventListener("input", function() {
 
 })
 
-guideCheckbox.addEventListener("input", function() {
+guideCheckbox.addEventListener("input", handleQuadrandGuideClick)
+guideCheckbox2.addEventListener("input", handleQuadrandGuideClick)
+
+function handleQuadrandGuideClick() {
+    guideCheckbox.checked = this.checked
+    guideCheckbox2.checked = this.checked
     if (this.checked) {
         addGuides()
     } else {
@@ -346,11 +363,10 @@ guideCheckbox.addEventListener("input", function() {
             }
         }
     }
-})
+}
 
 
 function addGuides() {
-    let cols = Math.round(canvas.width / cellWidth)
     if (cols % 2 == 1) {
         let paintCells2d = []
         for (let i = 0; i < paintCells.length; i++)
@@ -604,8 +620,16 @@ document.getElementById("export-cell-border-selector-hex").addEventListener("inp
 
 document.getElementById("refresh-drawing-checker").addEventListener("click", () => {
     let img = new Image(200, 200)
-    paintDataOnCanvas(ctx, canvas, buffer.getItem(), cellBorderWidthSlider.value, cellBorderColorSelector.value, rows, cols)
-    img.src = canvas.toDataURL()
+    let currentBuffer = buffer.getItem()
+    let paintData = []
+    for (let i = 0; i < currentBuffer.length; i++) {
+        paintData.push(rgbaToHex(currentBuffer[i]))
+    }
+    img.src = colorDataToImage(
+        squareArray(paintData),
+        cellBorderWidthSlider.value,
+        cellBorderColorSelector.value
+        )
     img.style.border = "1px solid var(--secondary)"
     drawingCheckerSection.removeChild(drawingCheckerSection.lastChild)
     drawingCheckerSection.appendChild(img)
@@ -613,11 +637,10 @@ document.getElementById("refresh-drawing-checker").addEventListener("click", () 
 
 
 // paint mode
-paintModeSelector.addEventListener("input",()=>{
+paintModeSelector.addEventListener("input", () => {
     paintModeInfoShower.textContent = `,paint-mode:${paintModeSelector.value},`
 })
 
-colorModeSelector.addEventListener("input",()=>{
+colorModeSelector.addEventListener("input", () => {
     colorModeShower.textContent = colorModeSelector.value
 })
-
