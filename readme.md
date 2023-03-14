@@ -1,7 +1,15 @@
-> THIS IS VERSION : ```7.0```
+> THIS IS VERSION : ```8.0```
 
 
 ## Version History
+### 8.0.n
+- Added support for getting data from images
+- Fixed Bugs 
+- Hue Addition To Spheres
+- Changed the apprerence uploader buttons
+- Border showing status will now be saved between sessions 
+
+
 ### 7.0.n
 - Added rectangle, filled rectangle, sphere shape support.
 - Added setting for changing background with a random image & also a button to change it in ```settings/general```
