@@ -10,13 +10,12 @@
      padding: 0;
      text-align: center;
      background: var(--accent);
-     image-rendering: optimizeSpeed;
      background-size: cover;
  }
 
  * {
      font-family: 'Noto Sans Symbols', sans-serif;
-     user-select: none
+     user-select: none;
  }
 
  :root {
@@ -32,7 +31,7 @@
      width: 95vw;
      height: 95vw;
      margin-left: 2.5vw;
-     border:1px solid var(--secondary);
+     border: 1px solid var(--secondary);
  }
 
 
@@ -80,7 +79,7 @@
      border-radius: 8px;
  }
 
- 
+
 
  hr {
      width: 80%;
@@ -136,7 +135,7 @@
      scroll-behavior: smooth;
      color: var(--secondary) !important;
      border: 1px solid var(--secondary);
-     margin-left: 2.5vw!important;
+     margin-left: 2.5vw !important;
  }
 
 
@@ -299,6 +298,7 @@
 
  .theme-selector {
      margin-bottom: 2px !important;
+     margin-left: 1vw
  }
 
  .default-pallette {
@@ -325,12 +325,40 @@
 
  #info {
      margin: 2vh 0;
-     width:100%;
+     width: 100%;
  }
 
  #info>* {
      font-family: monospace;
      color: var(--secondary);
  }
+
+ #top-image {
+     animation-name: rotate;
+     animation-delay: 400ms;
+     animation-duration: 3s;
+     animation-iteration-count: infinite;
+     animation-timing-function: linear;
+ }
+
+ @keyframes rotate {
+     from {
+         transform: rotate(0)
+     }
+
+     to {
+         transform: rotate(360deg)
+     }
+ }
  
- 
+ /* CSS code to style the input element */
+ .file-label {
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid var(--secondary);
+  padding: 0 2vw;
+}
+
+input[type="file"] {
+  display: none;
+}

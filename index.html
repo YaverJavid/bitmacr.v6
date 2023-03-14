@@ -86,6 +86,11 @@
                     <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
                     <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
                     <span id="copied-color-shower"></span>
+                    <label for="image-to-pixel" class="file-label">
+
+                        <input type="file" id="image-to-pixel" accept="image/*">
+                        Add Pixel Data From Image
+                    </label>
                 </div>
                 <div>
                     <br>
@@ -133,8 +138,12 @@
                 <div>
                     <br>
                     <h3>Raw Data</h3> <br>
-                    <input type="file" id="raw-data-fp" accept=".spad" value="F">
-                    <br>
+
+                    <label for="raw-data-fp" class="file-label">
+                        Add Raw Data (SPAD)
+                        <input type="file" id="raw-data-fp" accept=".spad" value="F">
+                    </label>
+                    <br> <br>
                     <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
                     <br>
                     <input type="button" value="Export Raw Data(spad)" id="export-raw-data">
@@ -154,6 +163,7 @@
                     <input type="button" value="Solorize" id="filter-solorize">
                     <input type="button" value="Duotone" id="filter-duotone">
                     <input type="button" value="Randomise Color Shift" id="shift-colors-button">
+                    <input type="button" value="Sharpen Image" id="sharpen-image-button">
                 </div>
                 <div>
                     <br>
@@ -243,10 +253,10 @@
                 <div>
                     <br>
                     <h3>Previous Versions</h3>
-                    <a href="https://yaverjavid.github.io/bitmacr.v1">Version 1</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v2">Version 2</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v3">Version 3</a>  <br>
-                    <a href="https://yaverjavid.github.io/bitmacr.v4">Version 4</a>  <br>
+                    <a href="https://yaverjavid.github.io/bitmacr.v1">Version 1</a> <br>
+                    <a href="https://yaverjavid.github.io/bitmacr.v2">Version 2</a> <br>
+                    <a href="https://yaverjavid.github.io/bitmacr.v3">Version 3</a> <br>
+                    <a href="https://yaverjavid.github.io/bitmacr.v4">Version 4</a> <br>
                     <a href="https://yaverjavid.github.io/bitmacr.v5">Version 5</a>
                 </div>
             </div>
@@ -267,6 +277,8 @@
     <script src="js/browser-variation-support.js"></script>
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
+    <script>
+    </script>
 </body>
 
 </html>
