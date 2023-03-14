@@ -51,8 +51,8 @@ for (let i = 0; i < menuNav.children.length; i++) {
 }
 
 function getCurrentSelectedColor() {
-    if (colorModeSelector.value == "random") return getRandColor()
-    if (colorModeSelector.value == "hue") return `hsl(${++hue},50%,60%)`
+    if (colorModeSelector.value == "random") return rgbToHex(getRandColor())
+    if (colorModeSelector.value == "hue") return hslToHex(`hsl(${++hue%360},50%,60%)`)
     if (colorModeSelector.value == "eraser") return '#00000000'
     return currentSelectedColor
 }
@@ -330,12 +330,21 @@ guideCellBorderColor.addEventListener("input", function() {
     }
 })
 
+setUpLocalStorageBucket("bitmacr_border", "1")
+execBucket("bitmacr_border", "0", ()=>{
+    removeBorder()
+    borderCheckbox.checked = false
+})
+
 borderCheckbox.addEventListener("input", function() {
     if (this.checked) {
+                localStorage.setItem("bitmacr_border" , "1")
+
         for (var i = 0; i < paintCells.length; i++) {
             paintCells[i].style.borderWidth = '0.5px'
         }
     } else {
+        localStorage.setItem("bitmacr_border" , "0")
         for (var i = 0; i < paintCells.length; i++) {
             paintCells[i].style.borderWidth = '0'
         }
@@ -366,7 +375,9 @@ function handleQuadrandGuideClick() {
 }
 
 
+
 function addGuides() {
+    
     if (cols % 2 == 1) {
         let paintCells2d = []
         for (let i = 0; i < paintCells.length; i++)
@@ -629,7 +640,7 @@ document.getElementById("refresh-drawing-checker").addEventListener("click", () 
         squareArray(paintData),
         cellBorderWidthSlider.value,
         cellBorderColorSelector.value
-        )
+    )
     img.style.border = "1px solid var(--secondary)"
     drawingCheckerSection.removeChild(drawingCheckerSection.lastChild)
     drawingCheckerSection.appendChild(img)
@@ -644,3 +655,67 @@ paintModeSelector.addEventListener("input", () => {
 colorModeSelector.addEventListener("input", () => {
     colorModeShower.textContent = colorModeSelector.value
 })
+
+
+
+function imageToPixeArtData(image, width, height) {
+    // create a new canvas element
+    const canvas = document.createElement('canvas');
+
+    // set the canvas dimensions to match the desired dimensions
+    canvas.width = width;
+    canvas.height = height;
+
+    // get the canvas context
+    const context = canvas.getContext('2d');
+
+    // draw the image on the canvas
+    context.drawImage(image, 0, 0, width, height);
+
+    // get the pixel data from the canvas
+    const imageData = context.getImageData(0, 0, width, height);
+    const pixels = imageData.data;
+
+    // create a 2D array to hold the pixel data with hex color values
+    const pixelArray = [];
+
+    // loop through the pixels and create a 2D array of hex color values
+    for (let y = 0; y < height; y++) {
+        const row = [];
+        for (let x = 0; x < width; x++) {
+            const index = (y * width + x) * 4;
+            const r = pixels[index];
+            const g = pixels[index + 1];
+            const b = pixels[index + 2];
+            const a = pixels[index + 3];
+
+            // convert the RGB values to a hex color value
+            const hexColor = ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+            row.push("#" + hexColor);
+        }
+        pixelArray.push(row);
+    }
+
+    // return the 2D array of pixel data with hex color values
+    return pixelArray.flat();
+}
+
+
+
+document.getElementById("image-to-pixel").addEventListener("change", function() {
+    const file = this.files[0];
+    if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            let img = new Image();
+            img.src = event.target.result;
+            img.addEventListener("load", () => {
+                applyPaintData(imageToPixeArtData(img, rows, cols))
+                recordPaintData()
+
+            })
+        };
+
+        reader.readAsDataURL(file);
+    }
+});

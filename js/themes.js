@@ -40,7 +40,8 @@ let themes = [
     new Theme("#27AE60", "#FFC300", "Green Yellow"),
     new Theme("#D35400", "#F0E68C", "Orange Khaki"),
     new Theme("#2C3E50", "#FAD7A0", "Navy Peach"),
-    new Theme("#2C3E50", "#ffffff", "Navy White")
+    new Theme("#2C3E50", "#ffffff", "Navy White"),
+    new Theme("#000000", "#ffffff", "Amoled")
 ]
 
 for (var i = 0; i < themes.length; i++) {
