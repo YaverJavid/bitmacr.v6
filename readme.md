@@ -2,12 +2,24 @@
 
 
 ## Version History
+### 8.1.n
+- Fixed Replace Tools
+- Added Option for slight variations in color mode
+- Added Checkbox in basic Tools to only fill transparent cells
+- Added Support for 1-100 cell size
+
+- Few more minor features 
+
+
+
 ### 8.0.n
 - Added support for getting data from images
 - Fixed Bugs 
 - Hue Addition To Spheres
 - Changed the apprerence uploader buttons
 - Border showing status will now be saved between sessions 
+
+
 
 
 ### 7.0.n
