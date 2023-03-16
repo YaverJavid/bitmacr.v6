@@ -52,6 +52,9 @@ function flip2DArrayHorizontally(arr) {
 }
 
 function rgbToHex(str) {
+    if(str.includes("rgba")){
+        return rgbaToHex(str)
+    }
     str = str.replace('rgb(', '').replace(')').split(',')
     let r = parseInt(str[0])
     let g = parseInt(str[1])
@@ -86,14 +89,17 @@ function matchNumbers(n1, n2, th) {
 }
 
 function matchHexColors(c1, c2, th) {
-    c1 = hexToRgbObject(c1)
-    c2 = hexToRgbObject(c2)
+    c1 = hexToRgbaObject(c1)
+    c2 = hexToRgbaObject(c2)
+    if(c1.a != c2.a) return false
+    if(c1.a == 0 && c2.a == 0) return true
     return (
         matchNumbers(c1.r, c2.r, th) &&
         matchNumbers(c1.g, c2.g, th) &&
         matchNumbers(c1.b, c2.b, th)
     )
 }
+
 
 
 trimString = str => str.replace(/^\s+|\s+$/g, "");
@@ -118,6 +124,7 @@ function colorObjectToRGBA(obj) {
 
 function convertRGBAStrToObj(rgbaStr) {
     const rgbaArr = rgbaStr.match(/\d+/g).map(Number);
+    if(rgbaArr[3] == undefined) rgbaArr[3] = 1 
     return { r: rgbaArr[0], g: rgbaArr[1], b: rgbaArr[2], a: rgbaArr[3] };
 }
 
@@ -217,7 +224,6 @@ function rgbaToHex(rgbaColor) {
     let alpha = Math.round(a * 255).toString(16);
     hex += alpha.length === 1 ? '0' + alpha : alpha;
   }
-
   return hex;
 }
 
@@ -256,4 +262,40 @@ function hslToHex(hsl) {
   };
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function slightlyDifferentColor(hexColor) {
+  // Convert hex color string to RGB values
+  const r = parseInt(hexColor.substring(1, 3), 16);
+  const g = parseInt(hexColor.substring(3, 5), 16);
+  const b = parseInt(hexColor.substring(5, 7), 16);
+
+  // Calculate random variations for each RGB value
+  const rVariation = Math.floor(Math.random() * 27) - 12;
+  const gVariation = Math.floor(Math.random() * 27) - 12;
+  const bVariation = Math.floor(Math.random() * 27) - 12;
+
+  // Apply variations to RGB values and ensure they stay within valid range (0-255)
+  const newR = Math.min(Math.max(r + rVariation, 0), 255);
+  const newG = Math.min(Math.max(g + gVariation, 0), 255);
+  const newB = Math.min(Math.max(b + bVariation, 0), 255);
+
+  // Convert RGB values back to hex color string and return with the same opacity
+  const newHexColor = '#' + ((1 << 24) + (newR << 16) + (newG << 8) + newB).toString(16).slice(1);
+  const opacity = hexColor.length === 9 ? hexColor.substring(7, 9) : null;
+  return opacity ? newHexColor + opacity : newHexColor;
+}
+
+
+function rgbaObjectToHex(color) {
+  const r = Math.round(color.r);
+  const g = Math.round(color.g);
+  const b = Math.round(color.b);
+  const a = Math.round(color.a * 255);
+  const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  return "#" + hex + pad(a.toString(16), 2);
+}
+
+function pad(str, len) {
+  return "0".repeat(len - str.length) + str;
 }

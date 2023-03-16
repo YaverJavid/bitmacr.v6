@@ -3,6 +3,15 @@ let getSecondaryColor = () => getComputedStyle(root).getPropertyValue("--seconda
 let setAccentColor = color => root.style.setProperty("--accent", color)
 let setSecondaryColor = color => root.style.setProperty("--secondary", color)
 
+let colorToBeReplaced = colorToBeReplacedSelector.value
+let colorToReplaceWith = colorToReplaceWithSelector.value
+colorToBeReplacedSelector.addEventListener("change", ()=>{
+    colorToBeReplaced = colorToBeReplacedSelector.value
+})
+
+colorToReplaceWithSelector.addEventListener("change", () => {
+    colorToReplaceWith = colorToReplaceWithSelector.value
+})
 
 let cellWidth
 let cellHeight
@@ -16,7 +25,7 @@ let usedColors = defaultPalletteColors
 let settingsLocations = []
 let pallateColors = document.getElementsByClassName("pallate-color")
 let currentSelectedColor = undefined
-setCurrentColor("#162829")
+setCurrentColor("#273782")
 let chooseColorRandomly = false
 let rows, cols
 let menuSegmentLocations = []
@@ -50,10 +59,13 @@ for (let i = 0; i < menuNav.children.length; i++) {
     }
 }
 
+let hue2 = 0
 function getCurrentSelectedColor() {
     if (colorModeSelector.value == "random") return rgbToHex(getRandColor())
     if (colorModeSelector.value == "hue") return hslToHex(`hsl(${++hue%360},50%,60%)`)
+    if (colorModeSelector.value == "hue2") return hslToHex(`hsl(${++hue2%360},50%,80%)`)
     if (colorModeSelector.value == "eraser") return '#00000000'
+    if (colorModeSelector.value == "slight-variations") return slightlyDifferentColor(currentSelectedColor)
     return currentSelectedColor
 }
 
@@ -68,13 +80,17 @@ function recordPaintData() {
     return data
 }
 
-function applyPaintData(data) {
+function applyPaintData(data, isUndoRedo = true) {
+    if (isUndoRedo) {
+        for (var i = 0; i < paintCells.length; i++) {
+            paintCells[i].style.background = data[i]
+        }
+        return
+    }
     for (var i = 0; i < paintCells.length; i++) {
-        paintCells[i].style.backgroundColor = data[i]
+        setCellColor(paintCells[i], data[i])
     }
 }
-
-
 
 function addCanvas(argRows, argCols) {
     rows = argRows
@@ -99,16 +115,18 @@ function addCanvas(argRows, argCols) {
                 changeCellBorderColor(borderColor)
                 if (colorCopierCheckboxes.selectColorForFind.checked) {
                     colorToBeReplacedSelector.value = selectedColor
+                    colorToBeReplaced = selectedColor
                     colorCopierCheckboxes.selectColorForFind.checked = false
                 } else if (colorCopierCheckboxes.colorSelectCheckbox.checked) {
                     setCurrentColor(selectedColor)
                     colorCopierCheckboxes.colorSelectCheckbox.checked = false
                 } else if (colorCopierCheckboxes.selectColorForReplacer.checked) {
                     colorToReplaceWithSelector.value = selectedColor
+                    colorToReplaceWith = selectedColor
                     colorCopierCheckboxes.selectColorForReplacer.checked = false
                 } else if (colorCopierCheckboxes.copyColorFromCellCheckbox.checked) {
                     copyTextToClipboard(selectedColor);
-                    copiedColorShower.textContent = `If Color Wasn't Copied, Copy Manually: ${selectedColor}`
+                    copiedColorShower.innerHTML = `If Color Wasn't Copied, Copy Manually: <span class="color">${selectedColor}</span> <span style="user-select:none; color: ${selectedColor}; background: ${selectedColor}; border: 0.5px solid var(-secondary)" >!!!!</span>`
                     colorCopierCheckboxes.copyColorFromCellCheckbox.checked = false
                 }
                 recordPaintData()
@@ -129,7 +147,7 @@ function addCanvas(argRows, argCols) {
                 recordPaintData()
             }
             else {
-                this.style.background = getCurrentSelectedColor()
+                setCellColor(this, getCurrentSelectedColor())
                 recordPaintData()
             }
 
@@ -137,6 +155,8 @@ function addCanvas(argRows, argCols) {
         })
         paintCells[i].style.borderColor = borderColor
     }
+    // if (guideCheckbox.checked || guideCheckbox2.checked)
+        // addGuides()
     recordPaintData()
 
 }
@@ -166,14 +186,14 @@ function setCurrentColor(color) {
 
 document.getElementById('clear-button').addEventListener("click", () => {
     for (let i = 0; i < paintCells.length; i++) {
-        paintCells[i].style.background = "#00000000"
+        setCellColor(paintCells[i], "#00000000")
     }
     recordPaintData()
 })
 
 document.getElementById('fill-all-button').addEventListener("click", () => {
     for (let i = 0; i < paintCells.length; i++) {
-        paintCells[i].style.background = getCurrentSelectedColor()
+        setCellColor(paintCells[i], getCurrentSelectedColor())
     }
     recordPaintData()
 })
@@ -189,7 +209,7 @@ function exportImage() {
     downloadImage(dataUrl, 'syn-pixmacr-yj.png')
 }
 
-function colorDataToImage(colors, borderWidth, borderColor) {
+function colorDataToImage(colors, borderWidth, borderColor, res=1024) {
     // Calculate the dimensions of the canvas
     const canvasWidth = colors[0].length;
     const canvasHeight = colors.length;
@@ -228,15 +248,15 @@ function colorDataToImage(colors, borderWidth, borderColor) {
     // Put the ImageData onto the canvas
     ctx.putImageData(imageData, 0, 0);
 
-    // Scale the canvas up to 1024x1024
+    // Scale the canvas up to resXres
     const scaledCanvas = document.createElement('canvas');
-    scaledCanvas.width = 1024;
-    scaledCanvas.height = 1024;
+    scaledCanvas.width = res;
+    scaledCanvas.height = res;
 
     const scaledCtx = scaledCanvas.getContext('2d');
     scaledCtx.imageSmoothingEnabled = false;
-    scaledCtx.drawImage(canvas, 0, 0, 1024, 1024);
-    let cellSize = 1024 / colors.length
+    scaledCtx.drawImage(canvas, 0, 0, res, res);
+    let cellSize = res / colors.length
     // If there is a border, draw it onto the final canva
     scaledCtx.lineWidth = borderWidth;
     scaledCtx.strokeStyle = borderColor;
@@ -331,20 +351,20 @@ guideCellBorderColor.addEventListener("input", function() {
 })
 
 setUpLocalStorageBucket("bitmacr_border", "1")
-execBucket("bitmacr_border", "0", ()=>{
+execBucket("bitmacr_border", "0", () => {
     removeBorder()
     borderCheckbox.checked = false
 })
 
 borderCheckbox.addEventListener("input", function() {
     if (this.checked) {
-                localStorage.setItem("bitmacr_border" , "1")
+        localStorage.setItem("bitmacr_border", "1")
 
         for (var i = 0; i < paintCells.length; i++) {
             paintCells[i].style.borderWidth = '0.5px'
         }
     } else {
-        localStorage.setItem("bitmacr_border" , "0")
+        localStorage.setItem("bitmacr_border", "0")
         for (var i = 0; i < paintCells.length; i++) {
             paintCells[i].style.borderWidth = '0'
         }
@@ -377,7 +397,7 @@ function handleQuadrandGuideClick() {
 
 
 function addGuides() {
-    
+
     if (cols % 2 == 1) {
         let paintCells2d = []
         for (let i = 0; i < paintCells.length; i++)
@@ -505,22 +525,17 @@ function updateCopyTargetString() {
 updateCopyTargetString()
 
 randomiseCellsButton.addEventListener("click", () => {
-    for (let i = 0; i < paintCells.length; i++) {
-        paintCells[i].style.background = getRandColor()
-    }
+    for (let i = 0; i < paintCells.length; i++) setCellColor(paintCells[i], getRandColor())
     recordPaintData()
 
 })
 
 
 replaceButton.addEventListener("click", () => {
-    let colorToBeReplaced = colorToBeReplacedSelector.value
-    let colorToReplaceWith = colorToReplaceWithSelector.value
     for (var i = 0; i < paintCells.length; i++) {
-        let currentColor = rgbToHex(getComputedStyle(paintCells[i]).getPropertyValue("background"))
+        let currentColor = rgbToHex(getComputedStyle(paintCells[i]).getPropertyValue("background-color"))
         if (matchHexColors(colorToBeReplaced, currentColor, colorMatchThresholdSlider.value))
-            paintCells[i].style.backgroundColor = colorToReplaceWith
-
+            setCellColor(paintCells[i], colorToReplaceWith)
     }
     recordPaintData()
 })
@@ -712,10 +727,14 @@ document.getElementById("image-to-pixel").addEventListener("change", function() 
             img.addEventListener("load", () => {
                 applyPaintData(imageToPixeArtData(img, rows, cols))
                 recordPaintData()
-
             })
         };
-
         reader.readAsDataURL(file);
     }
 });
+
+
+function setCellColor(cellElem, color) {
+    if (onlyFillTransaprent.checked && window.getComputedStyle(cellElem).getPropertyValue('background-color') != "rgba(0, 0, 0, 0)") return
+    cellElem.style.background = color
+}
