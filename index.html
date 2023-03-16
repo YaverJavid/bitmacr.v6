@@ -36,7 +36,7 @@
                     <h3 data-shortcutkey="s">General</h3>
                     <br>
                     <label for="color-selector">Select Color : </label>
-                    <input value="#FF0000" type="color" name="color-selector" id="color-selector">
+                    <input value="#FF00FF" type="color" name="color-selector" id="color-selector">
                     Or <input class="hex-input" type="text" id="color-selector-hex" placeholder="Enter Hex..." maxlength="7">
                     <br>
                     <label for="select-color">Select Color From Cell : </label>
@@ -48,7 +48,7 @@
                     <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
                     <br>
                     <label for="cell-slider">Canvas Size : </label>
-                    <input type="range" name="cell-slider" id="cells-slider" min='1' max='75' value='10'>
+                    <input type="range" name="cell-slider" id="cells-slider" min='1' max='100' value='10'>
                     <span id="canvas-size-shower">(10)</span><br>
                     <input type="button" id="fliph-button" value="Flip Horizontally">
                     <input type="button" id="flipv-button" value="Flip Vertically">
@@ -72,8 +72,10 @@
                     <label for="color-mode-selector">Color Mode : </label>
                     <select id="color-mode-selector">
                         <option value="normal">Normal</option>
+                        <option value="slight-variations">Slight Variations</option>
                         <option value="random">Random</option>
                         <option value="hue">Hue</option>
+                        <option value="hue2">Hue2</option>
                         <option value="eraser">Eraser</option>
                     </select> <br>
                     <label for="paintModeSelector">Onclick Fill : </label>
@@ -83,14 +85,17 @@
                         <option value="col">Coloumn</option>
                     </select>
                     <br>
-                    <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
-                    <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
-                    <span id="copied-color-shower"></span>
+                    <label for="only-fill-transaprent">Only Fill Transaprent</label>
+                    <input type="checkbox" id="only-fill-transaprent" /> <br>
                     <label for="image-to-pixel" class="file-label">
-
                         <input type="file" id="image-to-pixel" accept="image/*">
                         Add Pixel Data From Image
                     </label>
+                    <br>
+                    <br>
+                    <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
+                    <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
+                    <span id="copied-color-shower"></span> <br> <br>
                 </div>
                 <div>
                     <br>
@@ -163,7 +168,6 @@
                     <input type="button" value="Solorize" id="filter-solorize">
                     <input type="button" value="Duotone" id="filter-duotone">
                     <input type="button" value="Randomise Color Shift" id="shift-colors-button">
-                    <input type="button" value="Sharpen Image" id="sharpen-image-button">
                 </div>
                 <div>
                     <br>
@@ -224,9 +228,9 @@
                     <h3 data-shortcutkey="z">Settings</h3> <br>
                     <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
                     <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input> <br>
-                    <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App (Andriod)</a> <br>
+                    <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App(Andriod)</a> <br>
                     <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
-                    <span>Version : 8.0</span>
+                    <span>Version : 8.1</span>
                 </div>
                 <div>
                     <br>
@@ -245,7 +249,7 @@
                 </div>
                 <div id="drawing-checker-section">
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="drawing-checker">See How Your Drawing Looks</h3>
+                    <h3 data-type="settings-menu" data-settingsname="drawing-checker">Drawing Preview</h3>
                     <br>
                     <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
                     <img width="0" height="0">
