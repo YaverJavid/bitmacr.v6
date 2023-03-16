@@ -1,10 +1,10 @@
-> THIS IS VERSION : ```8.0```
+> THIS IS VERSION : ```8.1```
 
 
 ## Version History
 ### 8.1.n
 - Fixed Replace Tools
-- Added Option for slight variations in color mode
+- Added Option for `slight variations` & `hue2` in color mode
 - Added Checkbox in basic Tools to only fill transparent cells
 - Added Support for 1-100 cell size
 
