@@ -5,7 +5,7 @@ let setSecondaryColor = color => root.style.setProperty("--secondary", color)
 
 let colorToBeReplaced = colorToBeReplacedSelector.value
 let colorToReplaceWith = colorToReplaceWithSelector.value
-colorToBeReplacedSelector.addEventListener("change", ()=>{
+colorToBeReplacedSelector.addEventListener("change", () => {
     colorToBeReplaced = colorToBeReplacedSelector.value
 })
 
@@ -29,7 +29,6 @@ setCurrentColor("#273782")
 let chooseColorRandomly = false
 let rows, cols
 let menuSegmentLocations = []
-let hue = 0
 
 guideCellBorderColor.value = borderColor
 
@@ -59,15 +58,6 @@ for (let i = 0; i < menuNav.children.length; i++) {
     }
 }
 
-let hue2 = 0
-function getCurrentSelectedColor() {
-    if (colorModeSelector.value == "random") return rgbToHex(getRandColor())
-    if (colorModeSelector.value == "hue") return hslToHex(`hsl(${++hue%360},50%,60%)`)
-    if (colorModeSelector.value == "hue2") return hslToHex(`hsl(${++hue2%360},50%,80%)`)
-    if (colorModeSelector.value == "eraser") return '#00000000'
-    if (colorModeSelector.value == "slight-variations") return slightlyDifferentColor(currentSelectedColor)
-    return currentSelectedColor
-}
 
 
 function recordPaintData() {
@@ -128,6 +118,21 @@ function addCanvas(argRows, argCols) {
                     copyTextToClipboard(selectedColor);
                     copiedColorShower.innerHTML = `If Color Wasn't Copied, Copy Manually: <span class="color">${selectedColor}</span> <span style="user-select:none; color: ${selectedColor}; background: ${selectedColor}; border: 0.5px solid var(-secondary)" >!!!!</span>`
                     colorCopierCheckboxes.copyColorFromCellCheckbox.checked = false
+                } else if(colorCopierCheckboxes.selectHueFromCell.checked){
+                    colorCopierCheckboxes.selectHueFromCell.checked = false
+                    hueAngle.value = getHSLFromHex(selectedColor).hue
+                    updateHueShower()
+                } else if (colorCopierCheckboxes.selectLightingFromCell.checked) {
+                    // LIGHTING
+                    colorCopierCheckboxes.selectLightingFromCell.checked = false
+                    lightingSlider.value = getHSLFromHex(selectedColor).lightness * 100
+                    
+                    lightingShower.innerHTML = `(${lightingSlider.value}%)`
+                } else if (colorCopierCheckboxes.selectSaturationFromCell.checked) {
+                    // SATURATION
+                    colorCopierCheckboxes.selectSaturationFromCell.checked = false
+                    saturationSlider.value = getHSLFromHex(selectedColor).saturation * 100
+                    saturationShower.innerHTML = `(${saturationSlider.value}%)`
                 }
                 recordPaintData()
                 colorSelectionInProgress = false
@@ -156,7 +161,7 @@ function addCanvas(argRows, argCols) {
         paintCells[i].style.borderColor = borderColor
     }
     // if (guideCheckbox.checked || guideCheckbox2.checked)
-        // addGuides()
+    // addGuides()
     recordPaintData()
 
 }
@@ -199,17 +204,17 @@ document.getElementById('fill-all-button').addEventListener("click", () => {
 })
 
 
-function exportImage() {
+function exportImage(mini = false) {
     let currentBuffer = buffer.getItem()
     let paintData = []
     for (let i = 0; i < currentBuffer.length; i++) {
         paintData.push(rgbaToHex(currentBuffer[i]))
     }
-    let dataUrl = colorDataToImage(squareArray(paintData), cellBorderWidthSlider.value, cellBorderColorSelector.value)
+    let dataUrl = colorDataToImage(squareArray(paintData), cellBorderWidthSlider.value, cellBorderColorSelector.value, mini)
     downloadImage(dataUrl, 'syn-pixmacr-yj.png')
 }
 
-function colorDataToImage(colors, borderWidth, borderColor, res=1024) {
+function colorDataToImage(colors, borderWidth, borderColor, mini = false, res = 1024) {
     // Calculate the dimensions of the canvas
     const canvasWidth = colors[0].length;
     const canvasHeight = colors.length;
@@ -247,7 +252,7 @@ function colorDataToImage(colors, borderWidth, borderColor, res=1024) {
 
     // Put the ImageData onto the canvas
     ctx.putImageData(imageData, 0, 0);
-
+    if (mini) return canvas.toDataURL()
     // Scale the canvas up to resXres
     const scaledCanvas = document.createElement('canvas');
     scaledCanvas.width = res;
@@ -279,9 +284,9 @@ function colorDataToImage(colors, borderWidth, borderColor, res=1024) {
 
 
 
-document.getElementById('export-button').addEventListener("click", exportImage)
-document.getElementById('export-button2').addEventListener("click", exportImage)
-
+document.getElementById('export-button').addEventListener("click", () => exportImage())
+document.getElementById('export-button2').addEventListener("click", () => exportImage())
+document.getElementById("export-mini").addEventListener("click", () => exportImage(true))
 
 cellsSlider.addEventListener("input", function() {
     canvasSizeShower.innerHTML = `(${this.value})`
@@ -354,9 +359,18 @@ setUpLocalStorageBucket("bitmacr_border", "1")
 execBucket("bitmacr_border", "0", () => {
     removeBorder()
     borderCheckbox.checked = false
+    guideCellBorder2.checked = false
 })
 
-borderCheckbox.addEventListener("input", function() {
+borderCheckbox.addEventListener("input", handleGuideBorderVisibility)
+guideCellBorder2.addEventListener("input", handleGuideBorderVisibility)
+
+guideCheckbox.addEventListener("input", handleQuadrandGuideClick)
+guideCheckbox2.addEventListener("input", handleQuadrandGuideClick)
+
+function handleGuideBorderVisibility() {
+    borderCheckbox.checked = this.checked
+    guideCellBorder2.checked = this.checked
     if (this.checked) {
         localStorage.setItem("bitmacr_border", "1")
 
@@ -371,10 +385,7 @@ borderCheckbox.addEventListener("input", function() {
     }
     if (guideCheckbox.checked) addGuides()
 
-})
-
-guideCheckbox.addEventListener("input", handleQuadrandGuideClick)
-guideCheckbox2.addEventListener("input", handleQuadrandGuideClick)
+}
 
 function handleQuadrandGuideClick() {
     guideCheckbox.checked = this.checked
@@ -618,12 +629,14 @@ document.getElementById("color-selector-hex").addEventListener("input", function
 document.getElementById("color-to-be-replaced-selector-hex").addEventListener("input", function() {
     if (validateHex(this.value)) {
         colorToBeReplacedSelector.value = this.value
+        colorToBeReplaced = this.value
     }
 })
 
 document.getElementById("color-to-replace-with-selector-hex").addEventListener("input", function() {
     if (validateHex(this.value)) {
         colorToReplaceWithSelector.value = this.value
+        colorToReplaceWith = this.value
     }
 })
 

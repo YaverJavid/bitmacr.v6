@@ -52,7 +52,7 @@ function flip2DArrayHorizontally(arr) {
 }
 
 function rgbToHex(str) {
-    if(str.includes("rgba")){
+    if (str.includes("rgba")) {
         return rgbaToHex(str)
     }
     str = str.replace('rgb(', '').replace(')').split(',')
@@ -91,8 +91,8 @@ function matchNumbers(n1, n2, th) {
 function matchHexColors(c1, c2, th) {
     c1 = hexToRgbaObject(c1)
     c2 = hexToRgbaObject(c2)
-    if(c1.a != c2.a) return false
-    if(c1.a == 0 && c2.a == 0) return true
+    if (c1.a != c2.a) return false
+    if (c1.a == 0 && c2.a == 0) return true
     return (
         matchNumbers(c1.r, c2.r, th) &&
         matchNumbers(c1.g, c2.g, th) &&
@@ -124,7 +124,7 @@ function colorObjectToRGBA(obj) {
 
 function convertRGBAStrToObj(rgbaStr) {
     const rgbaArr = rgbaStr.match(/\d+/g).map(Number);
-    if(rgbaArr[3] == undefined) rgbaArr[3] = 1 
+    if (rgbaArr[3] == undefined) rgbaArr[3] = 1
     return { r: rgbaArr[0], g: rgbaArr[1], b: rgbaArr[2], a: rgbaArr[3] };
 }
 
@@ -212,90 +212,114 @@ function brightenHexColor(hexColor, threshold) {
 }
 
 function rgbaToHex(rgbaColor) {
-  let rgbaValues = rgbaColor.substring(rgbaColor.indexOf('(') + 1, rgbaColor.lastIndexOf(')')).split(',');
-  let r = parseInt(rgbaValues[0]);
-  let g = parseInt(rgbaValues[1]);
-  let b = parseInt(rgbaValues[2]);
-  let a = parseFloat(rgbaValues[3]);
+    let rgbaValues = rgbaColor.substring(rgbaColor.indexOf('(') + 1, rgbaColor.lastIndexOf(')')).split(',');
+    let r = parseInt(rgbaValues[0]);
+    let g = parseInt(rgbaValues[1]);
+    let b = parseInt(rgbaValues[2]);
+    let a = parseFloat(rgbaValues[3]);
 
-  let hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  
-  if (!isNaN(a)) {
-    let alpha = Math.round(a * 255).toString(16);
-    hex += alpha.length === 1 ? '0' + alpha : alpha;
-  }
-  return hex;
+    let hex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+    if (!isNaN(a)) {
+        let alpha = Math.round(a * 255).toString(16);
+        hex += alpha.length === 1 ? '0' + alpha : alpha;
+    }
+    return hex;
 }
 
 
 function hslToHex(hsl) {
-  const [hue, saturation, lightness] = hsl
-    .match(/[\d.]+/g)
-    .map((x) => parseFloat(x));
+    const [hue, saturation, lightness] = hsl
+        .match(/[\d.]+/g)
+        .map((x) => parseFloat(x));
 
-  const h = hue / 360;
-  const s = saturation / 100;
-  const l = lightness / 100;
+    const h = hue / 360;
+    const s = saturation / 100;
+    const l = lightness / 100;
 
-  let r, g, b;
-  if (s === 0) {
-    r = g = b = l;
-  } else {
-    const hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
+    let r, g, b;
+    if (s === 0) {
+        r = g = b = l;
+    } else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    const toHex = (x) => {
+        const hex = Math.round(x * 255).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
     };
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1 / 3);
-  }
 
-  const toHex = (x) => {
-    const hex = Math.round(x * 255).toString(16);
-    return hex.length === 1 ? '0' + hex : hex;
-  };
-
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-}
-
-function slightlyDifferentColor(hexColor) {
-  // Convert hex color string to RGB values
-  const r = parseInt(hexColor.substring(1, 3), 16);
-  const g = parseInt(hexColor.substring(3, 5), 16);
-  const b = parseInt(hexColor.substring(5, 7), 16);
-
-  // Calculate random variations for each RGB value
-  const rVariation = Math.floor(Math.random() * 27) - 12;
-  const gVariation = Math.floor(Math.random() * 27) - 12;
-  const bVariation = Math.floor(Math.random() * 27) - 12;
-
-  // Apply variations to RGB values and ensure they stay within valid range (0-255)
-  const newR = Math.min(Math.max(r + rVariation, 0), 255);
-  const newG = Math.min(Math.max(g + gVariation, 0), 255);
-  const newB = Math.min(Math.max(b + bVariation, 0), 255);
-
-  // Convert RGB values back to hex color string and return with the same opacity
-  const newHexColor = '#' + ((1 << 24) + (newR << 16) + (newG << 8) + newB).toString(16).slice(1);
-  const opacity = hexColor.length === 9 ? hexColor.substring(7, 9) : null;
-  return opacity ? newHexColor + opacity : newHexColor;
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
 
 function rgbaObjectToHex(color) {
-  const r = Math.round(color.r);
-  const g = Math.round(color.g);
-  const b = Math.round(color.b);
-  const a = Math.round(color.a * 255);
-  const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  return "#" + hex + pad(a.toString(16), 2);
+    const r = Math.round(color.r);
+    const g = Math.round(color.g);
+    const b = Math.round(color.b);
+    const a = Math.round(color.a * 255);
+    const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    return "#" + hex + pad(a.toString(16), 2);
 }
 
 function pad(str, len) {
-  return "0".repeat(len - str.length) + str;
+    return "0".repeat(len - str.length) + str;
+}
+
+
+function getHSLFromHex(hex) {
+    // Convert hex to RGB
+    var r = parseInt(hex.substring(1, 3), 16) / 255;
+    var g = parseInt(hex.substring(3, 5), 16) / 255;
+    var b = parseInt(hex.substring(5, 7), 16) / 255;
+
+    // Find the minimum and maximum values of R, G and B
+    var cmin = Math.min(r, g, b),
+        cmax = Math.max(r, g, b),
+        delta = cmax - cmin,
+        hue = 0,
+        saturation = 0,
+        lightness = 0;
+
+    // Calculate hue
+    if (delta === 0) {
+        hue = 0;
+    } else if (cmax === r) {
+        hue = ((g - b) / delta) % 6;
+    } else if (cmax === g) {
+        hue = (b - r) / delta + 2;
+    } else {
+        hue = (r - g) / delta + 4;
+    }
+
+    hue = Math.round(hue * 60);
+
+    if (hue < 0) {
+        hue += 360;
+    }
+
+    // Calculate lightness
+    lightness = (cmax + cmin) / 2;
+
+    // Calculate saturation
+    if (delta === 0) {
+        saturation = 0;
+    } else {
+        saturation = delta / (1 - Math.abs(2 * lightness - 1));
+    }
+
+    // Return an object containing the HSL values
+    return { hue: hue, saturation: saturation, lightness: lightness };
 }

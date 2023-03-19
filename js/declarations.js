@@ -1,3 +1,7 @@
+/*
+   NOTICE
+   ONLY UNIVERSALLY REQUIRED DECLARATIONS ARE DEFINATELY HERE
+*/
 const paintCells = document.getElementsByClassName("cell")
 const cellsSlider = document.getElementById('cells-slider')
 const paintZone = document.getElementById('paint-zone')
@@ -47,13 +51,16 @@ const copiedColorShower = document.getElementById("copied-color-shower")
 const drawingCheckerSection = document.getElementById("drawing-checker-section")
 const paintModeSelector = document.getElementById("paint-mode-selector")
 const clickModeSelector = document.getElementById("click-mode-selector")
-
+const guideCellBorder2 = document.getElementById('guide-cell-border2')
 
 const colorCopierCheckboxes = {
     colorSelectCheckbox: document.getElementById("select-color"),
     selectColorForFind: document.getElementById("select-color-for-find"),
     selectColorForReplacer: document.getElementById("select-color-for-replacer"),
-    copyColorFromCellCheckbox: document.getElementById("copy-color-from-cell-checkbox")
+    copyColorFromCellCheckbox: document.getElementById("copy-color-from-cell-checkbox"),
+    selectHueFromCell: document.getElementById("select-hue-from-cell"),
+    selectSaturationFromCell: document.getElementById("select-saturation-cell"),
+    selectLightingFromCell: document.getElementById("select-lighting-cell")
 }
 
 const bottomControlsContainer = document.getElementById("bottom-control-container")
@@ -65,3 +72,24 @@ const paintModeInfoShower = document.getElementById("paint-mode-info-shower")
 const colorModeSelector = document.getElementById("color-mode-selector")
 const colorModeShower = document.getElementById("color-mode-shower")
 const onlyFillTransaprent = document.getElementById("only-fill-transaprent")
+
+// Color Settings
+
+const colorStringInput = document.getElementById("color-string-input")
+const hueSpeedSlider = document.getElementById("hue-speed-slider")
+const saturationSlider = document.getElementById("saturation-slider")
+const lightingSlider = document.getElementById("lighting-slider")
+const hueAngle = document.getElementById("hue-angle")
+
+// Showers
+
+const hueSpeedShower = document.getElementById("hue-speed-shower")
+const lightingShower = document.getElementById("lighting-shower")
+const saturationShower = document.getElementById("saturation-shower")
+const colorVariationThSlider = document.getElementById("color-variation-th-slider")
+const colorVariationThShower = document.getElementById("color-variation-th-shower")
+const hueAngleShower = document.getElementById("hue-angle-shower")
+
+// Extras
+
+const slightVariationsCheckbox = document.getElementById("slight-variations-checkbox")
