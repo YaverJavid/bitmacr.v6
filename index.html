@@ -30,6 +30,7 @@
         <div id="menu-nav">
         </div>
         <div id="controls-container">
+
             <div class="controls" id="bottom-control-container">
                 <div>
                     <br>
@@ -53,7 +54,9 @@
                     <input type="button" id="fliph-button" value="Flip Horizontally">
                     <input type="button" id="flipv-button" value="Flip Vertically">
                     <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
-                    <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise">
+                    <input type="button" id="rotate-anticlockwise-button" value="Rotate Anti-Clockwise"> <br>
+                    <label for="guide-cell-border2">Cell Border : </label>
+                    <input type="checkbox" id="guide-cell-border2" checked>
                 </div>
                 <div>
                     <br>
@@ -72,12 +75,18 @@
                     <label for="color-mode-selector">Color Mode : </label>
                     <select id="color-mode-selector">
                         <option value="normal">Normal</option>
-                        <option value="slight-variations">Slight Variations</option>
                         <option value="random">Random</option>
                         <option value="hue">Hue</option>
-                        <option value="hue2">Hue2</option>
                         <option value="eraser">Eraser</option>
-                    </select> <br>
+                        <option value="css-color">CSS Color String</option>
+                    </select>
+                    <input type="button" value="Color Settings" onclick="redirectViewToSetting('color-settings')">
+                    <br>
+                    <label for="slight-variations-checkbox">Slight Variations In Color : </label>
+                    <input type="checkbox" id="slight-variations-checkbox">
+                    <br>
+                    <input type="text" id="color-string-input" placeholder="Enter CSS Color String">
+                    <br>
                     <label for="paintModeSelector">Onclick Fill : </label>
                     <select id="click-mode-selector">
                         <option value="default">Cell</option>
@@ -96,6 +105,33 @@
                     <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
                     <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
                     <span id="copied-color-shower"></span> <br> <br>
+                </div>
+                <div>
+                    <br>
+                    <h3 data-type="settings-menu" data-settingsname="color-settings">Color Settings</h3> <br>
+                    <h3>Hue Settings</h3> <br>
+                    <label for="saturation-slider">Saturation : </label>
+                    <input type="range" name="" id="saturation-slider" min="0" max="100" value="50">
+                    <span id="saturation-shower">(50%)</span>
+                    <input type="checkbox" id="select-saturation-cell">
+                    <br>
+                    <label for="lighting-slider">Lighting : </label>
+                    <input type="range" id="lighting-slider" min="0" max="100" value="40">
+                    <span id="lighting-shower">(40%)</span>
+                    <input type="checkbox" id="select-lighting-cell">
+                    <br>
+                    <label for="hue-angle">Hue Angle : </label>
+                    <input type="range" id="hue-angle" min="0" max="360" step="0.1" value="0">
+                    <span id="hue-angle-shower">(0&deg;)</span>
+                    <input type="checkbox" id="select-hue-from-cell">
+                    <br>
+                    <label for="hue-speed-slider">Speed : </label>
+                    <input type="range" id="hue-speed-slider" min="0" max="15" step="0.1" value="1">
+                    <span id="hue-speed-shower">(1&deg;)</span>
+                    <h3>Variation Settings</h3> <br>
+                    <label for="color-variation-th-slider">Threshold : </label>
+                    <input type="range" id="color-variation-th-slider" max="15" min="1" value="2">
+                    <span id="color-variation-th-shower">(2)</span>
                 </div>
                 <div>
                     <br>
@@ -215,7 +251,19 @@
                     <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
                     <br>
                     <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
-                    <input type="button" id="export-button2" value="Export">
+                    <input type="button" id="export-button2" value="Export"> <br>
+                    <input type="button" value="Export Mini" id="export-mini">
+                </div>
+                <div>
+                    <br>
+                    <h3>Animation(beta)</h3> <br>
+                    <input type="button" value="Add Frame" id="add-frame">
+                    <br> <span id="frame-count">0</span> Frame(s) <br>
+                    <input type="number" placeholder="Time Per Frame(ms)">
+                    <br>
+                    <div id="frames"></div>
+                    <br>
+                    <input type="button" value="Export GIF" id="export-gif">
                 </div>
                 <div id="themes-section">
                     <br>
@@ -230,11 +278,11 @@
                     <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input> <br>
                     <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App(Andriod)</a> <br>
                     <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
-                    <span>Version : 8.1</span>
+                    <span>Version : 9.2.0</span>
                 </div>
                 <div>
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="general">General Settings</h3> <br>
+                    <h3 data-type="settings-menu" data-settingsname="general">General</h3> <br>
                     <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
                     <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
                     <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
@@ -276,13 +324,14 @@
     <script src="js/shapes.js"></script>
     <script src="js/main.js"></script>
     <script src="js/settings.js"></script>
+    <script src="js/color-settings.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/raw-data-handler.js"></script>
     <script src="js/browser-variation-support.js"></script>
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
-    <script>
-    </script>
+    <script src="js/animation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js" integrity="sha512-nNOFtIS+H0lwgdUDaPn/g1ssw3uN9AkEM7zy2wLaTQeLQNeNiitUcLpEpDIh3Z4T22MdeTNru/SQbNM4ig2rng==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>
