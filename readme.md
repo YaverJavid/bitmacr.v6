@@ -1,7 +1,19 @@
-> THIS IS VERSION : ```8.1```
+> THIS IS VERSION : ```9.0.1```
 
 
 ## Version History
+### 9.2.0
+- Fixed Bugs
+- Added color settings tab
+- Added animation creator tab(not working fully)
+- Added css color string support
+- You can now export mini images with every cell one pixel 
+- You can now hide and show borders on first tab
+- color settings include hue settings & variation setting for now
+- In hue settings you can control hue speed, saturation , lightingness, hue angle.
+- In variation settings you can control threshold of how much you want your variations to be
+
+
 ### 8.1.n
 - Fixed Replace Tools
 - Added Option for `slight variations` & `hue2` in color mode
