@@ -37,8 +37,6 @@ function parseRawData(rawData) {
 }
 
 function getCurrentDrawingData() {
-    let cols = Math.round(canvas.height / cellHeight)
-    let rows = Math.round(canvas.width / cellWidth)
     return toRawData(buffer.getItem(), rows, cols)
 }
 

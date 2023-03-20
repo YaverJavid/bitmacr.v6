@@ -121,6 +121,7 @@ function addCanvas(argRows, argCols) {
                 } else if(colorCopierCheckboxes.selectHueFromCell.checked){
                     colorCopierCheckboxes.selectHueFromCell.checked = false
                     hueAngle.value = getHSLFromHex(selectedColor).hue
+                    hue = parseFloat(hueAngle.value)
                     updateHueShower()
                 } else if (colorCopierCheckboxes.selectLightingFromCell.checked) {
                     // LIGHTING
