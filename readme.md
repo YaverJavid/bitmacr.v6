@@ -1,7 +1,11 @@
-> THIS IS VERSION : ```9.0.1```
+> THIS IS VERSION : ```9.2.1```
 
 
 ## Version History
+
+#### 9.2.1
+- Fixed Bugs
+
 ### 9.2.0
 - Fixed Bugs
 - Added color settings tab
