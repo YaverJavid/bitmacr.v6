@@ -75,4 +75,3 @@ document.getElementById("filter-duotone").addEventListener("click", () => {
         return { a, r: 0, g: 0, b: 0 }
     })
 })
-

@@ -14,4 +14,3 @@ function setBucketOnCondition(bucketName, condition, valueIfTrue, valueIfFalse){
     localStorage.setItem(bucketName ,bucketValue)
     return bucketValue
 }
-

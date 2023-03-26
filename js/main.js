@@ -118,7 +118,7 @@ function addCanvas(argRows, argCols) {
                     copyTextToClipboard(selectedColor);
                     copiedColorShower.innerHTML = `If Color Wasn't Copied, Copy Manually: <span class="color">${selectedColor}</span> <span style="user-select:none; color: ${selectedColor}; background: ${selectedColor}; border: 0.5px solid var(-secondary)" >!!!!</span>`
                     colorCopierCheckboxes.copyColorFromCellCheckbox.checked = false
-                } else if(colorCopierCheckboxes.selectHueFromCell.checked){
+                } else if (colorCopierCheckboxes.selectHueFromCell.checked) {
                     colorCopierCheckboxes.selectHueFromCell.checked = false
                     hueAngle.value = getHSLFromHex(selectedColor).hue
                     hue = parseFloat(hueAngle.value)
@@ -127,7 +127,7 @@ function addCanvas(argRows, argCols) {
                     // LIGHTING
                     colorCopierCheckboxes.selectLightingFromCell.checked = false
                     lightingSlider.value = getHSLFromHex(selectedColor).lightness * 100
-                    
+
                     lightingShower.innerHTML = `(${lightingSlider.value}%)`
                 } else if (colorCopierCheckboxes.selectSaturationFromCell.checked) {
                     // SATURATION
@@ -292,21 +292,30 @@ document.getElementById("export-mini").addEventListener("click", () => exportIma
 cellsSlider.addEventListener("input", function() {
     canvasSizeShower.innerHTML = `(${this.value})`
 })
-cellsSlider.addEventListener("change", function() {
-    if (confirm(`You will loose your artwork if you resize. Do you really want to resize to ${cols} cell(s) to ${this.value}cell(s)?`)) {
-        addCanvas(this.value, this.value)
-        if (guideCheckbox.checked) {
-            addGuides()
-        }
-        if (!borderCheckbox.checked) {
-            removeBorder()
-        }
-    } else {
-        cellsSlider.value = cols
-        canvasSizeShower.innerHTML = `(${cols})`
-    }
-})
 
+cellsSlider.addEventListener("change", () => changeCanvasSize())
+document.getElementById("increment-canvas-size").addEventListener("click", () => changeCanvasSize(1))
+document.getElementById("decrement-canvas-size").addEventListener("click", () => changeCanvasSize(-1))
+
+function changeCanvasSize(offset = 0) {
+    cellsSlider.value = parseInt(cellsSlider.value) + offset
+    customConfirm(`You will loose your artwork if you resize. Do you really want to resize to ${cols} cell(s) to ${cellsSlider.value}cell(s)?`,
+        () => {
+            addCanvas(cellsSlider.value, cellsSlider.value)
+            if (guideCheckbox.checked) {
+                addGuides()
+            }
+            if (!borderCheckbox.checked) {
+                removeBorder()
+            }
+            canvasSizeShower.innerHTML = `(${cellsSlider.value})`
+        },
+        () => {
+            cellsSlider.value = cols
+            canvasSizeShower.innerHTML = `(${cols})`
+        }
+    )
+}
 
 
 

@@ -28,9 +28,11 @@ document.getElementById("add-frame").addEventListener("click", () => {
 
 function deleteFrame(elem) {
     let frameElem = elem.parentNode.parentNode
-    if (!confirm("Do you really want to delete this frame?")) return
-    framesContainer.removeChild(frameElem)
-    updateFrameCount()
+    customConfirm("Do you really want to delete this frame?",
+        () => {
+            framesContainer.removeChild(frameElem)
+            updateFrameCount()
+        })
 }
 
 async function createGIF(imageUrls, timeDurations) {
@@ -82,19 +84,37 @@ function loadImage(url) {
 }
 var gif
 document.getElementById("export-gif").addEventListener("click", () => {
-    let frames = []
-    let timeStamps = []
-    gif = new GIF({
-        workers: 2,
-        quality: 10
-    })
-    for (let i = 0; i < framesContainer.children.length; i++) {
-        gif.addFrame(framesContainer.children[i].children[0], {delay: 500})
-    }
-    gif.on("finished", (blob)=>{
-        console.log("5");
-        window.open(URL.createObjectURL(blob))
-    })
-    gif.render()
-    console.log(gif);
+    // Define the options for the GIF
+    var gifOptions = {
+        gifWidth: 320,
+        gifHeight: 240,
+        interval: 0.5,
+        numFrames: 2,
+        gifQuality: 10
+    };
+
+    // Get the image data for the two frames
+
+
+    // Create an array of image data for the frames
+    logo = Image
+    logo.src = "logo.png"
+    var imageArray = [logo];
+
+    // Call the gifshot library to create the GIF
+    gifshot.createGIF({
+        images: imageArray,
+        gifWidth: gifOptions.gifWidth,
+        gifHeight: gifOptions.gifHeight,
+        interval: gifOptions.interval,
+        numFrames: gifOptions.numFrames,
+        gifQuality: gifOptions.gifQuality
+    }, function(obj) {
+        if (!obj.error) {
+            // Display the GIF
+            var image = obj.image;
+            document.getElementById('myGif').src = image;
+        }
+    });
+
 })

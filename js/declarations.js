@@ -39,7 +39,7 @@ const multiplyTargetCheckboxes = {
 
 const guideCellBorderColor = document.getElementById("guide-cell-border-color")
 const drawingName = document.getElementById("drawing-name")
-const saveToLocalStorage = document.getElementById("save-to-ls")
+const saveTolocalStorage  = document.getElementById("save-to-ls")
 const drawingsSection = document.getElementById("drawings-section")
 const colsPainter = document.getElementById("cols-painter")
 const rowsPainter = document.getElementById("rows-painter")

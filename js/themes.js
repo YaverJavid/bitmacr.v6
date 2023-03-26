@@ -1,15 +1,15 @@
-if (!localStorage.getItem("bit_theme")) {
-    localStorage.setItem("bit_theme", "#1a1b1d,#ffffff")
+if (!localStorage .getItem("bit_theme")) {
+    localStorage .setItem("bit_theme", "#1a1b1d,#ffffff")
 }
 
-let currentTheme = localStorage.getItem("bit_theme").split(",")
+let currentTheme = localStorage .getItem("bit_theme").split(",")
 setTheme(currentTheme[0], currentTheme[1])
 
 function setTheme(accent, secondary) {
     setSecondaryColor(secondary)
     setAccentColor(accent)
     changeCellBorderColor(secondary)
-    localStorage.setItem("bit_theme", `${accent},${secondary}`)
+    localStorage .setItem("bit_theme", `${accent},${secondary}`)
 }
 
 

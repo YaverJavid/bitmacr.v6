@@ -82,6 +82,6 @@ document.getElementById("add-image-background-checkbox").addEventListener("input
 
 document.getElementById("change-background-image").addEventListener("click", ()=>{
     document.getElementById("add-image-background-checkbox").checked = true
-    localStorage.setItem("pixmacr_background_image", "1")
+    localStorage .setItem("pixmacr_background_image", "1")
     document.body.style.backgroundImage = getImageURL()
 })

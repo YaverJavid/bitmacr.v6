@@ -61,8 +61,9 @@ document.getElementById("export-raw-data").addEventListener("click", () => {
 
 function verifyAndProcessRawColorArray(rawArray, rows, cols) {
     if (rows * cols != rawArray.length) {
-        if (!confirm("Missing Or Extra Data: Do you still want Apply?")) return false
+        alert("Missing Or Extra Data")
     }
+    
     let result = []
     for (var i = 0; i < rawArray.length; i++) {
         if (rawArray[i].replaceAll(" ", '') == "%rand") {
@@ -74,7 +75,7 @@ function verifyAndProcessRawColorArray(rawArray, rows, cols) {
     return result
 }
 
-saveToLocalStorage.addEventListener("click", () => {
+saveTolocalStorage.addEventListener("click", () => {
     let currentDrawingName = prompt('Enter Name', drawingName.value || 'Untitled')
     if (!(currentDrawingName in drawings)) {
         drawingsSection.innerHTML += getDrawingHTML(currentDrawingName)
@@ -123,40 +124,52 @@ function addEventListenersToSavedDrawings() {
     for (let i = 0; i < drawingElements.length; i++) {
         let currentDrawingName = drawingNames[i].innerHTML
         drawingDeleteIcons[i].addEventListener("click", () => {
-            if (confirm(`Do you really want to delete drawing "${currentDrawingName}"?`)) {
-                delete drawings[currentDrawingName]
-                drawingElements[i].style.display = "none"
-            }
-            saveDrawings()
+            customConfirm(`Do you really want to delete drawing "${currentDrawingName}"?`, () => {
+                    delete drawings[currentDrawingName]
+                    drawingElements[i].style.display = "none"
+                },
+                () => {}, saveDrawings
+            )
         })
         drawingApplyIcons[i].addEventListener("click", () => {
-            if (!confirm("Do you really want to apply data, you will loose your current artwork on canvas?")) return
-            let data = parseRawData(drawings[currentDrawingName])
-            addCanvas(data.rows, data.cols)
-            canvasSizeShower.textContent = `(${data.cols})`
-            cellsSlider.value = data.cols
-            applyPaintData(data.colorData)
-            buffer.clearStack()
-            if (!borderCheckbox.checked) {
-                removeBorder()
-            }
-            if (guideCheckbox.checked) {
-                addGuides()
-            }
-            recordPaintData()
+            customConfirm(
+                "Do you really want to apply data, you will loose your current artwork on canvas?",
+                () => {
+                    let data = parseRawData(drawings[currentDrawingName])
+                    addCanvas(data.rows, data.cols)
+                    canvasSizeShower.textContent = `(${data.cols})`
+                    cellsSlider.value = data.cols
+                    applyPaintData(data.colorData)
+                    buffer.clearStack()
+                    if (!borderCheckbox.checked) {
+                        removeBorder()
+                    }
+                    if (guideCheckbox.checked) {
+                        addGuides()
+                    }
+                    recordPaintData()
+                }
+            )
         })
         drawingDownloadIcons[i].addEventListener("click", () => {
-            if (confirm("Do You Want To Download In Png Format? (Cancel To Download In Raw Data Format(spad))")) {
-                let data = parseRawData(drawings[currentDrawingName])
-                let dataUrl = colorDataToImage(
-                    squareArray(data.colorData),
-                    cellBorderWidthSlider.value,
-                    cellBorderColorSelector.value
-                )
-                downloadImage(dataUrl, "yjpm-saved-.png")
-            } else {
-                downloadText(currentDrawingName + "(saved-pixmacr).spad", drawings[currentDrawingName])
-            }
+            customConfirm(
+                "Do You Want To Download In Png Format? (Cancel To Download In Raw Data Format(spad))",
+                () => {
+                    let data = parseRawData(drawings[currentDrawingName])
+                    let dataUrl = colorDataToImage(
+                        squareArray(data.colorData),
+                        cellBorderWidthSlider.value,
+                        cellBorderColorSelector.value
+                    )
+                    downloadImage(dataUrl, "yjpm-saved-.png")
+                },
+                () => {
+                    customConfirm("Do You Want To Download In Raw Data Format Format(spad)?", () => {
+                        downloadText(currentDrawingName + "(saved-pixmacr).spad", drawings[currentDrawingName])
+                    })
+                }
+            )
+
         })
         drawingPreviewIcons[i].addEventListener("click", () => {
             drawingPreviewIcons[i].style.display = "none"

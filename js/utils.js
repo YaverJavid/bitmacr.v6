@@ -323,3 +323,4 @@ function getHSLFromHex(hex) {
     // Return an object containing the HSL values
     return { hue: hue, saturation: saturation, lightness: lightness };
 }
+
