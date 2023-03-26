@@ -1,7 +1,12 @@
-> THIS IS VERSION : ```9.2.1```
+> THIS IS VERSION : ```9.2.2```
 
 
 ## Version History
+
+### 9.2.2
+- Added ```-``` ```+``` buttons for easy change of canvas size
+- Added Custom Confirm System For Better Platform Support
+
 
 #### 9.2.1
 - Fixed Bugs
