@@ -49,8 +49,11 @@
                     <input type="button" value="Randomise Cells Color" id="randomise-cells-button">
                     <br>
                     <label for="cell-slider">Canvas Size : </label>
+                    <input type="button" value="- 1" id="decrement-canvas-size">
                     <input type="range" name="cell-slider" id="cells-slider" min='1' max='100' value='10'>
-                    <span id="canvas-size-shower">(10)</span><br>
+                    <span id="canvas-size-shower">(10)</span>
+                    <input type="button" value="+ 1" id="increment-canvas-size">
+                    <br>
                     <input type="button" id="fliph-button" value="Flip Horizontally">
                     <input type="button" id="flipv-button" value="Flip Vertically">
                     <input type="button" id="rotate-clockwise-button" value="Rotate Clockwise">
@@ -274,7 +277,7 @@
                 <div>
                     <br>
                     <h3 data-shortcutkey="z">Settings</h3> <br>
-                    <input type="button" value="General" onclick="redirectViewToSetting('general')"></input>
+                    <input type="button" value="Layout" onclick="redirectViewToSetting('layout')"></input>
                     <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input> <br>
                     <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App(Andriod)</a> <br>
                     <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
@@ -282,7 +285,7 @@
                 </div>
                 <div>
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="general">General</h3> <br>
+                    <h3 data-type="settings-menu" data-settingsname="layout">Layout Setting</h3> <br>
                     <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
                     <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
                     <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
@@ -315,8 +318,28 @@
         </div>
     </div>
     <br>
-
+    <div id="alert">
+        <p id="alert-heading">The Page Says : </p>
+        <p id="alert-message"></p>
+        <button onclick="cancelAlert()" id="alert-cancel-button">Cancel</button>
+        <button onclick="okAlert()" id="alert-ok-button">Ok</button>
+        <br>
+    </div>
+    <br>
+<!-- <div id="intro">
+    <p>PIXMACR</p>
+<div><div></div></div>
+</div>
+<script>
+    // Intro Handler
+    setTimeout(()=>{
+        document.getElementById("intro").style.display = "none";
+        document.body.style.overflow = "scroll"
+    },1000 )
+</script> -->
     <script src="js/utils.js"></script>
+        <script src="js/alert.js"></script>
+
     <script src="js/lib.local-storage-tools.js"></script>
     <script src="js/declarations.js"></script>
     <script src="js/settings-pre.js"></script>
@@ -331,6 +354,8 @@
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
     <script src="js/animation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gifshot/build/gifshot.min.js"></script>
 </body>
 
 </html>
+

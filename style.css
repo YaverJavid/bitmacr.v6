@@ -1,5 +1,11 @@
  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&display=swap');
 
+
+@font-face{
+    font-family: trajan;
+    src: url("fonts/Trajan Pro Regular.ttf");
+}
+
  input {
      margin-bottom: 25px;
  }
@@ -11,12 +17,17 @@
      text-align: center;
      background: var(--accent);
      background-size: cover;
+     height:100vh;
  }
 
  * {
      font-family: 'Noto Sans Symbols', sans-serif;
      user-select: none;
  }
+
+h3{
+
+}
 
  :root {
      --accent: #1a1b1d;
@@ -385,4 +396,84 @@ input[type="file"] {
 
 .frame-time::placeholder{
     color:var(--secondary);
+}
+
+#intro{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100vh;
+    background: #42445A;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    flex-direction: column
+}
+
+#intro > div{
+    width: 60%;
+    height: 2vw;
+    border: 2px solid white;
+}
+
+#intro > p{
+   font-family: trajan;
+}
+
+#intro > div > div{
+    width: 0;
+    height: 2vw;
+    background: white;
+    animation-name: fill-left;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear
+}
+
+@keyframes fill-left{
+    from{
+        width: 0%
+    }
+    to{
+        width: 100%;
+    }
+}
+
+#alert{
+    width: 100%;
+    box-sizing: border-box;
+    background: white;
+    position: fixed;
+    bottom:0;
+    padding: 2vh;
+    z-index: -1;
+    opacity: 0;
+    transition: 200ms;
+    text-align: right
+
+}
+
+#alert > button{
+    text-transform: uppercase;
+    display: inline-block;
+    
+}
+
+
+#alert > p{
+    text-align: center
+}
+
+#alert-heading{
+    font-weight: bold;
+    text-align: center
+}
+
+
+#alert-cancel-button{
+    margin-right: 4vh;
+
 }
