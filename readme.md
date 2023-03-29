@@ -1,9 +1,10 @@
 > THIS IS VERSION : ```9.2.3```
 
-
 ## Version History
 ### 9.2.3
 - Added ```fill``` option to ```onclick fill``` to flood fill
+- Fixed Bugs About Css Color String
+- Changed Info String System
 
 ### 9.2.2
 - Added ```-``` ```+``` buttons for easy change of canvas size
