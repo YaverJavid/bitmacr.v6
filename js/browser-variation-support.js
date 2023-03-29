@@ -13,11 +13,11 @@ if (ios) {
         document.querySelector("body").style.fontSize = "12pt"
         const topControlContainerChildren = document.getElementById("top-control-container").children
         for (var i = 0; i < topControlContainerChildren.length; i++) {
-            topControlContainerChildren[i].style.fontSize = "1.3rem"
+            topControlContainerChildren[i].style.fontSize = "1rem"
         }
-
+        
+        
     } else {
         // Chrome
     }
 };
-

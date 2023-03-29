@@ -75,17 +75,24 @@ function verifyAndProcessRawColorArray(rawArray, rows, cols) {
     return result
 }
 
-saveTolocalStorage.addEventListener("click", () => {
-    let currentDrawingName = prompt('Enter Name', drawingName.value || 'Untitled')
+
+
+
+
+function saveCanvasAsDrawing(){
+    if(drawingName.value == ""){
+        alert("Enter Name First!")
+        return
+    }
+    let currentDrawingName = drawingName.value
     if (!(currentDrawingName in drawings)) {
-        drawingsSection.innerHTML += getDrawingHTML(currentDrawingName)
+        drawingsContainer.innerHTML += getDrawingHTML(currentDrawingName)
         addEventListenersToSavedDrawings()
     }
     drawings[currentDrawingName] = getCurrentDrawingData()
     saveDrawings()
     alert("Drawing Saved!")
-})
-
+}
 
 function saveDrawings() {
     localStorage.setItem("drawings", JSON.stringify(drawings))
@@ -107,7 +114,7 @@ function getDrawingHTML(drawingName) {
 
 
 for (let drawingName in drawings) {
-    drawingsSection.innerHTML += getDrawingHTML(drawingName)
+    drawingsContainer.innerHTML += getDrawingHTML(drawingName)
 }
 addEventListenersToSavedDrawings()
 

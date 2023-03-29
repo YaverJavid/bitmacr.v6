@@ -36,11 +36,11 @@ const multiplyTargetCheckboxes = {
     q3MultiplyTargetCheckbox: document.getElementById("q3-multiply-target-checkbox"),
     q4MultiplyTargetCheckbox: document.getElementById("q4-multiply-target-checkbox"),
 }
-
 const guideCellBorderColor = document.getElementById("guide-cell-border-color")
 const drawingName = document.getElementById("drawing-name")
 const saveTolocalStorage  = document.getElementById("save-to-ls")
 const drawingsSection = document.getElementById("drawings-section")
+const drawingsContainer = document.getElementById("drawings")
 const colsPainter = document.getElementById("cols-painter")
 const rowsPainter = document.getElementById("rows-painter")
 const themeSelectors = document.getElementsByClassName("theme-selector")
@@ -52,7 +52,6 @@ const drawingCheckerSection = document.getElementById("drawing-checker-section")
 const paintModeSelector = document.getElementById("paint-mode-selector")
 const clickModeSelector = document.getElementById("click-mode-selector")
 const guideCellBorder2 = document.getElementById('guide-cell-border2')
-
 const colorCopierCheckboxes = {
     colorSelectCheckbox: document.getElementById("select-color"),
     selectColorForFind: document.getElementById("select-color-for-find"),
@@ -62,9 +61,7 @@ const colorCopierCheckboxes = {
     selectSaturationFromCell: document.getElementById("select-saturation-cell"),
     selectLightingFromCell: document.getElementById("select-lighting-cell")
 }
-
 const bottomControlsContainer = document.getElementById("bottom-control-container")
-
 const cellBorderOnTransparentCellsCheckbox = document.getElementById("cell-border-on-transparent-cells-checkbox")
 const themesSection = document.getElementById("themes-section")
 const lineInfoShower = document.getElementById('line-info-shower')

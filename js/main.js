@@ -22,7 +22,7 @@ let cellBorderWidth = 1
 // hex should be lowercase
 var defaultPalletteColors = ["#f44336", "#ffc107", "#9c27b0", "#4caf50", "#2196f3", "#ff5722", "#607d8b", "#673ab7", "#ffeb3b"]
 let usedColors = defaultPalletteColors
-let settingsLocations = []
+let tabLocations = []
 let pallateColors = document.getElementsByClassName("pallate-color")
 let currentSelectedColor = undefined
 setCurrentColor("#273782")
@@ -44,16 +44,16 @@ function redirectMenuViewTo(location) {
     bottomControls.scrollLeft = location
 }
 
-function redirectViewToSetting(settingName) {
-    return redirectMenuViewTo(settingsLocations[settingName] * controlWidth)
+function gotoTab(tabName) {
+    return redirectMenuViewTo(tabLocations[tabName] * controlWidth)
 }
 
 for (let i = 0; i < menuNav.children.length; i++) {
     menuNav.children[i].addEventListener("click", () => {
         redirectMenuViewTo(i * controlWidth)
     })
-    if (bottomControls.children[i].children[1].dataset.type == "settings-menu") {
-        settingsLocations[bottomControls.children[i].children[1].dataset.settingsname] = i
+    if (bottomControls.children[i].children[1].dataset.type == "hidden-tab") {
+        tabLocations[bottomControls.children[i].children[1].dataset.tabname] = i
         menuNav.children[i].style.display = "none"
     }
 }
@@ -150,6 +150,9 @@ function addCanvas(argRows, argCols) {
                 let newData = squareArray(buffer.getItem().slice())
                 for (let i = 0; i < newData.length; i++) newData[i][colToPaint] = getCurrentSelectedColor()
                 applyPaintData(newData.flat())
+                recordPaintData()
+            } else if (clickModeSelector.value == "fill") {
+                applyPaintData(fill(squareArray(buffer.getItem()), currentCol, currentRow).flat())
                 recordPaintData()
             }
             else {

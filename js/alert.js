@@ -6,12 +6,15 @@ let nothing = () => {}
 var cancel = nothing
 var ok = nothing
 var then = nothing
+var hasAlertAnswered = true
 function customConfirm(message, ifOk = nothing, ifCancel = nothing, argThen = nothing ) {
     alertBox.style.opacity = "1"
     alertBox.style.zIndex = "2"
     alertMessage.textContent = message
     cancel = ifCancel
     ok = ifOk
+    if(!hasAlertAnswered) then()
+    hasAlertAnswered = false
     then = argThen
 }
 
@@ -21,12 +24,14 @@ function hideAlert() {
 }
 
 function cancelAlert() {
+    hasAlertAnswered = true
     hideAlert()
     cancel()
     then()
 }
 
 function okAlert() {
+    hasAlertAnswered = true
     hideAlert()
     ok()
     then()
