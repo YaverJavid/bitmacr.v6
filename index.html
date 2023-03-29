@@ -22,9 +22,10 @@
     </div>
     <div id="paint-zone"></div>
     <div id="info">
-        <span id="line-info-shower">row:0,col:0</span>
-        <span id="paint-mode-info-shower">,paint-mode:none,</span>
-        <nobr>color-mode:</nobr><span id="color-mode-shower">none</span>
+        <span id="line-info-shower">row:0,col:0,</span>
+        <span id="paint-mode-info-shower">none,</span>
+        <span id="color-mode-shower">normal,</span>
+        <span id="onclick-fill-shower">cell,</span>
     </div>
     <div>
         <div id="menu-nav">
@@ -92,7 +93,7 @@
                     <br>
                     <label for="paintModeSelector">Onclick Fill : </label>
                     <select id="click-mode-selector">
-                        <option value="default">Cell</option>
+                        <option value="cell">Cell</option>
                         <option value="row">Row</option>
                         <option value="col">Coloumn</option>
                         <option value="fill">Fill</option>
@@ -146,7 +147,7 @@
                 </div>
                 <div>
                     <br>
-                    <h3 data-shortcutkey="p">Color Palette</h3> <br>
+                    <h3 data-shortcutkey='d'>Color Palette</h3> <br>
                     <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
                     <div id="pallate-container">
                     </div>
@@ -317,6 +318,7 @@
             </div>
         </div>
     </div>
+    <div id="psedo"></div>
     <div id="alert">
         <p id="alert-heading">The Page Says : </p>
         <p id="alert-message"></p>
