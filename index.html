@@ -83,7 +83,7 @@
                         <option value="eraser">Eraser</option>
                         <option value="css-color">CSS Color String</option>
                     </select>
-                    <input type="button" value="Color Settings" onclick="redirectViewToSetting('color-settings')">
+                    <input type="button" value="Color Settings" onclick="gotoTab('color-settings')">
                     <br>
                     <label for="slight-variations-checkbox">Slight Variations In Color : </label>
                     <input type="checkbox" id="slight-variations-checkbox">
@@ -95,23 +95,31 @@
                         <option value="default">Cell</option>
                         <option value="row">Row</option>
                         <option value="col">Coloumn</option>
+                        <option value="fill">ill</option>
                     </select>
                     <br>
                     <label for="only-fill-transaprent">Only Fill Transaprent</label>
                     <input type="checkbox" id="only-fill-transaprent" /> <br>
+                                        <input type="button" onclick="gotoTab('copy_options')" value="Copy Options"> <br>
+
                     <label for="image-to-pixel" class="file-label">
                         <input type="file" id="image-to-pixel" accept="image/*">
                         Add Pixel Data From Image
                     </label>
                     <br>
                     <br>
+                    <label for="raw-data-fp" class="file-label">
+                        Add Pixel Data Raw Data (SPAD)
+                        <input type="file" id="raw-data-fp" accept=".spad" value="F">
+                    </label>
+                    <br> <br>
                     <label for="copy-color-from-cell-checkbox">Copy Color From Cell : </label>
                     <input type="checkbox" id="copy-color-from-cell-checkbox"> <br>
                     <span id="copied-color-shower"></span> <br> <br>
                 </div>
                 <div>
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="color-settings">Color Settings</h3> <br>
+                    <h3 data-type="hidden-tab" data-tabname="color-settings">Color Settings</h3> <br>
                     <h3>Hue Settings</h3> <br>
                     <label for="saturation-slider">Saturation : </label>
                     <input type="range" name="" id="saturation-slider" min="0" max="100" value="50">
@@ -146,7 +154,7 @@
                 </div>
                 <div>
                     <br>
-                    <h3 data-shortcutkey="c">Copy Options</h3><br>
+                    <h3 data-shortcutkey="c" data-type="hidden-tab" data-tabname="copy_options">Copy Options</h3><br>
                     <label for="guide-checkbox2">Quadrant Guides: </label>
                     <input type="checkbox" name="guide-checkbox2" id="guide-checkbox2">
                     <br>
@@ -179,29 +187,19 @@
                     </details>
                     <br> <input type="button" value="Multiply" id="multiply-q-button">
                 </div>
-                <div>
-                    <br>
-                    <h3>Raw Data</h3> <br>
 
-                    <label for="raw-data-fp" class="file-label">
-                        Add Raw Data (SPAD)
-                        <input type="file" id="raw-data-fp" accept=".spad" value="F">
-                    </label>
-                    <br> <br>
-                    <input type="text" placeholder="Enter Drawing Name" id="drawing-name">
-                    <br>
-                    <input type="button" value="Export Raw Data(spad)" id="export-raw-data">
-                    <br>
-                    <input type="button" value="Save To Local-storage(Browser)" id="save-to-ls">
-                </div>
                 <div id="drawings-section">
                     <br>
                     <h3 data-shortcutkey="q">Saved Drawings</h3>
+                    <br>
+                    <input type="text" placeholder="Enter Drawing Name" id="drawing-name"> <br>
+                    <input type="button" value="Save Drawing(Browser)" id="save-to-ls" onclick="saveCanvasAsDrawing()">
+                    <div id="drawings"></div>
                 </div>
                 <div>
                     <br>
                     <h3 data-shortcutkey="o">Filters</h3> <br>
-                    <br> <input type="button" value="Invert" id="filter-invert"> <br>
+                    <input type="button" value="Invert" id="filter-invert"> 
                     <input type="button" value="Sepia" id="filter-sepia">
                     <input type="button" value="Grayscale" id="filter-grayscale">
                     <input type="button" value="Solorize" id="filter-solorize">
@@ -253,9 +251,10 @@
                     <label for="cell-border-on-transparent-cells-checkbox">Cell Border Also On Transparent Cells: </label>
                     <input type="checkbox" id="cell-border-on-transparent-cells-checkbox">
                     <br>
-                    <input type="button" value="See How Your Drawings Looks" onclick="redirectViewToSetting('drawing-checker')"><br>
-                    <input type="button" id="export-button2" value="Export"> <br>
-                    <input type="button" value="Export Mini" id="export-mini">
+                    <input type="button" value="See How Your Drawings Looks" onclick="gotoTab('drawing_preview')"><br>
+                    <input type="button" id="export-button2" value="Export (PNG)"> <br>
+                    <input type="button" value="Export Mini" id="export-mini"> <br>
+                    <input type="button" value="Export Raw Data (SPAD)" id="export-raw-data">
                 </div>
                 <div>
                     <br>
@@ -270,22 +269,23 @@
                 </div>
                 <div id="themes-section">
                     <br>
-                    <h3 data-shortcutkey="h" data-type="settings-menu" data-settingsname="themes">Themes</h3><br>
+                    <h3 data-shortcutkey="h" data-type="hidden-tab" data-tabname="themes">Themes</h3><br>
                     <br>
                     <input type="button" value="Invert Theme" id="invert-theme"> <br>
                 </div>
                 <div>
                     <br>
                     <h3 data-shortcutkey="z">Settings</h3> <br>
-                    <input type="button" value="Layout" onclick="redirectViewToSetting('layout')"></input>
-                    <input type="button" value="Themes" onclick="redirectViewToSetting('themes')"></input> <br>
+                    <input type="button" value="Layout" onclick="gotoTab('layout')"></input>
+                    <input type="button" value="Themes" onclick="gotoTab('themes')"></input> <br>
+                    <input type="button" value="Previous Versions" onclick="gotoTab('previous_versions')"> <br>
                     <a href="https://yaverjavid.github.io/bitmacr/apk/app.apk">Download App(Andriod)</a> <br>
                     <br> <a href="mailto:yaverjavid@gmail.com">Contact : yaverjavid@gmail.com</a> <br> <br>
-                    <span>Version : 9.2.2</span>
+                    <span>Version : 9.2.3</span>
                 </div>
                 <div>
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="layout">Layout Setting</h3> <br>
+                    <h3 data-type="hidden-tab" data-tabname="layout">Layout Setting</h3> <br>
                     <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
                     <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
                     <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
@@ -293,21 +293,21 @@
                     <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
                     <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
                     <label for="animate-menu-checkbox">Animate Menu: </label>
-                    <input type="checkbox" id="animate-menu-checkbox"> <br>
+                    <input type="checkbox" id="animate-menu-checkbox" checked> <br>
                     <label for="add-image-background-checkbox">Use Image Background: </label>
                     <input type="checkbox" id="add-image-background-checkbox"> <br>
                     <input type="button" value="Change Background Image" id="change-background-image">
                 </div>
                 <div id="drawing-checker-section">
                     <br>
-                    <h3 data-type="settings-menu" data-settingsname="drawing-checker">Drawing Preview</h3>
+                    <h3 data-type="hidden-tab" data-tabname="drawing_preview">Drawing Preview</h3>
                     <br>
                     <input type="button" value="Refresh" id="refresh-drawing-checker"><br>
                     <img width="0" height="0">
                 </div>
                 <div>
                     <br>
-                    <h3>Previous Versions</h3>
+                    <h3 data-type="hidden-tab" data-tabname="previous_versions">Previous Versions</h3> <br>
                     <a href="https://yaverjavid.github.io/bitmacr.v1">Version 1</a> <br>
                     <a href="https://yaverjavid.github.io/bitmacr.v2">Version 2</a> <br>
                     <a href="https://yaverjavid.github.io/bitmacr.v3">Version 3</a> <br>
@@ -317,7 +317,6 @@
             </div>
         </div>
     </div>
-    <br>
     <div id="alert">
         <p id="alert-heading">The Page Says : </p>
         <p id="alert-message"></p>
@@ -325,21 +324,8 @@
         <button onclick="okAlert()" id="alert-ok-button">Ok</button>
         <br>
     </div>
-    <br>
-<!-- <div id="intro">
-    <p>PIXMACR</p>
-<div><div></div></div>
-</div>
-<script>
-    // Intro Handler
-    setTimeout(()=>{
-        document.getElementById("intro").style.display = "none";
-        document.body.style.overflow = "scroll"
-    },1000 )
-</script> -->
     <script src="js/utils.js"></script>
-        <script src="js/alert.js"></script>
-
+    <script src="js/alert.js"></script>
     <script src="js/lib.local-storage-tools.js"></script>
     <script src="js/declarations.js"></script>
     <script src="js/settings-pre.js"></script>
@@ -354,8 +340,8 @@
     <script src="js/themes.js"></script>
     <script src="js/shortcuts.js"></script>
     <script src="js/animation.js"></script>
+    <script src="js/fill.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gifshot/build/gifshot.min.js"></script>
 </body>
 
 </html>
-
