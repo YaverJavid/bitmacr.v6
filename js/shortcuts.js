@@ -10,6 +10,7 @@ document.addEventListener("keydown", function(event) {
         }
         if (event.key == 'p') {
             paintModeSelector.value = paintModeSelector.value != "stroke" ? "stroke" : "none"
+            paintModeInfoShower.textContent = paintModeSelector.value + ","
         }else if(event.key == 'u'){
             if (buffer.setPointer(buffer.pointer - 1))
                 applyPaintData(buffer.getItem())

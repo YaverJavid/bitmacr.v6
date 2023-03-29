@@ -68,7 +68,9 @@ const lineInfoShower = document.getElementById('line-info-shower')
 const paintModeInfoShower = document.getElementById("paint-mode-info-shower")
 const colorModeSelector = document.getElementById("color-mode-selector")
 const colorModeShower = document.getElementById("color-mode-shower")
+const onclickFillShower = document.getElementById("onclick-fill-shower")
 const onlyFillTransaprent = document.getElementById("only-fill-transaprent")
+
 
 // Color Settings
 

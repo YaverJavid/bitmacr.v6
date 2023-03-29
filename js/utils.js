@@ -324,3 +324,4 @@ function getHSLFromHex(hex) {
     return { hue: hue, saturation: saturation, lightness: lightness };
 }
 
+

@@ -99,7 +99,7 @@ function addCanvas(argRows, argCols) {
         paintCells[i].addEventListener("click", function() {
             let currentCol = i % cols
             let currentRow = Math.floor(i / rows);
-            lineInfoShower.textContent = `row:${currentRow},col:${currentCol}`
+            lineInfoShower.textContent = `row:${currentRow},col:${currentCol},`
             if (colorSelectionInProgress) {
                 let selectedColor = rgbToHex(buffer.getItem()[i])
                 changeCellBorderColor(borderColor)
@@ -356,6 +356,7 @@ for (let colorCopierCheckbox in colorCopierCheckboxes) {
 eraseButton.addEventListener("click", function() {
     colorModeSelector.value = "eraser"
     this.value = "Selected Eraser"
+    colorModeShower.textContent = "eraser,"
     setTimeout(() => { this.value = "Select Eraser" }, 500)
 })
 
@@ -690,11 +691,11 @@ document.getElementById("refresh-drawing-checker").addEventListener("click", () 
 
 // paint mode
 paintModeSelector.addEventListener("input", () => {
-    paintModeInfoShower.textContent = `,paint-mode:${paintModeSelector.value},`
+    paintModeInfoShower.textContent = `${paintModeSelector.value},`
 })
 
 colorModeSelector.addEventListener("input", () => {
-    colorModeShower.textContent = colorModeSelector.value
+    colorModeShower.textContent = colorModeSelector.value + ','
 })
 
 
@@ -764,3 +765,7 @@ function setCellColor(cellElem, color) {
     if (onlyFillTransaprent.checked && window.getComputedStyle(cellElem).getPropertyValue('background-color') != "rgba(0, 0, 0, 0)") return
     cellElem.style.background = color
 }
+
+clickModeSelector.addEventListener("change", ()=>{
+    onclickFillShower.textContent = clickModeSelector.value + ','
+})

@@ -4,6 +4,15 @@ function updateHueShower() {
     hueAngleShower.innerHTML = `(${hueAngle.value}&deg;)`
 }
 
+let psedoElementForColorConversion = document.getElementById("psedo")
+
+function cssToRGBAOrRgb(color){
+    psedoElementForColorConversion.style.background = color
+    return window.getComputedStyle(
+        psedoElementForColorConversion, true
+        ).getPropertyValue("background-color")
+}
+
 function getCurrentSelectedColor() {
     if (colorModeSelector.value == "random")
         color = rgbToHex(getRandColor())
@@ -19,7 +28,7 @@ function getCurrentSelectedColor() {
     else if (colorModeSelector.value == "eraser")
         color = '#00000000'
     else if (colorModeSelector.value == "css-color")
-        color = colorStringInput.value
+        color = rgbToHex(cssToRGBAOrRgb(colorStringInput.value));
     else
         color = currentSelectedColor
     return slightVariationsCheckbox.checked ? slightlyDifferentColor(color) : color
