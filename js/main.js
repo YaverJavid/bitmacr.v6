@@ -21,7 +21,7 @@ let borderColor = getSecondaryColor().slice(1)
 let cellBorderWidth = 1
 // hex should be lowercase
 var defaultPalletteColors = ["#f44336", "#ffc107", "#9c27b0", "#4caf50", "#2196f3", "#ff5722", "#607d8b", "#673ab7", "#ffeb3b"]
-let usedColors = defaultPalletteColors
+let usedColors = defaultPalletteColors.flat()
 let tabLocations = []
 let pallateColors = document.getElementsByClassName("pallate-color")
 let currentSelectedColor = undefined
@@ -560,7 +560,7 @@ replaceButton.addEventListener("click", () => {
     for (var i = 0; i < paintCells.length; i++) {
         let currentColor = rgbToHex(getComputedStyle(paintCells[i]).getPropertyValue("background-color"))
         if (matchHexColors(colorToBeReplaced, currentColor, colorMatchThresholdSlider.value))
-            setCellColor(paintCells[i], colorToReplaceWith)
+            setCellColor(paintCells[i], replaceWithNormalCheckbox.checked ? getCurrentSelectedColor() : colorToReplaceWith)
     }
     recordPaintData()
 })
@@ -761,11 +761,18 @@ document.getElementById("image-to-pixel").addEventListener("change", function() 
 });
 
 
-function setCellColor(cellElem, color) {
-    if (onlyFillTransaprent.checked && window.getComputedStyle(cellElem).getPropertyValue('background-color') != "rgba(0, 0, 0, 0)") return
-    cellElem.style.background = color
-}
 
 clickModeSelector.addEventListener("change", ()=>{
     onclickFillShower.textContent = clickModeSelector.value + ','
 })
+
+
+deleteNonDefaultPallette.onclick = ()=>{
+    usedColors = defaultPalletteColors.flat()
+    let palletteElemsToDelete = []
+    for (let i = 0; i < pallateContainer.children.length; i++) 
+        if(!pallateContainer.children[i].classList.contains("default-pallette")) 
+            palletteElemsToDelete.push(pallateContainer.children[i])
+    for (let i = 0; i < palletteElemsToDelete.length; i++) 
+       pallateContainer.removeChild(palletteElemsToDelete[i])
+}

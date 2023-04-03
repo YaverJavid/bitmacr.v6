@@ -6,11 +6,11 @@ function updateHueShower() {
 
 let psedoElementForColorConversion = document.getElementById("psedo")
 
-function cssToRGBAOrRgb(color){
+function cssToRGBAOrRgb(color) {
     psedoElementForColorConversion.style.background = color
     return window.getComputedStyle(
         psedoElementForColorConversion, true
-        ).getPropertyValue("background-color")
+    ).getPropertyValue("background-color")
 }
 
 function getCurrentSelectedColor() {
@@ -29,7 +29,15 @@ function getCurrentSelectedColor() {
         color = '#00000000'
     else if (colorModeSelector.value == "css-color")
         color = rgbToHex(cssToRGBAOrRgb(colorStringInput.value));
-    else
+    else if (colorModeSelector.value == "random-pallatte") {
+        let colorsArray;
+        if (onlyFromDefaultPallatte.checked)
+            colorsArray = defaultPalletteColors
+        else if (onlyFromNonDefaultPallatte.checked)
+            colorsArray = usedColors.filter(n => !defaultPalletteColors.includes(n))
+        else colorsArray = usedColors
+        color = colorsArray[Math.floor(Math.random() * colorsArray.length)]
+    } else
         color = currentSelectedColor
     return slightVariationsCheckbox.checked ? slightlyDifferentColor(color) : color
 }
@@ -68,4 +76,24 @@ function slightlyDifferentColor(hexColor, th = 24) {
     const newHexColor = '#' + ((1 << 24) + (Math.floor(newR) << 16) + (Math.floor(newG) << 8) + Math.floor(newB)).toString(16).slice(1);
     const opacity = hexColor.length === 9 ? hexColor.substring(7, 9) : null;
     return opacity ? newHexColor + opacity : newHexColor;
+}
+
+function setCellColor(cellElem, color) {
+    let currentColor = window.getComputedStyle(cellElem).getPropertyValue('background-color')
+    let dontFillIfColorIs = cssToRGBAOrRgb(fillOnlyThisColor.value)
+    if (onlyFillTransaprent.checked && currentColor != dontFillIfColorIs) return
+    cellElem.style.background = color
+}
+
+
+onlyFromDefaultPallatte.onclick = () => {
+    if (onlyFromDefaultPallatte.checked) {
+        onlyFromNonDefaultPallatte.checked = false
+    }
+}
+
+onlyFromNonDefaultPallatte.onclick = () => {
+    if (onlyFromNonDefaultPallatte.checked) {
+        onlyFromDefaultPallatte.checked = false
+    }
 }

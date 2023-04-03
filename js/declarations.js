@@ -79,6 +79,9 @@ const hueSpeedSlider = document.getElementById("hue-speed-slider")
 const saturationSlider = document.getElementById("saturation-slider")
 const lightingSlider = document.getElementById("lighting-slider")
 const hueAngle = document.getElementById("hue-angle")
+const onlyFromNonDefaultPallatte = document.getElementById("only-from-non-default-pallatte")
+const onlyFromDefaultPallatte = document.getElementById("only-from-default-pallatte")
+
 
 // Showers
 
@@ -92,3 +95,10 @@ const hueAngleShower = document.getElementById("hue-angle-shower")
 // Extras
 
 const slightVariationsCheckbox = document.getElementById("slight-variations-checkbox")
+const replaceWithNormalCheckbox = document.getElementById("replace-with-normal")
+const fillOnlyThisColor = document.getElementById("fill-only-this-color")
+
+
+// MISC
+
+const deleteNonDefaultPallette = document.getElementById("delete-non-default-pallette")
