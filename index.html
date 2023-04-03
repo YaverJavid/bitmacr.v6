@@ -16,9 +16,9 @@
 <body>
     <img src="logo.png" alt="Logo" width="150" id="top-image">
     <div class="controls" id="top-control-container">
-        <input type="button" id="undo" value="Undo">
-        <input type="button" id="export-button" value="Save (png)">
-        <input type="button" id="redo" value="Redo">
+        <input type="button" id="undo" value="UNDO">
+        <input type="button" id="export-button" value="SAVE (PNG)">
+        <input type="button" id="redo" value="REDO">
     </div>
     <div id="paint-zone"></div>
     <div id="info">
@@ -83,6 +83,7 @@
                         <option value="hue">Hue</option>
                         <option value="eraser">Eraser</option>
                         <option value="css-color">CSS Color String</option>
+                        <option value="random-pallatte">Random From Pallatte</option>
                     </select>
                     <input type="button" value="Color Settings" onclick="gotoTab('color-settings')">
                     <br>
@@ -99,10 +100,10 @@
                         <option value="fill">Fill</option>
                     </select>
                     <br>
-                    <label for="only-fill-transaprent">Only Fill Transaprent</label>
+                    <label for="only-fill-transaprent">Fill Only If Color Is </label>
+                    (<input type="text" id="fill-only-this-color" class="hex-input" placeholder="Any CSS Color">) : 
                     <input type="checkbox" id="only-fill-transaprent" /> <br>
-                                        <input type="button" onclick="gotoTab('copy_options')" value="Copy Options"> <br>
-
+                    <input type="button" onclick="gotoTab('copy_options')" value="Copy Options"> <br>
                     <label for="image-to-pixel" class="file-label">
                         <input type="file" id="image-to-pixel" accept="image/*">
                         Add Pixel Data From Image
@@ -144,11 +145,18 @@
                     <label for="color-variation-th-slider">Threshold : </label>
                     <input type="range" id="color-variation-th-slider" max="15" min="1" value="2">
                     <span id="color-variation-th-shower">(2)</span>
+                    <h3>Random From Pallate Settings</h3> <br>
+                    <label for="only-from-default-pallatte">Only From Default Pallatte : </label>
+                    <input type="checkbox" id="only-from-default-pallatte"> <br>
+                                        <label for="only-from-non-default-pallatte">Only From Non-Default Pallatte : </label>
+                                        <input type="checkbox" id="only-from-non-default-pallatte">
                 </div>
                 <div>
                     <br>
                     <h3 data-shortcutkey='d'>Color Palette</h3> <br>
-                    <input type="button" value="Extract Colours From Canvas" id="extract-pallette"> <br>
+                    <input type="button" value="Extract Colours From Canvas" id="extract-pallette">
+                    <input type="button" value="Delete All Non Default Colors" id="delete-non-default-pallette">
+                    <br>
                     <div id="pallate-container">
                     </div>
 
@@ -173,16 +181,16 @@
                         <br>
                         <input type="button" id="select-all-copy-targets" value="Select All">
                         <br>
-                        <label for="q1-multiply-target-checkbox">Quadrant I</label>
+                        <label for="q1-multiply-target-checkbox">Quadrant I : </label>
                         <input type="checkbox" id="q1-multiply-target-checkbox" checked>
                         <br>
-                        <label for="q2-multiply-target-checkbox">Quadrant II</label>
+                        <label for="q2-multiply-target-checkbox">Quadrant II : </label>
                         <input type="checkbox" id="q2-multiply-target-checkbox" checked>
                         <br>
-                        <label for="q3-multiply-target-checkbox">Quadrant III</label>
+                        <label for="q3-multiply-target-checkbox">Quadrant III : </label>
                         <input type="checkbox" id="q3-multiply-target-checkbox" checked>
                         <br>
-                        <label for="q4-multiply-target-checkbox">Quadrant IV</label>
+                        <label for="q4-multiply-target-checkbox">Quadrant IV : </label>
                         <input type="checkbox" id="q4-multiply-target-checkbox" checked>
                         <br>
                     </details>
@@ -220,6 +228,8 @@
                     Or <input class="hex-input" type="text" id="color-to-replace-with-selector-hex" placeholder="Enter Hex..." maxlength="7">
                     <br> <label for="select-color-for-replacer">Select Color From Cell : </label>
                     <input type="checkbox" id="select-color-for-replacer"> <br>
+                    <label for="replace-with-normal">Or Replace With Selected Color : </label>
+                    <input type="checkbox" id="replace-with-normal"> <br>
                     <label for="color-match-threshold-range">Threshold : </label>
                     <input type="range" min="0" max="225" value="0" id="color-match-threshold-range">
                     <span id="threshold-shower">(0)</span>
@@ -286,16 +296,16 @@
                 </div>
                 <div>
                     <br>
-                    <h3 data-type="hidden-tab" data-tabname="layout">Layout Setting</h3> <br>
+                    <h3 data-type="hidden-tab" data-tabname="layout">Layout Settings</h3> <br>
                     <label for="shortcut-info-checkbox">Show Shortcut Info : </label>
                     <input type="checkbox" id="shortcut-info-checkbox" checked> <br>
-                    <label for="advanced-remove-top-image-checkbox">Remove Top Image</label>
+                    <label for="advanced-remove-top-image-checkbox">Remove Top Image : </label>
                     <input type="checkbox" id="advanced-remove-top-image-checkbox"> <br>
-                    <label for="hide-default-pallette-checkbox">Hide Default Pallette: </label>
+                    <label for="hide-default-pallette-checkbox">Hide Default Pallette : </label>
                     <input type="checkbox" id="hide-default-pallette-checkbox"> <br>
-                    <label for="animate-menu-checkbox">Animate Menu: </label>
+                    <label for="animate-menu-checkbox">Animate Menu : </label>
                     <input type="checkbox" id="animate-menu-checkbox" checked> <br>
-                    <label for="add-image-background-checkbox">Use Image Background: </label>
+                    <label for="add-image-background-checkbox">Use Image Background : </label>
                     <input type="checkbox" id="add-image-background-checkbox"> <br>
                     <input type="button" value="Change Background Image" id="change-background-image">
                 </div>

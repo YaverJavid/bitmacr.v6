@@ -1,6 +1,13 @@
-> THIS IS VERSION : ```9.2.3```
+> THIS IS VERSION : ```9.2.4```
 
 ## Version History
+### 9.2.4 [dated(03-04-2023)]
+- Fill only transparent now supports fill only any color
+- Now there is a way to replace color with selected color
+- Added A button To Delete All Non Default Pallatte Colors 
+- Added Option In Color Selector To Get Colors Randomly From Pallatte
+- Added Settings In Color Settings For ```Randomly From Pallatte```
+
 ### 9.2.3
 - Added ```fill``` option to ```onclick fill``` to flood fill
 - Fixed Bugs About Css Color String
