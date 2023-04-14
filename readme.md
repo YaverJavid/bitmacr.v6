@@ -1,5 +1,9 @@
 > THIS IS VERSION : ```9.2.4```
+#### Note This Is Not Main Repo.
 
+Main is on yaverjavid.github.io/pixmacr
+
+or github.com/yaverjavid/pixmacr
 ## Version History
 ### 9.2.4 [dated(03-04-2023)]
 - Fill only transparent now supports fill only any color
